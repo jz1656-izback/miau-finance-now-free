@@ -134,9 +134,28 @@ async def quant_health(ticker: str, user: dict = Depends(get_current_user)):
 
 @router.get("/quant/dcf/{ticker}")
 async def quant_dcf(ticker: str, user: dict = Depends(get_current_user)):
-    provider = _get_provider("securitiesdb")
-    result = await provider.fetch_fair_value(ticker.upper())
-    return result.model_dump()
+    try:
+        provider = _get_provider("securitiesdb")
+        result = await provider.fetch_fair_value(ticker.upper())
+        return result.model_dump()
+    except Exception:
+        # Fallback: return Yahoo Finance fundamentals as DCF approximation
+        from app.services.analytics._yf import get_info
+        info = await get_info(ticker.upper())
+        if info and info.get("forwardPE"):
+            return {
+                "ticker": ticker.upper(),
+                "fair_price": info.get("targetMeanPrice"),
+                "current_price": None,
+                "upside_pct": None,
+                "wacc": None,
+                "sensitivity_matrix": None,
+                "note": "DCF provider unavailable — showing analyst target from Yahoo Finance",
+                "forwardPE": info.get("forwardPE"),
+                "beta": info.get("beta"),
+                "recommendation": info.get("recommendationKey"),
+            }
+        return {"ticker": ticker.upper(), "error": "Could not calculate fair value", "note": "Try again later or check ticker"}
 
 
 @router.get("/quant/etf-overlap/{ticker}")
