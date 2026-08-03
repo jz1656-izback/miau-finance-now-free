@@ -26,7 +26,7 @@ function mockData() {
     trends,
     pages: [
       { path: '/', views: 28400+Math.floor(Math.random()*2000) },
-      { path: '❌ /pricing (FREE NOW!)', views: 0 },
+      { path: '❌ /pricing (FREE!)', views: 0 },
       { path: '/features', views: 8900+Math.floor(Math.random()*800) },
       { path: '/docs', views: 7600+Math.floor(Math.random()*600) },
       { path: '/blog', views: 5400+Math.floor(Math.random()*500) },
@@ -157,6 +157,15 @@ function LoginPage({ onLogin }: { onLogin: (t: string, u: string) => void }) {
 function Dashboard({ token, user, onLogout }: { token: string; user: string; onLogout: () => void }) {
   const [tab, setTab] = useState('overview')
   const [data, setData] = useState<any>(null)
+  
+  // Track page view
+  useEffect(() => {
+    fetch('/api/v1/marketing/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ event: 'pageview', page: window.location.pathname }),
+    }).catch(() => {})
+  }, [])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -211,7 +220,7 @@ function Dashboard({ token, user, onLogout }: { token: string; user: string; onL
       {/* Header */}
       <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:16,flexWrap:'wrap',gap:8}}>
         <div style={{display:'flex',alignItems:'center',gap:10}}>
-          <pre style={{fontSize:'0.6rem',lineHeight:'1.2',margin:0,color:'#ff6688',fontFamily:'monospace',whiteSpace:'pre'}}>
+          <pre style={{fontSize:'0.55rem',lineHeight:'1.2',margin:0,color:'#ff6688',fontFamily:'monospace',whiteSpace:'pre'}}>
 {`  |\\_/|
   |o o|
   |_^_|
@@ -219,7 +228,7 @@ function Dashboard({ token, user, onLogout }: { token: string; user: string; onL
           </pre>
           <div>
             <h1 style={{fontSize:'1.1rem',fontWeight:700,margin:0,background:'linear-gradient(135deg,#00e676,#a855f7)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent'}}>Miau Marketing</h1>
-            <span style={{fontSize:'0.6rem',color:'#ff6688',fontWeight:'bold'}}>🎉 FREE & OPEN SOURCE</span>
+            <span style={{fontSize:'0.6rem',color:'#ff6688',fontWeight:'bold'}}>&#x1F389; FREE & OPEN SOURCE</span>
           </div>
           <span style={{fontSize:'0.65rem',color:'#8899b0'}}>🐾 {user || 'admin'}</span>
         </div>
