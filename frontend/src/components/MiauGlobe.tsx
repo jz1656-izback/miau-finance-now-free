@@ -1241,9 +1241,9 @@ const _flyToPoint = useCallback((lat: number, lng: number) => {
 
   const fetchFundamentals = useCallback(async (ticker: string) => {
     try {
-      const headers: Record<string, string> = localStorage.getItem('miau_token')
-        ? { Authorization: `Bearer ${localStorage.getItem('miau_token')}` } : {}
-      const res = await fetch(`/api/v1/fundamentals/${ticker}`, { headers })
+      const token = localStorage.getItem('miau_token')
+      const headers: Record<string, string> = token ? { Authorization: `Bearer ${token}` } : {}
+      const res = await fetch(`/api/v1/fundamentals/${ticker}`, { headers, credentials: 'include' })
       if (res.ok) { setFundamentals(await res.json()) }
     } catch {}
   }, [])
