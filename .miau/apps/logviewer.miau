@@ -1,0 +1,7 @@
+Page: Log Viewer
+Cat: 📋
+Function: Real-time log streaming viewer
+Description: Browser-based log viewer that streams application logs in real-time with filtering, search, severity highlighting, and export capabilities.
+API: GET /api/v1/logs/*
+Output: Streaming log lines with filter controls
+Tuna: 4

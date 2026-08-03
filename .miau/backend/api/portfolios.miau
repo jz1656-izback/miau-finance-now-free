@@ -1,0 +1,7 @@
+Page: Portfolios
+Cat: 💼
+Function: Manages user investment portfolios
+Description: CRUD operations for portfolios with positions, performance tracking, currency conversion, and rebalancing. Supports multiple portfolios per user with drill-down into individual holdings.
+API: GET/POST/PUT/DELETE /api/v1/portfolios/*
+Output: Portfolio list, detail, positions, P&L, performance charts
+Tuna: 7

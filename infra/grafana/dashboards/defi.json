@@ -1,0 +1,1 @@
+{"title":"DeFi Overview","panels":[{"title":"TVL by Protocol","type":"pie","targets":[{"expr":"miau_defi_tvl"}]},{"title":"Risk Distribution","type":"pie","targets":[{"expr":"miau_defi_risk"}]},{"title":"Active Wallets","type":"stat","targets":[{"expr":"miau_defi_wallets"}]}]}

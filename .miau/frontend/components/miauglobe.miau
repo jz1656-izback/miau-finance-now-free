@@ -1,0 +1,7 @@
+Page: MiauGlobe
+Cat: 🌐
+Function: GPU-accelerated 3D WebGL globe
+Description: Three.js interactive 3D globe with country polygons, company markers, trade route arcs, satellite tracking, weather overlay, mining layer, aliens, and cat army deployment.
+API: —
+Output: WebGL 3D globe with draggable/zoomable interaction
+Tuna: 9

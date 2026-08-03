@@ -1,0 +1,7 @@
+Page: MiauBook App
+Cat: 📘
+Function: Social trading network
+Description: Standalone MiauBook social app where traders connect, share portfolio performance, post trade ideas, and build their trading reputation.
+API: GET/POST /api/v1/social/*
+Output: Social feed, user profiles, leaderboards, comments
+Tuna: 7

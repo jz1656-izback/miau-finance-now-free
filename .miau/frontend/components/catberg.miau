@@ -1,0 +1,7 @@
+Page: Catberg
+Cat: 🏔️
+Function: Bloomberg Terminal emulation
+Description: Bloomberg-style terminal with 30+ live-data panels (WEI, N, WCV, GPO, DES, FA) powered by real APIs. Split-screen with real-time ticker bar and cat commentary.
+API: —
+Output: Multi-panel financial data display with function key navigation
+Tuna: 9

@@ -1,0 +1,7 @@
+Page: Security Stack
+Cat: 🛡️
+Function: Middleware pipeline for API security
+Description: Multi-layer security middleware: JWT auth verification, rate limiting (Redis sliding window), CORS, CSP headers, CSRF protection, request validation, audit logging, and PQC crypto integration.
+API: —
+Output: Secured request/response pipeline with error handling
+Tuna: 7

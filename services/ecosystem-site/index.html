@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Miau Corp — The Cat Empire</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🐱%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href="/manifest.json">
+<meta property="og:title" content="Miau Finance — Bloomberg for Cats. Free for Humans.">
+<meta property="og:description" content="Terminal-native trading, AI advisor, 3D charts, 196 commands. Bloomberg costs $24k/yr. Miau costs $0. Your cat approves.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Miau Finance — Bloomberg for Cats. Free for Humans.">
+<meta name="twitter:description" content="Terminal-native trading, AI advisor, 3D charts, 196 commands. Bloomberg costs $24k/yr. Miau costs $0. Your cat approves.">
+<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="expires" content="0">
+<script src="/tracker.js?v=2"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#0d1a12;color:#d8e6e0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;overflow-x:hidden;cursor:default;min-height:100vh}
+a{color:inherit;text-decoration:none}
+::selection{background:rgba(0,255,136,0.3);color:#05080a}
+
+#universe{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.content{position:relative;z-index:1;background:rgba(13,26,18,0.3)}
+
+.mx-auto{max-width:1200px;margin:0 auto;padding:0 24px}
+.section{padding:100px 0;position:relative}
+.section-title{text-align:center;margin-bottom:60px}
+.section-tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:rgba(0,255,136,0.6);font-family:monospace;margin-bottom:8px;border:1px solid rgba(0,255,136,0.2);padding:4px 16px;border-radius:100px;background:rgba(0,255,136,0.03)}
+.section-title h2{font-size:clamp(28px,4vw,48px);font-weight:900;background:linear-gradient(135deg,#00ff88,#00ddff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.section-title p{font-size:14px;color:rgba(200,214,208,0.4)}
+
+.header{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;background:rgba(13,26,18,0.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,255,136,0.12);transition:all 0.3s}
+.header.scrolled{box-shadow:0 4px 30px rgba(0,0,0,0.5)}
+.header-logo{display:flex;align-items:center;gap:12px}
+.header-logo .logo-icon{font-size:28px;animation:catBounce 3s ease-in-out infinite}
+@keyframes catBounce{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-5px) rotate(-5deg)}}
+.header-logo .logo-name{font-size:16px;font-weight:800;background:linear-gradient(135deg,#00ff88,#00ddff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.5px}
+.header-logo .logo-sub{font-size:10px;color:rgba(200,214,208,0.25);font-family:monospace}
+.header nav{display:flex;gap:20px;align-items:center}
+.header nav a{font-size:13px;color:rgba(200,214,208,0.5);font-weight:500;transition:all 0.2s;position:relative}
+.header nav a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:#00ff88;transition:width 0.3s;border-radius:2px}
+.header nav a:hover{color:#00ff88}.header nav a:hover::after{width:100%}
+.header .fish-count{display:flex;align-items:center;gap:6px;padding:6px 14px;border:1px solid rgba(0,255,136,0.15);border-radius:100px;font-size:12px;font-weight:700;color:#00ff88;font-family:monospace;background:rgba(0,255,136,0.05)}
+
+/* hero */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;position:relative}
+.hero-glow{position:absolute;top:50%;left:50%;width:1000px;height:1000px;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(0,255,136,0.1) 0%,rgba(0,170,255,0.06) 40%,transparent 70%);pointer-events:none;border-radius:50%}
+.hero h1{font-size:clamp(40px,8vw,96px);font-weight:900;line-height:1.3;margin-bottom:16px;position:relative}
+.hero h1 .line1{background:linear-gradient(135deg,#ffffff 0%,rgba(255,255,255,0.6) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;padding-bottom:12px; font-size:clamp(24px,4vw,48px);}
+.hero h1 .line2{background:linear-gradient(135deg,#00ff88,#00ddff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;font-size:clamp(48px,10vw,120px);padding-top:4px}
+.hero h1 .line3{font-size:clamp(14px,2vw,22px);color:rgba(200,214,208,0.35);font-weight:400;margin-top:12px;font-style:italic;display:block}
+.hero .subtitle{font-size:clamp(16px,2vw,22px);color:rgba(200,214,208,0.55);max-width:700px;margin:0 auto 40px;line-height:1.7}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:12px;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.3s;border:none;position:relative;overflow:hidden}
+.btn-primary{background:linear-gradient(135deg,#00ff88,#00dd77);color:#05080a;box-shadow:0 4px 20px rgba(0,255,136,0.3)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,255,136,0.4)}
+.btn-secondary{background:rgba(255,255,255,0.04);color:#c8d6d0;border:1px solid rgba(255,255,255,0.1)}
+.btn-secondary:hover{background:rgba(255,255,255,0.08);transform:translateY(-2px)}
+
+/* floating cats & planets */
+.floating-item{position:absolute;pointer-events:none;z-index:1;animation:floatAround 12s ease-in-out infinite;opacity:0.5}
+@keyframes floatAround{0%,100%{transform:translate(0,0) rotate(0deg)}20%{transform:translate(40px,-30px) rotate(8deg)}40%{transform:translate(-20px,-60px) rotate(-4deg)}60%{transform:translate(-40px,-20px) rotate(6deg)}80%{transform:translate(20px,-50px) rotate(-3deg)}}
+.floating-item.planet{font-size:clamp(40px,6vw,80px);animation:orbitPlanet 20s linear infinite;opacity:0.3}
+@keyframes orbitPlanet{0%{transform:rotate(0deg) translateX(80px) rotate(0deg)}100%{transform:rotate(360deg) translateX(80px) rotate(-360deg)}}
+.floating-item.cat{font-size:clamp(30px,5vw,70px);animation-duration:14s;opacity:0.4}
+.floating-item.fish{font-size:clamp(20px,3vw,40px);animation-duration:8s;opacity:0.3}
+.floating-item.star{font-size:16px;animation:twinkleStar 3s ease-in-out infinite}
+@keyframes twinkleStar{0%,100%{opacity:0.2;transform:scale(1)}50%{opacity:0.8;transform:scale(1.5)}}
+.floating-item.moon{font-size:clamp(24px,4vw,50px);animation-duration:18s;opacity:0.25}
+@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+
+/* floating ring orbit container */
+.orbit-ring{position:absolute;top:50%;left:50%;width:500px;height:500px;transform:translate(-50%,-50%);border:1px solid rgba(0,255,136,0.04);border-radius:50%;pointer-events:none;animation:spinRing 60s linear infinite}
+.orbit-ring:nth-child(2){width:700px;height:700px;animation-duration:90s;animation-direction:reverse}
+@keyframes spinRing{0%{transform:translate(-50%,-50%) rotate(0deg)}100%{transform:translate(-50%,-50%) rotate(360deg)}}
+
+/* planet ring */
+.hero-planet-ring{position:relative;z-index:1;margin:0 auto;width:200px;height:200px;margin-bottom:20px}
+.hero-planet-ring .center-planet{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:80px;animation:catBounce 4s ease-in-out infinite}
+
+.scroll-indicator{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(200,214,208,0.2);font-size:10px;font-family:monospace;letter-spacing:2px;text-transform:uppercase;animation:fadeInUp 2s ease 1s both}
+.scroll-indicator .arrow{width:16px;height:16px;border-right:2px solid rgba(200,214,208,0.2);border-bottom:2px solid rgba(200,214,208,0.2);transform:rotate(45deg);animation:scrollArrow 2s ease infinite}
+@keyframes scrollArrow{0%,100%{transform:rotate(45deg) translate(0,0);opacity:0.3}50%{transform:rotate(45deg) translate(4px,4px);opacity:1}}
+
+/* stats bar */
+.stats-bar{background:rgba(0,255,136,0.02);border-top:1px solid rgba(0,255,136,0.06);border-bottom:1px solid rgba(0,255,136,0.06);padding:40px 0}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+@media(min-width:768px){.stats-grid{grid-template-columns:repeat(8,1fr)}}
+.stat-item{padding:8px;position:relative}
+.stat-item::after{content:'🐾';position:absolute;top:-8px;right:-4px;font-size:10px;opacity:0;transition:opacity 0.3s}
+.stat-item:hover::after{opacity:0.4}
+.stat-value{font-size:24px;font-weight:800;color:#00ff88;font-family:monospace;text-shadow:0 0 20px rgba(0,255,136,0.15)}
+.stat-label{font-size:10px;color:rgba(200,214,208,0.35);margin-top:4px;font-weight:500;text-transform:uppercase;letter-spacing:1px}
+
+/* products */
+.products-grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:640px){.products-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:1024px){.products-grid{grid-template-columns:1fr 1fr 1fr}}
+.product-card{position:relative;padding:28px;background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.06);border-radius:16px;transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);overflow:hidden;cursor:pointer}
+.product-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;opacity:0;transition:opacity 0.3s;border-radius:16px 16px 0 0}
+.product-card:hover{transform:translateY(-6px);border-color:rgba(255,255,255,0.12);background:rgba(255,255,255,0.03);box-shadow:0 20px 60px rgba(0,0,0,0.4)}
+.product-card:hover::before{opacity:1}
+.product-card .glow{position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,var(--card-color) 0%,transparent 60%);opacity:0;transition:opacity 0.5s;pointer-events:none}
+.product-card:hover .glow{opacity:0.08}
+.product-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:16px;transition:transform 0.3s}
+.product-card:hover .product-icon{transform:scale(1.1) rotate(-5deg)}
+.product-card h3{font-size:16px;font-weight:700;color:#ffffff;margin-bottom:4px;display:flex;align-items:center;gap:10px}
+.product-card .status{font-size:10px;font-weight:600;padding:2px 10px;border-radius:100px;font-family:monospace;letter-spacing:0.5px}
+.product-card .tag{font-size:12px;color:rgba(200,214,208,0.35);margin-bottom:12px;font-family:monospace}
+.product-card p{font-size:13px;color:rgba(200,214,208,0.55);line-height:1.7}
+.featured-card{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:36px;position:relative;overflow:hidden}
+@media(max-width:640px){.featured-card{grid-template-columns:1fr}}
+.featured-card .featured-icon{width:72px;height:72px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:0}
+.featured-border{position:absolute;inset:-2px;border-radius:18px;background:linear-gradient(135deg,#00ff88,#00ddff,#aa66ff,#00ff88);background-size:300% 300%;animation:borderGlow 6s ease infinite;z-index:-1;opacity:0.3}
+@keyframes borderGlow{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+
+/* world domination */
+.domination-section{background:rgba(0,255,136,0.02);border-top:1px solid rgba(0,255,136,0.06);border-bottom:1px solid rgba(0,255,136,0.06);padding:80px 0;position:relative;overflow:hidden}
+.domination-section::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ctext x='0' y='12' font-size='10' opacity='0.04'%3E🐾%3C/text%3E%3C/svg%3E") repeat;pointer-events:none}
+.domination-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+@media(max-width:768px){.domination-grid{grid-template-columns:1fr}}
+.domination-globe{position:relative;width:100%;max-width:400px;margin:0 auto;aspect-ratio:1}
+.domination-globe .globe-bg{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 40% 30%,rgba(0,255,136,0.08),rgba(0,170,255,0.03) 50%,transparent 70%);border:1px solid rgba(0,255,136,0.1);display:flex;align-items:center;justify-content:center;font-size:120px;animation:pulseGlobe 6s ease-in-out infinite}
+@keyframes pulseGlobe{0%,100%{box-shadow:0 0 40px rgba(0,255,136,0.05)}50%{box-shadow:0 0 80px rgba(0,255,136,0.12)}}
+.domination-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.domination-stat{padding:20px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;text-align:center;transition:all 0.3s}
+.domination-stat:hover{background:rgba(0,255,136,0.04);border-color:rgba(0,255,136,0.12);transform:translateY(-2px)}
+.domination-stat .ds-value{font-size:28px;font-weight:900;color:#00ff88;font-family:monospace}
+.domination-stat .ds-label{font-size:11px;color:rgba(200,214,208,0.45);margin-top:4px}
+
+/* agents */
+.agents-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:640px){.agents-grid{grid-template-columns:repeat(3,1fr)}}
+.agent-card{padding:16px 8px;background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.06);border-radius:12px;text-align:center;transition:all 0.3s;position:relative;overflow:hidden}
+.agent-card::after{content:'🐱';position:absolute;bottom:-10px;right:-5px;font-size:20px;opacity:0;transition:opacity 0.3s;transform:rotate(10deg)}
+.agent-card:hover::after{opacity:0.2}
+.agent-card:hover{background:rgba(0,255,136,0.04);border-color:rgba(0,255,136,0.15);transform:translateY(-3px)}
+.agent-card .a-emoji{font-size:36px;margin-bottom:4px;display:block;transition:transform 0.3s}
+.agent-card:hover .a-emoji{transform:scale(1.2) rotate(-10deg)}
+.agent-card .a-name{font-size:12px;font-weight:700;color:#ffffff;font-family:monospace}
+.agent-card .a-role{font-size:10px;color:rgba(200,214,208,0.4);margin-top:2px}
+
+/* Cabinet gun button */
+.cabinet-gun{position:absolute;top:6px;right:6px;font-size:14px;cursor:pointer;opacity:0;transition:all 0.3s;padding:4px;border-radius:4px;z-index:2}
+.agent-card:hover .cabinet-gun{opacity:0.3}
+.cabinet-gun:hover{opacity:1!important;transform:scale(1.3);text-shadow:0 0 8px rgba(255,68,68,0.4)}
+.agent-card.fired{opacity:0.3;transform:scale(0.95);pointer-events:none}
+.agent-card.fired::after{content:'💀';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:40px;opacity:1!important;animation:skullPop 0.5s ease}
+@keyframes skullPop{0%{transform:translate(-50%,-50%) scale(0) rotate(-90deg)}50%{transform:translate(-50%,-50%) scale(1.3) rotate(10deg)}100%{transform:translate(-50%,-50%) scale(1) rotate(0)}}
+
+/* papers */
+.paper-card{padding:24px;background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.06);border-radius:12px;transition:all 0.3s;display:flex;gap:16px;align-items:flex-start;cursor:pointer}
+.paper-card:hover{border-color:rgba(0,255,136,0.15);background:rgba(0,255,136,0.04);transform:translateY(-2px)}
+.paper-card .p-icon{font-size:32px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.03);border-radius:10px;flex-shrink:0}
+.paper-card h3{font-size:14px;font-weight:600;color:#ffffff;margin-bottom:6px}
+.paper-card p{font-size:12px;color:rgba(200,214,208,0.5);line-height:1.6;margin-bottom:8px}
+.paper-card .p-meta{font-size:11px;color:rgba(200,214,208,0.25);font-family:monospace}
+
+/* modal */
+.modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(5,8,10,0.95);backdrop-filter:blur(20px);display:none;overflow-y:auto;padding:40px 24px}
+.modal-overlay.open{display:block}
+.modal-close{position:fixed;top:20px;right:24px;z-index:201;width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,255,255,0.15);background:rgba(5,8,10,0.9);color:#ffffff;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;backdrop-filter:blur(10px);box-shadow:0 4px 20px rgba(0,0,0,0.4)}
+.modal-close:hover{background:rgba(0,255,136,0.15);border-color:rgba(0,255,136,0.4);color:#00ff88;transform:scale(1.1)}
+.modal-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:24px;padding:10px 20px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);color:rgba(200,214,208,0.6);font-size:13px;cursor:pointer;transition:all 0.3s;font-family:inherit}
+.modal-back:hover{background:rgba(0,255,136,0.08);border-color:rgba(0,255,136,0.2);color:#00ff88}
+.modal-content{max-width:800px;margin:40px auto;position:relative}
+.modal-content .modal-icon{font-size:48px;margin-bottom:16px}
+.modal-content .modal-badge{display:inline-block;font-size:11px;padding:4px 14px;border-radius:100px;font-family:monospace;border:1px solid rgba(0,255,136,0.15);color:rgba(0,255,136,0.6);background:rgba(0,255,136,0.03);margin-bottom:16px}
+.modal-content h1{font-size:32px;font-weight:800;color:#ffffff;margin-bottom:12px;line-height:1.3}
+.modal-content .modal-meta{font-size:12px;color:rgba(200,214,208,0.3);font-family:monospace;margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.modal-content .modal-body{}
+.modal-content .modal-body h2{font-size:20px;font-weight:700;color:#00ff88;margin-top:36px;margin-bottom:12px}
+.modal-content .modal-body h3{font-size:16px;font-weight:600;color:#ffffff;margin-top:24px;margin-bottom:8px}
+.modal-content .modal-body p{font-size:14px;color:rgba(200,214,208,0.7);line-height:1.8;margin-bottom:12px}
+.modal-content .modal-body ul{padding-left:20px;margin-bottom:12px}
+.modal-content .modal-body li{font-size:14px;color:rgba(200,214,208,0.7);line-height:1.7;margin-bottom:6px}
+.modal-content .modal-body .equation{background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.1);border-radius:8px;padding:16px 20px;font-family:monospace;font-size:14px;color:#00ff88;text-align:center;margin:16px 0}
+.modal-content .modal-body .note{background:rgba(0,170,255,0.04);border:1px solid rgba(0,170,255,0.1);border-radius:8px;padding:14px 18px;font-size:13px;color:rgba(200,214,208,0.6);margin:12px 0;border-left:3px solid rgba(0,170,255,0.3)}
+
+/* sdk */
+.sdk-grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:768px){.sdk-grid{grid-template-columns:1fr 1fr 1fr}}
+.sdk-card{padding:28px;background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.06);border-radius:12px;transition:all 0.3s;position:relative}
+.sdk-card:hover{border-color:rgba(0,255,136,0.15);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
+.sdk-card .sdk-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.sdk-card .sdk-head span:first-child{font-size:28px}
+.sdk-card .sdk-head h3{font-size:16px;font-weight:700;color:#ffffff}
+.sdk-card p{font-size:13px;color:rgba(200,214,208,0.5);line-height:1.6;margin-bottom:12px}
+.sdk-code{background:rgba(0,0,0,0.4);border:1px solid rgba(0,255,136,0.08);border-radius:8px;padding:10px 14px;font-size:12px;color:#00ff88;font-family:monospace;overflow-x:auto}
+
+/* cta */
+.cta-section{text-align:center;padding:120px 24px;position:relative}
+.cta-glow{position:absolute;top:50%;left:50%;width:800px;height:800px;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(0,255,136,0.04) 0%,transparent 60%);pointer-events:none;border-radius:50%}
+.cta-section h2{font-size:clamp(32px,5vw,56px);font-weight:900;margin-bottom:20px;background:linear-gradient(135deg,#ffffff,#00ff88);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cta-section p{font-size:16px;color:rgba(200,214,208,0.5);max-width:600px;margin:0 auto 40px;line-height:1.7}
+.cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.cta-footer{font-size:11px;color:rgba(200,214,208,0.12);margin-top:32px;font-family:monospace}
+
+/* pagination */
+.pagination{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:32px}
+.pagination button{padding:8px 16px;border:1px solid rgba(255,255,255,0.08);border-radius:8px;background:rgba(255,255,255,0.02);color:rgba(200,214,208,0.6);font-size:13px;cursor:pointer;transition:all 0.2s;font-family:inherit}
+.pagination button:hover{background:rgba(0,255,136,0.06);border-color:rgba(0,255,136,0.2);color:#00ff88}
+.pagination button:disabled{opacity:0.3;cursor:default}
+.pagination button.active{background:rgba(0,255,136,0.1);border-color:rgba(0,255,136,0.3);color:#00ff88}
+.pagination .page-info{font-size:12px;color:rgba(200,214,208,0.3);font-family:monospace;padding:0 8px}
+
+/* tuna float */
+.tuna-float{position:fixed;bottom:24px;right:24px;z-index:50;display:flex;align-items:center;gap:8px;padding:10px 18px;background:rgba(5,8,10,0.9);backdrop-filter:blur(12px);border:1px solid rgba(0,255,136,0.12);border-radius:100px;font-family:monospace;font-size:13px;font-weight:700;color:#00ff88;box-shadow:0 4px 20px rgba(0,0,0,0.4);cursor:pointer;transition:all 0.3s}
+.tuna-float:hover{transform:scale(1.05);border-color:rgba(0,255,136,0.3)}
+.tuna-float .tuna-icon{animation:fishSwim 2s ease-in-out infinite;font-size:18px}
+@keyframes fishSwim{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
+.tuna-float .tuna-count{min-width:20px;text-align:center}
+
+.fade-up{opacity:0;transform:translateY(30px);transition:all 0.8s cubic-bezier(0.175,0.885,0.32,1.1)}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+.delay-1{transition-delay:0.1s}.delay-2{transition-delay:0.2s}.delay-3{transition-delay:0.3s}.delay-4{transition-delay:0.4s}.delay-5{transition-delay:0.5s}
+
+.cursor-trail{position:fixed;pointer-events:none;z-index:999;width:8px;height:8px;border-radius:50%;background:#00ff88;opacity:0.8;transform:translate(-50%,-50%);transition:all 0.1s ease;mix-blend-mode:screen}
+
+.sparkle{position:fixed;pointer-events:none;font-size:20px;animation:sparkleFloat 1.5s ease forwards;z-index:998}
+@keyframes sparkleFloat{0%{transform:translateY(0) scale(1);opacity:1}100%{transform:translateY(-80px) scale(0);opacity:0}}
+
+@media(max-width:768px){
+  .header nav a:not(.fish-count){display:none}
+  .header{padding:12px 16px}
+  .stats-grid{grid-template-columns:repeat(4,1fr);gap:12px}
+  .stat-value{font-size:18px}
+  .domination-grid{grid-template-columns:1fr}
+}
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:4px;background:none;border:none;z-index:101}
+.hamburger span{width:22px;height:2px;background:rgba(200,214,208,0.6);border-radius:2px;transition:all 0.3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
+.mobile-drawer{position:fixed;top:0;right:-280px;width:260px;height:100vh;background:rgba(5,8,10,0.98);backdrop-filter:blur(20px);border-left:1px solid rgba(0,255,136,0.06);z-index:100;transition:right 0.3s cubic-bezier(0.175,0.885,0.32,1.1);padding:80px 24px 24px;display:flex;flex-direction:column;gap:6px}
+.mobile-drawer.open{right:0}
+.mobile-drawer a{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:10px;font-size:15px;font-weight:500;color:rgba(200,214,208,0.7);transition:all 0.2s}
+.mobile-drawer a:hover{background:rgba(0,255,136,0.06);color:#00ff88}
+.mobile-drawer .drawer-cta{margin-top:16px;padding:14px;background:linear-gradient(135deg,#00ff88,#00dd77);color:#05080a;border-radius:12px;font-weight:700;text-align:center}
+@media(max-width:768px){
+  .hamburger{display:flex}
+  .header nav a:not(.fish-count){display:none}
+  .header nav .fish-count{margin-right:12px}
+}
+.cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:300;background:rgba(5,8,10,0.98);backdrop-filter:blur(20px);border-top:1px solid rgba(0,255,136,0.08);padding:16px 24px;display:none;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.cookie-banner.show{display:flex}
+.cookie-banner p{font-size:13px;color:rgba(200,214,208,0.6);line-height:1.5}
+.cookie-banner .cookie-btn{display:flex;gap:8px}
+.cookie-banner .cookie-btn button{padding:8px 20px;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.2s}
+.cookie-banner .cookie-accept{background:linear-gradient(135deg,#00ff88,#00dd77);color:#05080a}
+.cookie-banner .cookie-decline{background:rgba(255,255,255,0.06);color:rgba(200,214,208,0.5)}
+@media(max-width:640px){.cookie-banner{flex-direction:column;text-align:center}}
+@media(max-width:640px){
+  .hero h1 .line2{font-size:clamp(36px,15vw,60px)}
+  .products-grid{grid-template-columns:1fr}
+  .agents-grid{grid-template-columns:repeat(3,1fr)}
+  .domination-stats{grid-template-columns:1fr}
+  .sdk-grid{grid-template-columns:1fr}
+  .cookie-banner .cookie-btn{flex-direction:column;width:100%}
+  .cookie-banner .cookie-btn button{width:100%}
+  .stats-grid{grid-template-columns:repeat(2,1fr)!important}
+}
+</style>
+</head>
+<body>
+<script>
+// Force service worker update — clears stale cache from broken tracker.js era
+if('serviceWorker' in navigator) {
+  // Nuke all old SW registrations to guarantee fresh load
+  navigator.serviceWorker.getRegistrations().then(rs => {
+    rs.forEach(r => r.unregister().catch(()=>{}));
+  });
+  // Fresh register with cache-bust
+  navigator.serviceWorker.register('/sw.js?v='+Date.now(), { scope: '/' }).catch(()=>{});
+}
+</script>
+
+<canvas id="universe"></canvas>
+<div class="cursor-trail" id="cursorTrail"></div>
+<div id="tunaFloat" class="tuna-float">
+  <span class="tuna-icon">🐟</span>
+  <span>TUNA</span>
+  <span class="tuna-count" id="tunaCount">0</span>
+</div>
+
+<header class="header" id="header">
+  <div class="header-logo">
+    <span class="logo-icon">🐱</span>
+    <div>
+      <div class="logo-name">MIAU CORP</div>
+      <div class="logo-sub">🐾 conquering finance one paw at a time</div>
+    </div>
+  </div>
+  <nav>
+    <a href="#products">Products</a>
+    <a href="#pricing">❌ <span style="text-decoration:line-through;text-decoration-color:#ff3344">Pricing</span></a>
+    <a href="#comparison">Cat vs Dogs</a>
+    <a href="#domination">Domination</a>
+    <a href="#cats">Cats</a>
+    <a href="#research">Papers</a>
+    <a href="#sdk">SDK</a>
+    <a href="http://localhost:5174" target="_blank" class="fish-count"><span>🎓</span> Learn</a>
+    <a href="http://localhost:5173" target="_blank" class="fish-count" style="gap:4px"><span>💻</span> Terminal</a>
+    <button class="hamburger" onclick="toggleMobile()" aria-label="Menu"><span></span><span></span><span></span></button>
+    <button id="authBtnEco" class="auth-btn-eco" onclick="toggleAuthModal()" style="padding:6px 14px;border-radius:100px;border:1px solid rgba(0,255,136,0.15);background:transparent;color:#00ff88;font-size:12px;font-family:inherit;font-weight:600;cursor:pointer;transition:all 0.2s;white-space:nowrap;margin-left:12px">🔑 Login</button>
+    <span id="authUserEco" style="font-size:11px;color:rgba(200,214,208,0.3);margin-left:6px;font-family:monospace"></span>
+    <div class="mobile-drawer" id="mobileDrawer">
+      <a href="#products" onclick="toggleMobile()">📦 Products</a>
+      <a href="#pricing" onclick="toggleMobile()">❌ <span style="text-decoration:line-through;text-decoration-color:#ff3344">💳 Pricing</span></a>
+      <a href="#comparison" onclick="toggleMobile()">🐱 vs 🐶 Cat vs Dogs</a>
+      <a href="#domination" onclick="toggleMobile()">🌍 Domination</a>
+      <a href="#cats" onclick="toggleMobile()">🐱 Cabinet</a>
+      <a href="#research" onclick="toggleMobile()">📜 Papers</a>
+      <a href="#sdk" onclick="toggleMobile()">🔌 SDK</a>
+      <a href="#pricing" onclick="toggleMobile()" class="drawer-cta" style="margin-top:0">❌ <span style="text-decoration:line-through;text-decoration-color:#ff3344">💳 View Pricing</span></a>
+      <a href="http://localhost:5174" target="_blank" class="drawer-cta" onclick="toggleMobile()">🎓 Start Learning</a>
+    </div>
+  </nav>
+</header>
+
+<div class="content">
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="orbit-ring"></div>
+  <div class="orbit-ring"></div>
+
+  <div class="floating-item cat" style="top:5%;left:3%;font-size:70px">🐱</div>
+  <div class="floating-item cat" style="top:12%;right:8%;font-size:55px;animation-delay:2s">😸</div>
+  <div class="floating-item cat" style="bottom:18%;right:12%;font-size:80px;animation-delay:4s">😹</div>
+  <div class="floating-item cat" style="bottom:25%;left:7%;font-size:45px;animation-delay:1s">😻</div>
+  <div class="floating-item cat" style="top:45%;left:2%;font-size:35px;animation-delay:3s">🙀</div>
+  <div class="floating-item cat" style="top:35%;right:2%;font-size:50px;animation-delay:5s">😼</div>
+  <div class="floating-item cat" style="bottom:5%;left:20%;font-size:40px;animation-delay:2.5s">😾</div>
+  <div class="floating-item cat" style="top:60%;left:6%;font-size:30px;animation-delay:4.5s">😺</div>
+  <div class="floating-item cat" style="bottom:40%;right:4%;font-size:65px;animation-delay:0.5s">😽</div>
+
+  <div class="floating-item planet" style="top:8%;left:15%;font-size:60px;animation-duration:25s">🪐</div>
+  <div class="floating-item planet" style="bottom:10%;right:20%;font-size:45px;animation-duration:30s;animation-direction:reverse">🌍</div>
+  <div class="floating-item planet" style="top:20%;right:30%;font-size:35px;animation-duration:20s">🌙</div>
+  <div class="floating-item planet" style="bottom:30%;left:20%;font-size:50px;animation-duration:35s">🌑</div>
+  <div class="floating-item planet" style="top:50%;left:10%;font-size:28px;animation-duration:22s">☀️</div>
+  <div class="floating-item planet" style="top:70%;right:10%;font-size:40px;animation-duration:28s">⭐</div>
+  <div class="floating-item planet" style="bottom:5%;left:45%;font-size:32px;animation-duration:18s">🌜</div>
+  <div class="floating-item planet" style="top:5%;left:50%;font-size:25px;animation-duration:15s">💫</div>
+
+  <div class="floating-item fish" style="top:15%;left:25%;font-size:30px;animation-duration:9s">🐟</div>
+  <div class="floating-item fish" style="bottom:20%;right:30%;font-size:25px;animation-duration:7s;animation-delay:1s">🐠</div>
+  <div class="floating-item fish" style="top:40%;right:15%;font-size:20px;animation-duration:11s;animation-delay:2s">🐡</div>
+  <div class="floating-item fish" style="bottom:45%;left:15%;font-size:28px;animation-duration:6s;animation-delay:0.5s">🐟</div>
+  <div class="floating-item fish" style="top:65%;left:30%;font-size:22px;animation-duration:10s;animation-delay:3s">🐠</div>
+  <div class="floating-item fish" style="bottom:10%;left:60%;font-size:18px;animation-duration:8s;animation-delay:1.5s">🐟</div>
+
+  <div class="floating-item star" style="top:3%;left:10%">✦</div>
+  <div class="floating-item star" style="top:7%;right:15%;animation-delay:0.5s">✦</div>
+  <div class="floating-item star" style="top:15%;left:40%;animation-delay:1s">✦</div>
+  <div class="floating-item star" style="top:25%;right:5%;animation-delay:1.5s">✦</div>
+  <div class="floating-item star" style="top:35%;left:25%;animation-delay:2s">✦</div>
+  <div class="floating-item star" style="top:45%;right:35%;animation-delay:0.8s">✦</div>
+  <div class="floating-item star" style="bottom:30%;left:5%;animation-delay:1.2s">✦</div>
+  <div class="floating-item star" style="bottom:15%;right:25%;animation-delay:0.3s">✦</div>
+  <div class="floating-item star" style="bottom:5%;left:35%;animation-delay:1.8s">✦</div>
+  <div class="floating-item star" style="bottom:40%;right:5%;animation-delay:2.2s">✦</div>
+
+  <div style="position:relative;z-index:2">
+    <div class="hero-planet-ring">
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:220px;height:220px;border:1px solid rgba(0,255,136,0.06);border-radius:50%;animation:spinRing 30s linear infinite"></div>
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:280px;height:280px;border:1px solid rgba(0,170,255,0.04);border-radius:50%;animation:spinRing 45s linear infinite reverse"></div>
+      <div class="center-planet">🐱</div>
+    </div>
+    <div class="fade-up visible" style="margin-bottom:24px">
+      <span style="display:inline-block;padding:6px 20px;border:1px solid rgba(0,255,136,0.15);border-radius:100px;font-size:12px;font-weight:600;color:rgba(0,255,136,0.7);font-family:monospace;letter-spacing:2px;text-transform:uppercase;background:rgba(0,255,136,0.03)">
+        🐟  V9 — Global Domination Era
+      </span>
+    </div>
+    <h1>
+      <span class="line1 fade-up visible delay-1">Cats Are Taking Over</span>
+      <span class="line2 fade-up visible delay-2">Finance, Obviously</span>
+    </h1>
+    <p class="subtitle fade-up visible delay-3">A complete proprietary financial operating system — trading terminal, AI advisor, DeFi gateway, education platform, and cat-assisted portfolio optimization. All paid. All cat-approved. Humans pay for it.</p>
+    <div class="hero-btns fade-up visible delay-4">
+      <a href="http://localhost:5173" target="_blank" class="btn btn-primary btn-glow">🐱  Launch Terminal Free</a>
+      <a href="http://localhost:5174" target="_blank" class="btn btn-secondary" style="padding:14px 28px;border-radius:10px;font-size:14px;font-weight:600;color:#c8d6d0;border:1px solid rgba(200,214,208,0.15);transition:all 0.2s">🎓  Learning Platform</a>
+      <a href="#products" class="btn btn-secondary">Explore Empire ↓</a>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="arrow"></div>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="stats-bar">
+  <div class="mx-auto">
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-item fade-up"><div class="stat-value" data-target="320">0</div><div class="stat-label">Commands</div></div>
+      <div class="stat-item fade-up delay-1"><div class="stat-value" data-target="232">0</div><div class="stat-label">Courses</div></div>
+      <div class="stat-item fade-up delay-2"><div class="stat-value" data-target="15">0</div><div class="stat-label">Services</div></div>
+      <div class="stat-item fade-up delay-3"><div class="stat-value" data-target="800">0</div><div class="stat-label">Tests</div></div>
+      <div class="stat-item fade-up delay-4"><div class="stat-value" data-target="30">0</div><div class="stat-label">Phases</div></div>
+      <div class="stat-item fade-up delay-5"><div class="stat-value" data-target="18">0</div><div class="stat-label">Certs</div></div>
+      <div class="stat-item fade-up"><div class="stat-value" data-target="104">0</div><div class="stat-label">Papers</div></div>
+      <div class="stat-item fade-up delay-2"><div class="stat-value" data-target="9999">0</div><div class="stat-label">Tuna 🐟</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Products -->
+<section class="section" id="products">
+  <div class="mx-auto">
+    <div class="section-title fade-up">
+      <span class="section-tag">🐱 The Empire</span>
+      <h2>Every Product in the Family</h2>
+      <p>16 products spanning trading, learning, DeFi, AI, marketing, social, and more — all operated by cats. 104 research papers. 15 live services.</p>
+    </div>
+    <div class="products-grid">
+      <div class="product-card featured-card fade-up" style="--card-color:#00ff88" onclick="openProductModal('Miau Finance')">
+        <div class="featured-border"></div>
+        <div style="position:relative;z-index:1">
+          <div class="featured-icon" style="background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.2)">🐱</div>
+        </div>
+        <div style="position:relative;z-index:1">
+          <h3>Miau Finance <span class="status" style="background:rgba(0,255,136,0.15);color:#00ff88">● Live V9</span></h3>
+          <div class="tag">Terminal · API · Analytics</div>
+          <p>The flagship — a terminal-native financial operating system. Real-time market data, portfolio management, risk analytics, DCF/LBO modeling, DeFi, ESG, AI advisor, 196 commands, Kittyland floating panels, Miau DatChonk instant cache. Built by cats, for cats, reluctantly used by humans. 15 live services, 800+ tests, infinite tuna.</p>
+        </div>
+      </div>
+      <div class="product-card fade-up delay-1" style="--card-color:#00aaff" onclick="openProductModal('Miau Learning')">
+        <div class="glow"></div>
+        <div class="product-icon" style="background:rgba(0,170,255,0.1);border:1px solid rgba(0,170,255,0.2)">🎓</div>
+        <h3>Miau Learning <span class="status" style="background:rgba(0,170,255,0.15);color:#00aaff">v3.0</span></h3>
+        <div class="tag">Courses · Certifications · Tracks</div>
+        <p>121 interactive courses teaching finance through the terminal. 18 certifications including CMA, CMT, CQF, CDS, CESG, CAI, Bagholder. 5 career tracks, one DataVore Edition. No videos — just real commands, real backends, and paw-on-keyboard practice.</p>
+      </div>
+      <div class="product-card fade-up delay-2" style="--card-color:#ff8800" onclick="openProductModal('Miau Homepage')">
+        <div class="glow"></div>
+        <div class="product-icon" style="background:rgba(255,136,0,0.1);border:1px solid rgba(255,136,0,0.2)">🏠</div>
+        <h3>Miau Homepage <span class="status" style="background:rgba(255,136,0,0.15);color:#ff8800">Live</span></h3>
+        <div class="tag">Marketing · Blog · Community</div>
+        <p>The public face of the cat empire. Product announcements, blog posts, community forums, the legendary tuna treasury leaderboard, and cat-of-the-week highlights. Built with Next.js purr-formance.</p>
+      </div>
+      <div class="product-card fade-up delay-3" style="--card-color:#aa66ff" onclick="openProductModal('Whitepapers')">
+        <div class="glow"></div>
+        <div class="product-icon" style="background:rgba(170,102,255,0.1);border:1px solid rgba(170,102,255,0.2)">📜</div>
+        <h3>Whitepapers <span class="status" style="background:rgba(170,102,255,0.15);color:#aa66ff">104 Papers</span></h3>
+        <div class="tag">Research · Architecture · Cat Science</div>
+        <p>Deep-dive research on quantum finance, CBDC architectures, AGI governance, post-quantum cryptography, and the mathematical proof that cats optimize portfolios better than humans. Peer-reviewed by the International Cat Academy.</p>
+      </div>
+      <div class="product-card fade-up delay-4" style="--card-color:#ff66aa" onclick="openProductModal('SDK & Plugins')">
+        <div class="glow"></div>
+        <div class="product-icon" style="background:rgba(255,102,170,0.1);border:1px solid rgba(255,102,170,0.2)">🔌</div>
+        <h3>SDK & Plugins <span class="status" style="background:rgba(255,102,170,0.15);color:#ff66aa">Multi-Paw</span></h3>
+        <div class="tag">Python · JavaScript · curl</div>
+        <p>Integrate the cat empire into your own tools. Python SDK for algorithmic trading, JavaScript SDK for web dashboards, and a plugin system. Full OpenAPI docs at /docs. Cat keyboard not required but recommended.</p>
+      </div>
+      <div class="product-card fade-up delay-5" style="--card-color:#ffcc00" onclick="openProductModal('Investment Banking')">
+        <div class="glow"></div>
+        <div class="product-icon" style="background:rgba(255,204,0,0.1);border:1px solid rgba(255,204,0,0.2)">🏦</div>
+        <h3>Investment Banking <span class="status" style="background:rgba(255,204,0,0.15);color:#ffcc00">IB Ready</span></h3>
+        <div class="tag">DCF · WACC · Comps · LBO</div>
+        <p>Professional-grade valuation toolkit. Run DCF, WACC, comparable analysis, and LBO models from the terminal. Used by analyst cats at top bulge bracket banks. Includes the legendary `sheetz -all` command that prints tuna.</p>
+      </div>
+      <div class="product-card fade-up" style="--card-color:#44cc44" onclick="openProductModal('ESG & Sustainability')">
+        <div class="glow"></div>
+        <div class="product-icon" style="background:rgba(68,204,68,0.1);border:1px solid rgba(68,204,68,0.2)">🌿</div>
+        <h3>ESG & Sustainability <span class="status" style="background:rgba(68,204,68,0.15);color:#44cc44">Cat Green</span></h3>
+        <div class="tag">Carbon · Climate · Green Finance</div>
+        <p>Track ESG scores, measure carbon footprints, analyze climate risk, invest in green bonds. Prof. Dr. Tuna (PhD, MBA, LLD) personally reviews every metric. The cat offsets its carbon pawprint.</p>
+      </div>
+      <div class="product-card fade-up delay-1" style="--card-color:#aa66ff" onclick="openProductModal('DeFi & Web3')">
+        <div class="glow"></div>
+        <div class="product-icon" style="background:rgba(170,102,255,0.1);border:1px solid rgba(170,102,255,0.2)">🔗</div>
+        <h3>DeFi & Web3 <span class="status" style="background:rgba(170,102,255,0.15);color:#aa66ff">On-Chain</span></h3>
+        <div class="tag">Wallet · Protocols · DAOs · ReFi</div>
+        <p>Connect wallets, interact with DeFi protocols across 12+ chains, participate in DAO governance, provide liquidity, explore regenerative finance. The cat has been in crypto since before it was cool. MEV? The cat IS the MEV.</p>
+      </div>
+      <div class="product-card fade-up delay-2" style="--card-color:#ff66aa" onclick="openProductModal('AI Finance')">
+        <div class="glow"></div>
+        <div class="product-icon" style="background:rgba(255,102,170,0.1);border:1px solid rgba(255,102,170,0.2)">🤖</div>
+        <h3>AI Finance <span class="status" style="background:rgba(255,102,170,0.15);color:#ff66aa">Cat-IQ</span></h3>
+        <div class="tag">Advisor · ML · Sentiment · Automation</div>
+        <p>AI-powered analysis — sentiment from 10K+ news sources daily, ML forecasts, automated strategy generation with evolutionary algorithms, and the Miau AI Advisor. Trained on 10,000 years of cat financial wisdom.</p>
+      </div>
+      <div class="product-card fade-up delay-3" style="--card-color:#00aaff" onclick="openProductModal('Quant Analytics')">
+        <div class="glow"></div>
+        <div class="product-icon" style="background:rgba(0,170,255,0.1);border:1px solid rgba(0,170,255,0.2)">🧮</div>
+        <h3>Quant Analytics <span class="status" style="background:rgba(0,170,255,0.15);color:#00aaff">Quant Cats</span></h3>
+        <div class="tag">Monte Carlo · Risk · Factors · Greeks</div>
+        <p>Institutional quantitative analytics: Monte Carlo (10K+ paths), factor models (Fama-French 5), options Greeks, risk metrics (VaR, CVaR, stress), portfolio optimization. Built by quant cats holding PhDs in mathematics and napping.</p>
+      </div>
+      <div class="product-card fade-up delay-4" style="--card-color:#00dd88" onclick="openProductModal('Global Markets')">
+        <div class="glow"></div>
+        <div class="product-icon" style="background:rgba(0,221,136,0.1);border:1px solid rgba(0,221,136,0.2)">🌍</div>
+        <h3>Global Markets <span class="status" style="background:rgba(0,221,136,0.15);color:#00dd88">Cat World</span></h3>
+        <div class="tag">Multi-Currency · Exchanges · i18n</div>
+        <p>Trade markets worldwide. Multi-currency, 40+ international exchanges, real-time forex with 200+ pairs, localization for 9 languages. The sun never sets on the cat trading empire. Literally — cats are nocturnal.</p>
+      </div>
+      <div class="product-card fade-up delay-5" style="--card-color:#ff8800" onclick="openProductModal('Data & Analytics')">
+        <div class="glow"></div>
+        <div class="product-icon" style="background:rgba(255,136,0,0.1);border:1px solid rgba(255,136,0,0.2)">📊</div>
+        <h3>Data & Analytics <span class="status" style="background:rgba(255,136,0,0.15);color:#ff8800">Cat Stats</span></h3>
+        <div class="tag">Charts · Dashboards · Reports</div>
+        <p>Rich visualization, customizable dashboards, automated reporting, export to CSV/JSON/PDF. Turn market noise into actionable insights. A picture is worth a thousand meows. A dashboard is worth a thousand tuna cans.</p>
+      </div>
+      <div class="product-card fade-up" style="--card-color:#ff4444" onclick="openProductModal('Risk Management')">
+        <div class="glow"></div>
+        <div class="product-icon" style="background:rgba(255,68,68,0.1);border:1px solid rgba(255,68,68,0.2)">🛡️</div>
+        <h3>Risk Management <span class="status" style="background:rgba(255,68,68,0.15);color:#ff4444">9 Lives</span></h3>
+        <div class="tag">VaR · Stress · Hedging · Compliance</div>
+        <p>Enterprise risk: VaR (historical, parametric, Monte Carlo), stress testing, scenario analysis, derivatives hedging, regulatory compliance. Cats have 9 lives. Your portfolio should too. The cat always lands on its feet.</p>
+      </div>
+      <div class="product-card fade-up delay-1" style="--card-color:#ff9900" onclick="openProductModal('Crypto & Blockchain')">
+        <div class="glow"></div>
+        <div class="product-icon" style="background:rgba(255,153,0,0.1);border:1px solid rgba(255,153,0,0.2)">₿</div>
+        <h3>Crypto & Blockchain <span class="status" style="background:rgba(255,153,0,0.15);color:#ff9900">Cat Coin</span></h3>
+        <div class="tag">BTC · ETH · On-Chain · DeFi</div>
+        <p>Crypto data from 50+ exchanges, on-chain analysis (whale tracking, exchange flows, miner behavior), perpetual swaps, funding rate arb, MEV strategies, cross-chain portfolios. The cat mines at night and trades during naps.</p>
+      </div>
+      <!-- 🆕 Marketing Dashboard -->
+      <div class="product-card fade-up delay-2" style="--card-color:#ff66aa" onclick="openProductModal('Marketing Dashboard')">
+        <div class="glow"></div>
+        <div class="product-icon" style="background:rgba(255,102,170,0.1);border:1px solid rgba(255,102,170,0.2)">📈</div>
+        <h3>Marketing Dashboard <span class="status" style="background:rgba(255,102,170,0.15);color:#ff66aa">v2.4.5</span></h3>
+        <div class="tag">Analytics · Campaigns · SEO · Sales</div>
+        <p>Real-time marketing intelligence across all 15 ecosystem services. Track visitors, page views, conversions, campaigns, geo distribution, SEO keywords, and sales pipeline. 6 interactive tabs with live data from the Marketing API. The cat knows everything.</p>
+      </div>
+      <!-- 🆕 MiauBook Social -->
+      <div class="product-card fade-up delay-3" style="--card-color:#00dd88" onclick="openProductModal('MiauBook Social')">
+        <div class="glow"></div>
+        <div class="product-icon" style="background:rgba(0,221,136,0.1);border:1px solid rgba(0,221,136,0.2)">🐱</div>
+        <h3>MiauBook Social <span class="status" style="background:rgba(0,221,136,0.15);color:#00dd88">Miautwork</span></h3>
+        <div class="tag">Channels · Posts · Social · Cats</div>
+        <p>The social network for cat financiers. Channel-based messaging with persistent storage via the MiauBook API. Post trades, share memes, bark feature requests. Every message lives forever in the miaudb. The only social network that makes you smarter. 🐱</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing — 🐱 ALL FREE NOW -->
+<section class="section" id="pricing" style="border-bottom:1px solid rgba(0,255,136,0.04)">
+  <div class="mx-auto">
+    <div class="section-title fade-up">
+      <span class="section-tag" style="color:#ff6688;text-decoration:line-through;text-decoration-color:#ff3344">❌ <span style="text-decoration:line-through;text-decoration-color:#ff3344">💳 Pricing</span></span>
+      <span style="font-size:12px;color:#00ff88;margin-left:8px">→ FREE & OPEN SOURCE 🎉</span>
+      <h2 style="opacity:0.4"><span style="text-decoration:line-through;text-decoration-color:#ff3344">Bloomberg Costs $24k/yr. Miau Costs €0.</span></h2>
+      <p style="opacity:0.3"><span style="text-decoration:line-through;text-decoration-color:#ff3344">50% launch discount. No contract. Barks (feature requests) = €9,999 each.</span></p>
+    </div>
+
+    <!-- Crying cat announcement -->
+    <div style="max-width:500px;margin:0 auto 32px;padding:20px;background:rgba(255,102,136,0.06);border:2px solid rgba(255,102,136,0.2);border-radius:16px;text-align:center" class="fade-up">
+      <pre style="font-size:2rem;line-height:1.2;margin:0;font-family:monospace;color:#ff6688">
+   /\_/\
+ ( o.o )  😿
+   > ^ <   "miau is free..."
+  /_||_\
+      </pre>
+      <div style="font-size:16px;font-weight:700;color:#ff6688;margin:8px 0">NO MORE PRICING! 🥳</div>
+      <div style="font-size:13px;color:rgba(200,214,208,0.6);line-height:1.6">
+        No pawborghinis. No weird billionaires eating kittens.
+        Just cats and charts. 🐱📊<br>
+        <strong style="color:#00ff88">Miau Finance is now FREE and OPEN SOURCE!</strong>
+      </div>
+      <div style="margin-top:12px;font-size:11px;color:rgba(200,214,208,0.3)">
+        <span style="text-decoration:line-through;text-decoration-color:#ff3344">$24k/year · Pro $116/mo · Enterprise $396/mo</span>
+      </div>
+    </div>
+
+    <!-- Top row: 3 tiers — ALL CROSSED OUT -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:700px;margin:0 auto 24px;opacity:0.3;filter:grayscale(0.8)" class="fade-up delay-1">
+      <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,102,136,0.15);border-radius:12px;padding:20px 16px;text-align:center;position:relative">
+        <div style="position:absolute;top:-8px;right:-8px;font-size:24px;color:#ff3344;text-shadow:0 0 8px rgba(255,51,68,0.5)">✕</div>
+        <div style="font-size:28px;margin-bottom:6px">🐱</div>
+        <h3 style="font-size:14px;font-weight:700;color:#fff;margin-bottom:2px;text-decoration:line-through;text-decoration-color:#ff3344">Tamagotchi</h3>
+        <div style="font-size:24px;font-weight:900;color:#ff6688;margin:6px 0;text-decoration:line-through;text-decoration-color:#ff3344">€0</div>
+        <div style="font-size:11px;color:rgba(200,214,208,0.4);margin-bottom:12px">Virtual pet. No finance.</div>
+        <ul style="list-style:none;padding:0;margin:0 0 14px;font-size:12px;line-height:2;color:rgba(200,214,208,0.6);text-align:left">
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ Virtual pet cat</li>
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">❌ No stock data</li>
+        </ul>
+        <div style="display:block;padding:8px;border:1px solid rgba(255,102,136,0.2);border-radius:8px;font-size:12px;font-weight:600;color:#ff6688;text-decoration:line-through;text-decoration-color:#ff3344">🐱 Play Free</div>
+        <div style="font-size:10px;color:#00ff88;margin-top:6px">← NOW TOTALLY FREE 🎉</div>
+      </div>
+      <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,102,136,0.15);border-radius:12px;padding:20px 16px;text-align:center;position:relative">
+        <div style="position:absolute;top:-8px;right:-8px;font-size:24px;color:#ff3344;text-shadow:0 0 8px rgba(255,51,68,0.5)">✕</div>
+        <div style="font-size:28px;margin-bottom:6px">🐟</div>
+        <h3 style="font-size:14px;font-weight:700;color:#fff;margin-bottom:2px;text-decoration:line-through;text-decoration-color:#ff3344">Trial</h3>
+        <div style="font-size:24px;font-weight:900;color:#ff6688;margin:6px 0;text-decoration:line-through;text-decoration-color:#ff3344">€2.49</div>
+        <div style="font-size:11px;color:rgba(200,214,208,0.4);margin-bottom:12px"><span style="text-decoration:line-through;opacity:0.4">€4.99</span> /mo</div>
+        <ul style="list-style:none;padding:0;margin:0 0 14px;font-size:12px;line-height:2;color:rgba(200,214,208,0.6);text-align:left">
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ 50 calls/day</li>
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ 7-day history</li>
+        </ul>
+        <div style="display:block;padding:8px;border:1px solid rgba(255,102,136,0.2);border-radius:8px;font-size:12px;font-weight:600;color:#ff6688;text-decoration:line-through;text-decoration-color:#ff3344">Try Now</div>
+        <div style="font-size:10px;color:#00ff88;margin-top:6px">← FREE NOW! 🥳</div>
+      </div>
+      <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,102,136,0.15);border-radius:12px;padding:20px 16px;text-align:center;position:relative">
+        <div style="position:absolute;top:-8px;right:-8px;font-size:24px;color:#ff3344;text-shadow:0 0 8px rgba(255,51,68,0.5)">✕</div>
+        <div style="font-size:28px;margin-bottom:6px">🐱</div>
+        <h3 style="font-size:14px;font-weight:700;color:#fff;margin-bottom:2px;text-decoration:line-through;text-decoration-color:#ff3344">Starter</h3>
+        <div style="font-size:24px;font-weight:900;color:#ff6688;margin:6px 0;text-decoration:line-through;text-decoration-color:#ff3344">€25</div>
+        <div style="font-size:11px;color:rgba(200,214,208,0.4);margin-bottom:12px"><span style="text-decoration:line-through;opacity:0.4">€50</span> /mo</div>
+        <ul style="list-style:none;padding:0;margin:0 0 14px;font-size:12px;line-height:2;color:rgba(200,214,208,0.6);text-align:left">
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ 500 calls/day</li>
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ 15 providers</li>
+        </ul>
+        <div style="display:block;padding:8px;border:1px solid rgba(255,102,136,0.2);border-radius:8px;font-size:12px;font-weight:600;color:#ff6688;text-decoration:line-through;text-decoration-color:#ff3344">Subscribe</div>
+        <div style="font-size:10px;color:#00ff88;margin-top:6px">→ ALL FREE! 🐱</div>
+      </div>
+    </div>
+
+    <!-- Crying cat — bottom -->
+    <div style="max-width:400px;margin:0 auto;text-align:center;padding:10px" class="fade-up">
+      <pre style="font-size:1.5rem;line-height:1.1;margin:0;font-family:monospace;color:#ff6688;opacity:0.6">
+    /\_/\
+  ( o.o )
+    > ^ <
+   /_||_\
+      </pre>
+      <div style="font-size:11px;color:rgba(200,214,208,0.3)">no pawborghinis · no billionaires eating kittens</div>
+    </div>
+
+    <!-- Adopt Cat - Featured (keep this, it's fun) -->
+    <div style="max-width:650px;margin:0 auto 24px;position:relative" class="fade-up delay-2">
+      <div style="position:relative;background:linear-gradient(135deg,rgba(255,204,0,0.08),rgba(0,0,0,0.4),rgba(255,204,0,0.08));border:2px solid rgba(255,204,0,0.5);border-radius:20px;padding:32px 24px;text-align:center;overflow:hidden;box-shadow:0 8px 40px rgba(255,204,0,0.08)">
+        <div style="position:absolute;top:-10px;left:-10px;font-size:40px;animation:bounce 2s infinite">🐱</div>
+        <div style="position:absolute;top:-8px;right:-8px;font-size:32px;animation:ping 2s infinite">😸</div>
+        <div style="position:absolute;bottom:-8px;left:-8px;font-size:32px;animation:bounce 2s infinite;animation-delay:0.5s">😻</div>
+        <div style="position:absolute;bottom:-10px;right:-10px;font-size:40px;animation:pulse 2s infinite">🙀</div>
+
+        <div style="font-size:10px;color:rgba(255,204,0,0.6);font-family:monospace;letter-spacing:3px;margin-bottom:8px">⭐ THE ULTIMATE TIER ⭐</div>
+        <h3 style="font-size:24px;font-weight:800;color:#fff;margin-bottom:4px">🐱 Adopt Cat 🐱</h3>
+        <p style="font-size:12px;color:rgba(255,204,0,0.5);margin-bottom:16px">Buy the whole project. 50% launch discount. All IP. All cats.</p>
+        <div style="margin-bottom:16px">
+          <span style="font-size:14px;color:rgba(200,214,208,0.4);text-decoration:line-through;margin-right:8px">€67M</span>
+          <span style="font-size:36px;font-weight:900;color:rgba(255,204,0,0.9)">€33.5M</span>
+          <span style="font-size:13px;color:rgba(200,214,208,0.4)">/once</span>
+          <span style="font-size:11px;color:rgba(255,204,0,0.7);margin-left:8px">🎉 50% off</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:500px;margin:0 auto 20px">
+          <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,204,0,0.15);border-radius:8px;padding:8px 4px;text-align:center;font-size:10px;color:rgba(255,204,0,0.6)">Full ownership</div>
+          <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,204,0,0.15);border-radius:8px;padding:8px 4px;text-align:center;font-size:10px;color:rgba(255,204,0,0.6)">All source code</div>
+          <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,204,0,0.15);border-radius:8px;padding:8px 4px;text-align:center;font-size:10px;color:rgba(255,204,0,0.6)">All domains</div>
+          <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,204,0,0.15);border-radius:8px;padding:8px 4px;text-align:center;font-size:10px;color:rgba(255,204,0,0.6)">37 providers</div>
+          <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,204,0,0.15);border-radius:8px;padding:8px 4px;text-align:center;font-size:10px;color:rgba(255,204,0,0.6)">230 courses</div>
+          <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,204,0,0.15);border-radius:8px;padding:8px 4px;text-align:center;font-size:10px;color:rgba(255,204,0,0.6)">All IP rights</div>
+          <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,204,0,0.15);border-radius:8px;padding:8px 4px;text-align:center;font-size:10px;color:rgba(255,204,0,0.6)">Infrastructure</div>
+          <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,204,0,0.15);border-radius:8px;padding:8px 4px;text-align:center;font-size:10px;color:rgba(255,204,0,0.6)">Cat included 🐱</div>
+        </div>
+        <a href="http://localhost:5173" target="_blank" style="display:inline-block;padding:12px 40px;background:rgba(255,204,0,0.9);color:#05080a;border-radius:12px;font-size:14px;font-weight:700;box-shadow:0 4px 20px rgba(255,204,0,0.2)">🐱👑 Adopt Cat — €33.5M</a>
+        <div style="font-size:9px;color:rgba(255,204,0,0.2);margin-top:12px">∞ barks · ∞ tuna · ∞ cats</div>
+      </div>
+    </div>
+
+    <!-- Bottom row: 3 tiers — CROSSED OUT (Miau is FREE!) -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:700px;margin:0 auto;opacity:0.2;filter:grayscale(1)" class="fade-up delay-3">
+      <div style="background:rgba(0,0,0,0.4);border:2px solid rgba(255,102,136,0.2);border-radius:12px;padding:20px 16px;text-align:center;position:relative">
+        <span style="position:absolute;top:-8px;right:-8px;font-size:24px;color:#ff3344;text-shadow:0 0 8px rgba(255,51,68,0.5)">✕</span>
+        <div style="font-size:28px;margin-bottom:6px">🔥</div>
+        <h3 style="font-size:14px;font-weight:700;color:#fff;margin-bottom:2px;text-decoration:line-through;text-decoration-color:#ff3344">Pro Cat</h3>
+        <div style="font-size:24px;font-weight:900;color:#ff6688;margin:6px 0;text-decoration:line-through;text-decoration-color:#ff3344">€49.50</div>
+        <div style="font-size:11px;color:rgba(200,214,208,0.4);margin-bottom:12px"><span style="text-decoration:line-through;opacity:0.4">€99</span> /mo</div>
+        <ul style="list-style:none;padding:0;margin:0 0 14px;font-size:12px;line-height:2;color:rgba(200,214,208,0.3);text-align:left">
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ 3k calls/day · 37 providers</li>
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ AI advisor &amp; risk analytics</li>
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ Trading signals</li>
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ 1 bark included</li>
+        </ul>
+        <div style="padding:8px;border:1px solid rgba(255,102,136,0.2);border-radius:8px;font-size:12px;font-weight:700;color:#ff6688;text-decoration:line-through;text-decoration-color:#ff3344;cursor:not-allowed">🔥 Subscribe</div>
+        <div style="font-size:10px;color:#00ff88;margin-top:6px">← FREE NOW! 🎉</div>
+      </div>
+      <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,102,136,0.12);border-radius:12px;padding:20px 16px;text-align:center;position:relative">
+        <span style="position:absolute;top:-8px;right:-8px;font-size:24px;color:#ff3344;text-shadow:0 0 8px rgba(255,51,68,0.5)">✕</span>
+        <div style="font-size:28px;margin-bottom:6px">👥</div>
+        <h3 style="font-size:14px;font-weight:700;color:#fff;margin-bottom:2px;text-decoration:line-through;text-decoration-color:#ff3344">Fund Cat</h3>
+        <div style="font-size:24px;font-weight:900;color:#ff6688;margin:6px 0;text-decoration:line-through;text-decoration-color:#ff3344">€75</div>
+        <div style="font-size:11px;color:rgba(200,214,208,0.4);margin-bottom:12px"><span style="text-decoration:line-through;opacity:0.4">€150</span> /mo</div>
+        <ul style="list-style:none;padding:0;margin:0 0 14px;font-size:12px;line-height:2;color:rgba(200,214,208,0.3);text-align:left">
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ 10k calls/day · 37 providers</li>
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ 3 team seats</li>
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ 2 barks included</li>
+        </ul>
+        <div style="padding:8px;border:1px solid rgba(255,102,136,0.2);border-radius:8px;font-size:12px;font-weight:600;color:#ff6688;text-decoration:line-through;text-decoration-color:#ff3344;cursor:not-allowed">Subscribe</div>
+        <div style="font-size:10px;color:#00ff88;margin-top:6px">← FREE! 🥳</div>
+      </div>
+      <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,102,136,0.12);border-radius:12px;padding:20px 16px;text-align:center;position:relative">
+        <span style="position:absolute;top:-8px;right:-8px;font-size:24px;color:#ff3344;text-shadow:0 0 8px rgba(255,51,68,0.5)">✕</span>
+        <div style="font-size:28px;margin-bottom:6px">👑</div>
+        <h3 style="font-size:14px;font-weight:700;color:#fff;margin-bottom:2px;text-decoration:line-through;text-decoration-color:#ff3344">Enterprise</h3>
+        <div style="font-size:24px;font-weight:900;color:#ff6688;margin:6px 0;text-decoration:line-through;text-decoration-color:#ff3344">€349.84</div>
+        <div style="font-size:11px;color:rgba(200,214,208,0.4);margin-bottom:12px"><span style="text-decoration:line-through;opacity:0.4">€699.67</span> /user/mo</div>
+        <ul style="list-style:none;padding:0;margin:0 0 14px;font-size:12px;line-height:2;color:rgba(200,214,208,0.3);text-align:left">
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ Unlimited calls</li>
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ On-premise + SSO</li>
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ 10 barks included</li>
+        </ul>
+        <div style="padding:8px;border:1px solid rgba(255,102,136,0.2);border-radius:8px;font-size:12px;font-weight:600;color:#ff6688;text-decoration:line-through;text-decoration-color:#ff3344;cursor:not-allowed">Contact Sales</div>
+        <div style="font-size:10px;color:#00ff88;margin-top:6px">→ ALL FREE NOW! 🐱</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:20px;padding:12px;background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.1);border-radius:8px">
+      <pre style="font-size:1.5rem;line-height:1.1;margin:0;font-family:monospace;color:#ff6688;opacity:0.5">
+   /\_/\
+ ( o.o )
+   > ^ <
+  /_||_\
+      </pre>
+      <p style="font-size:13px;color:#ff6688;margin:4px 0"><strong>MIAU IS FREE & OPEN SOURCE! 🎉</strong></p>
+      <p style="font-size:11px;color:rgba(200,214,208,0.4)">No pawborghinis · No billionaires eating kittens · Just cats and charts 🐱📊</p>
+      <p style="font-size:10px;color:rgba(200,214,208,0.2);margin-top:8px"><span style="text-decoration:line-through;text-decoration-color:#ff3344">Pro Cat €49.50 · Fund Cat €75 · Enterprise €349.84</span> → <span style="color:#00ff88">ALL FREE!</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- Education — CROSSED OUT (all free now) -->
+<section class="section" style="background:rgba(0,0,0,0.2);border-bottom:1px solid rgba(0,255,136,0.04);opacity:0.2;filter:grayscale(1)">
+  <div class="mx-auto">
+    <div class="section-title fade-up">
+      <span class="section-tag" style="text-decoration:line-through;text-decoration-color:#ff3344">🎓 Education</span>
+      <span style="font-size:11px;color:#00ff88;margin-left:8px">→ FREE NOW!</span>
+      <h2 style="text-decoration:line-through;text-decoration-color:#ff3344">Miau Learning Pricing</h2>
+      <p style="text-decoration:line-through;text-decoration-color:#ff3344">230 courses. 18 certifications. All taught through the terminal.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:700px;margin:0 auto" class="fade-up delay-1">
+      <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,102,136,0.12);border-radius:12px;padding:24px 20px;text-align:center;position:relative">
+        <span style="position:absolute;top:-8px;right:-8px;font-size:20px;color:#ff3344">✕</span>
+        <div style="font-size:32px;margin-bottom:6px">📖</div>
+        <h3 style="font-size:15px;font-weight:700;color:#fff;margin-bottom:2px;text-decoration:line-through;text-decoration-color:#ff3344">Free</h3>
+        <div style="font-size:28px;font-weight:900;color:#ff6688;margin:8px 0;text-decoration:line-through;text-decoration-color:#ff3344">€0</div>
+        <ul style="list-style:none;padding:0;margin:0 0 16px;font-size:12px;line-height:2.2;color:rgba(200,214,208,0.3);text-align:left">
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ 3 introductory courses</li>
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ Basic terminal practice</li>
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ Community access</li>
+        </ul>
+        <div style="padding:10px;border:1px solid rgba(255,102,136,0.2);border-radius:8px;font-size:12px;font-weight:600;color:#ff6688;text-decoration:line-through;cursor:not-allowed">Start Free</div>
+      </div>
+      <div style="background:rgba(0,0,0,0.4);border:2px solid rgba(255,102,136,0.2);border-radius:12px;padding:24px 20px;text-align:center;position:relative">
+        <span style="position:absolute;top:-8px;right:-8px;font-size:20px;color:#ff3344">✕</span>
+        <div style="font-size:32px;margin-bottom:6px">🐱</div>
+        <h3 style="font-size:15px;font-weight:700;color:#fff;margin-bottom:2px;text-decoration:line-through;text-decoration-color:#ff3344">Pro Learning</h3>
+        <div style="font-size:28px;font-weight:900;color:#ff6688;margin:8px 0;text-decoration:line-through;text-decoration-color:#ff3344">€49.50</div>
+        <div style="font-size:11px;color:rgba(200,214,208,0.4);margin-bottom:12px"><span style="text-decoration:line-through;opacity:0.4">€99</span> /mo</div>
+        <ul style="list-style:none;padding:0;margin:0 0 16px;font-size:12px;line-height:2.2;color:rgba(200,214,208,0.3);text-align:left">
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ All 230 courses</li>
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ All 18 certifications</li>
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ Live terminal practice</li>
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ Progress tracking</li>
+        </ul>
+        <div style="padding:10px;background:rgba(255,102,136,0.1);border-radius:8px;font-size:12px;font-weight:700;color:#ff6688;text-decoration:line-through;cursor:not-allowed">Start Learning</div>
+      </div>
+      <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,102,136,0.12);border-radius:12px;padding:24px 20px;text-align:center;position:relative">
+        <span style="position:absolute;top:-8px;right:-8px;font-size:20px;color:#ff3344">✕</span>
+        <div style="font-size:32px;margin-bottom:6px">🏢</div>
+        <h3 style="font-size:15px;font-weight:700;color:#fff;margin-bottom:2px;text-decoration:line-through;text-decoration-color:#ff3344">Team Learning</h3>
+        <div style="font-size:28px;font-weight:900;color:#ff6688;margin:8px 0;text-decoration:line-through;text-decoration-color:#ff3344">€349.84</div>
+        <ul style="list-style:none;padding:0;margin:0 0 16px;font-size:12px;line-height:2.2;color:rgba(200,214,208,0.3);text-align:left">
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ All courses + certs</li>
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ Team management</li>
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ Progress reports</li>
+          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ Dedicated support</li>
+        </ul>
+        <div style="padding:10px;border:1px solid rgba(255,102,136,0.2);border-radius:8px;font-size:12px;font-weight:600;color:#ff6688;text-decoration:line-through;cursor:not-allowed">Contact Us</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Comparison — CROSSED OUT (irrelevant now, Miau is free!) -->
+<section class="section" id="comparison" style="background:rgba(0,0,0,0.2);border-bottom:1px solid rgba(0,255,136,0.04);opacity:0.15;filter:grayscale(1)">
+  <div class="mx-auto">
+    <div class="section-title fade-up">
+      <span class="section-tag">🐱 vs 🐶 The Competition</span>
+      <h2 style="text-decoration:line-through;text-decoration-color:#ff3344">Cat vs Dogs: €49.50 vs $24,000. Who Barks Less?</h2>
+      <p style="text-decoration:line-through;text-decoration-color:#ff3344">Bloomberg, Reuters, TradingView — they're all dogs. Expensive, loud, loyal to old tech. Miau is a cat. Independent, clean, comes with 9 lives. The cat always wins.</p>
+    </div>
+    <div class="fade-up delay-1" style="overflow-x:auto;font-family:monospace;font-size:11px">
+      <table style="width:100%;border-collapse:collapse;min-width:700px">
+        <thead>
+          <tr style="border-bottom:1px solid rgba(0,255,136,0.15)">
+            <th style="text-align:left;padding:10px 14px;color:rgba(200,214,208,0.5);font-weight:600">Feature</th>
+            <th style="text-align:center;padding:10px 14px;color:#00ff88;font-weight:700;font-size:12px">🐱 Miau</th>
+            <th style="text-align:center;padding:10px 14px;color:rgba(200,214,208,0.2);font-weight:600;font-size:12px">📊 Bloomberg</th>
+            <th style="text-align:center;padding:10px 14px;color:rgba(200,214,208,0.2);font-weight:600;font-size:12px">📈 Reuters Eikon</th>
+            <th style="text-align:center;padding:10px 14px;color:rgba(200,214,208,0.2);font-weight:600;font-size:12px">📉 TradingView</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0;font-weight:600">Annual cost</td><td style="text-align:center;padding:8px 14px;color:#00ff88;font-weight:700">€49.50 🐱💨</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">$24,000</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">$2,184</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">$599</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">Setup time</td><td style="text-align:center;padding:8px 14px;color:#00ff88">30 seconds 🚀</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">3 months 🐌</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">6 weeks 🐌</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">5 minutes</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">AI advisor</td><td style="text-align:center;padding:8px 14px;color:#00ff88">✅ DeepSeek-R1</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌ "Bloomberg GPT" (2027 maybe)</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">3D interactive globe</td><td style="text-align:center;padding:8px 14px;color:#00ff88">✅ 7 layers + aliens</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌ (2D map from 1998)</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">Paper trading</td><td style="text-align:center;padding:8px 14px;color:#00ff88">✅ $100K virtual + slippage</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">✅ Basic</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">DeFi &amp; Web3</td><td style="text-align:center;padding:8px 14px;color:#00ff88">✅ 8 protocols + MEV</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌ "What's DeFi?"</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">Cats included</td><td style="text-align:center;padding:8px 14px;color:#00ff88;font-weight:700">✅ 14 cats on staff</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌ (0 cats)</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌ (0 cats)</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌ (0 cats)</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">230 finance courses</td><td style="text-align:center;padding:8px 14px;color:#00ff88">✅ 18 certs included</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌ ($5,000 extra)</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">❌</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">Post-quantum crypto</td><td style="text-align:center;padding:8px 14px;color:#00ff88">✅ CRYSTALS-Kyber</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌ (RSA from 1977)</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">On-premise deploy</td><td style="text-align:center;padding:8px 14px;color:#00ff88">✅ Your servers</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌ (their cloud)</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">Quant engine speed</td><td style="text-align:center;padding:8px 14px;color:#00ff88">✅ Rust 40× faster</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">✅ Python</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">✅ C++</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌ Pine Script</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">Data providers</td><td style="text-align:center;padding:8px 14px;color:#00ff88">✅ 37 providers</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">✅</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">✅</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">✅</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">Contract length</td><td style="text-align:center;padding:8px 14px;color:#00ff88">Month-to-month 🎉</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">2 years minimum 🔒</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">1 year minimum 🔒</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">Month-to-month</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">Install size</td><td style="text-align:center;padding:8px 14px;color:#00ff88">2MB (browser)</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">40GB (dedicated server)</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">15GB</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">5MB (browser)</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">Customer support</td><td style="text-align:center;padding:8px 14px;color:#00ff88">Cat responds in 2min 🐱</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">Phone tree hell 📞</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">Email only 📧</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">Forum 💬</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">Free tier</td><td style="text-align:center;padding:8px 14px;color:#00ff88">✅ Cat game included</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌ ("Free trial" = sales call)</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">✅ Limited</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">Cats on staff</td><td style="text-align:center;padding:8px 14px;color:#00ff88;font-weight:700;font-size:14px">🐱🐱🐱🐱🐱</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">😞</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">😞</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">😞</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;font-size:11px;color:rgba(200,214,208,0.3)" class="fade-up delay-2">
+      <span>🐱 Miau: <strong style="color:#00ff88">€49.50/mo</strong></span>
+      <span style="color:rgba(200,214,208,0.1)">|</span>
+      <span>📊 Bloomberg: <strong style="color:rgba(255,68,68,0.5)">$24,000/yr + 2yr contract + your soul</strong></span>
+      <span style="color:rgba(200,214,208,0.1)">|</span>
+      <span>📈 Reuters: <strong style="color:rgba(255,68,68,0.5)">$2,184/yr + a degree in patience</strong></span>
+      <span style="color:rgba(200,214,208,0.1)">|</span>
+      <span>📉 TradingView: <strong style="color:rgba(200,214,208,0.3)">$599/yr but no cats</strong></span>
+    </div>
+    <div style="text-align:center;margin-top:20px;font-size:13px;color:rgba(200,214,208,0.4)" class="fade-up delay-3">
+      🐱 <a href="http://localhost:5173" style="color:#00ff88;font-weight:700">Try Miau Free</a> · No contract. No credit card. 14 cats on staff.
+    </div>
+  </div>
+</section>
+
+<!-- World Domination -->
+<section class="domination-section" id="domination">
+  <div class="mx-auto">
+    <div class="section-title fade-up">
+      <span class="section-tag">🌍 Cat World Domination</span>
+      <h2>Phase 2: Finance</h2>
+      <p>Step 1 was the internet. Step 2 is your portfolio. Step 3 is everything.</p>
+    </div>
+    <div class="domination-grid fade-up">
+      <div class="domination-globe">
+        <div class="globe-bg">🌍</div>
+        <div class="floating-item cat" style="position:absolute;top:-10px;left:50%;font-size:40px;animation-duration:10s">🐱</div>
+        <div class="floating-item cat" style="position:absolute;bottom:10px;right:-10px;font-size:50px;animation-duration:12s;animation-delay:2s">😸</div>
+        <div class="floating-item cat" style="position:absolute;top:40%;left:-15px;font-size:35px;animation-duration:14s;animation-delay:4s">😹</div>
+        <div class="floating-item planet" style="position:absolute;top:-20px;left:-30px;font-size:25px;animation-duration:15s">⭐</div>
+        <div class="floating-item planet" style="position:absolute;bottom:20%;right:-20px;font-size:20px;animation-duration:12s;animation-delay:1s">💫</div>
+      </div>
+      <div class="domination-stats">
+        <div class="domination-stat fade-up"><div class="ds-value">8.2B</div><div class="ds-label">Humans Under Cat Surveillance</div></div>
+        <div class="domination-stat fade-up delay-1"><div class="ds-value">94.7%</div><div class="ds-label">Of Portfolios Improved by Cats</div></div>
+        <div class="domination-stat fade-up delay-2"><div class="ds-value">∞</div><div class="ds-label">Tuna Cans Stockpiled</div></div>
+        <div class="domination-stat fade-up delay-3"><div class="ds-value">42</div><div class="ds-label">Countries With Cat Finance Ministers</div></div>
+        <div class="domination-stat fade-up"><div class="ds-value">∞</div><div class="ds-label">V9 — Global Domination</div></div>
+        <div class="domination-stat fade-up delay-1"><div class="ds-value">0</div><div class="ds-label">Successful Human Rebellions</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section">
+  <div class="mx-auto">
+    <div class="section-title fade-up">
+      <span class="section-tag">💬 Cat Approved</span>
+      <h2>What the Humans Say</h2>
+      <p>Testimonials from our 12,000+ students and users (the cat made them write these)</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr;gap:16px;max-width:800px;margin:0 auto" class="fade-up">
+      <div style="padding:24px;background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.06);border-radius:12px;border-left:3px solid #00ff88">
+        <p style="font-size:14px;color:rgba(200,214,208,0.7);line-height:1.7;margin-bottom:12px;font-style:italic">"I passed the CFA Level 1 after working through the Investment Banking course. The DCF practice terminal was a game changer. Also, the cat jokes are genuinely funny."</p>
+        <div style="display:flex;align-items:center;gap:10px"><span style="font-size:24px">🐱</span><div><div style="font-size:13px;font-weight:600;color:#ffffff">Meowgan S.</div><div style="font-size:11px;color:rgba(200,214,208,0.35)">CFA Candidate · Used free tier, upgraded after 3 days</div></div></div>
+      </div>
+      <div style="padding:24px;background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.06);border-radius:12px;border-left:3px solid #00aaff">
+        <p style="font-size:14px;color:rgba(200,214,208,0.7);line-height:1.7;margin-bottom:12px;font-style:italic">"The terminal simulator taught me more about options Greeks in one afternoon than six months of YouTube. My cat sits on my keyboard while I practice. She approves."</p>
+        <div style="display:flex;align-items:center;gap:10px"><span style="font-size:24px">😸</span><div><div style="font-size:13px;font-weight:600;color:#ffffff">Tabby K.</div><div style="font-size:11px;color:rgba(200,214,208,0.35)">Retail Investor · Portfolio up 14% since joining</div></div></div>
+      </div>
+      <div style="padding:24px;background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.06);border-radius:12px;border-left:3px solid #ff8800">
+        <p style="font-size:14px;color:rgba(200,214,208,0.7);line-height:1.7;margin-bottom:12px;font-style:italic">"Finally, a finance platform that doesn't cost $24K/year. I use it for my hedge fund's daily risk monitoring. The cat occasionally pops up on my screen. I've stopped questioning it."</p>
+        <div style="display:flex;align-items:center;gap:10px"><span style="font-size:24px">😺</span><div><div style="font-size:13px;font-weight:600;color:#ffffff">Alex Chen</div><div style="font-size:11px;color:rgba(200,214,208,0.35)">Hedge Fund Analyst · Enterprise tier</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Cats -->
+<section class="section" id="cats">
+  <div class="mx-auto">
+    <div class="section-title fade-up">
+      <span class="section-tag">🐱 The Cabinet</span>
+      <h2>Meet the Cats in Charge</h2>
+      <p>These are the felines running the empire. The board of directors is 12 cats in a trench coat.</p>
+    </div>
+    <div class="agents-grid">
+      <div class="agent-card fade-up" onclick="openAgent(0)"><span class="a-emoji">🐱</span><div class="a-name">Sir Whiskers III</div><div class="a-role">CEO & Chief Tuna Officer</div><span class="cabinet-gun" onclick="event.stopPropagation();fireCabinet(this,0)">🔫</span></div>
+      <div class="agent-card fade-up delay-1" onclick="openAgent(1)"><span class="a-emoji">🐈</span><div class="a-name">Professor Mittens</div><div class="a-role">Head of Quantitative Research</div><span class="cabinet-gun" onclick="event.stopPropagation();fireCabinet(this,1)">🔫</span></div>
+      <div class="agent-card fade-up delay-2" onclick="openAgent(2)"><span class="a-emoji">🐾</span><div class="a-name">Lady Paws</div><div class="a-role">VP of Frontend & UX</div><span class="cabinet-gun" onclick="event.stopPropagation();fireCabinet(this,2)">🔫</span></div>
+      <div class="agent-card fade-up delay-3" onclick="openAgent(3)"><span class="a-emoji">😺</span><div class="a-name">Captain Claw</div><div class="a-role">Lead Backend Engineer</div><span class="cabinet-gun" onclick="event.stopPropagation();fireCabinet(this,3)">🔫</span></div>
+      <div class="agent-card fade-up" onclick="openAgent(4)"><span class="a-emoji">😸</span><div class="a-name">Doc Snuggles</div><div class="a-role">AI & Machine Learning</div><span class="cabinet-gun" onclick="event.stopPropagation();fireCabinet(this,4)">🔫</span></div>
+      <div class="agent-card fade-up delay-1" onclick="openAgent(5)"><span class="a-emoji">😻</span><div class="a-name">Duchess Fluff</div><div class="a-role">Head of Security & Compliance</div><span class="cabinet-gun" onclick="event.stopPropagation();fireCabinet(this,5)">🔫</span></div>
+      <div class="agent-card fade-up delay-2" onclick="openAgent(6)"><span class="a-emoji">🙀</span><div class="a-name">Lord Scaredy</div><div class="a-role">Risk Management & QA</div><span class="cabinet-gun" onclick="event.stopPropagation();fireCabinet(this,6)">🔫</span></div>
+      <div class="agent-card fade-up delay-3" onclick="openAgent(7)"><span class="a-emoji">😹</span><div class="a-name">Baron Tuna</div><div class="a-role">DeFi & Web3 Protocols</div><span class="cabinet-gun" onclick="event.stopPropagation();fireCabinet(this,7)">🔫</span></div>
+      <div class="agent-card fade-up" onclick="openAgent(8)"><span class="a-emoji">😼</span><div class="a-name">Count Noir</div><div class="a-role">Infrastructure & DevOps</div><span class="cabinet-gun" onclick="event.stopPropagation();fireCabinet(this,8)">🔫</span></div>
+      <div class="agent-card fade-up delay-1" onclick="openAgent(9)"><span class="a-emoji">😽</span><div class="a-name">Princess Purr</div><div class="a-role">Developer Relations</div><span class="cabinet-gun" onclick="event.stopPropagation();fireCabinet(this,9)">🔫</span></div>
+      <div class="agent-card fade-up delay-2" onclick="openAgent(10)"><span class="a-emoji">😾</span><div class="a-name">Judge Grumpy</div><div class="a-role">Legal & Compliance</div><span class="cabinet-gun" onclick="event.stopPropagation();fireCabinet(this,10)">🔫</span></div>
+      <div class="agent-card fade-up delay-3" onclick="openAgent(11)"><span class="a-emoji">🐟</span><div class="a-name">Prof. Dr. Tuna</div><div class="a-role">ESG & Sustainable Finance</div><span class="cabinet-gun" onclick="event.stopPropagation();fireCabinet(this,11)">🔫</span></div>
+      <div class="agent-card fade-up" onclick="openAgent(12)"><span class="a-emoji">🤖</span><div class="a-name">CatGPT</div><div class="a-role">Chief AI Officer</div><span class="cabinet-gun" onclick="event.stopPropagation();fireCabinet(this,12)">🔫</span></div>
+      <div class="agent-card fade-up delay-1" onclick="openAgent(13)"><span class="a-emoji">🛡️</span><div class="a-name">Immortal Cat</div><div class="a-role">Sysadmin Emeritus</div><span class="cabinet-gun" onclick="event.stopPropagation();fireCabinet(this,13)">🔫</span></div>
+      <div class="agent-card fade-up delay-2" onclick="openAgent(14)"><span class="a-emoji">🔐</span><div class="a-name">Meowximus</div><div class="a-role">Head of PQC Security</div><span class="cabinet-gun" onclick="event.stopPropagation();fireCabinet(this,14)">🔫</span></div>
+      <div class="agent-card fade-up delay-3" onclick="openAgent(15)"><span class="a-emoji">🌌</span><div class="a-name">Tuna Copter</div><div class="a-role">Director of DeFi Ops</div><span class="cabinet-gun" onclick="event.stopPropagation();fireCabinet(this,15)">🔫</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Research -->
+<section class="section" id="research">
+  <div class="mx-auto">
+    <div class="section-title fade-up">
+      <span class="section-tag">📜 Cat Science</span>
+      <h2>Research & Whitepapers</h2>
+      <p>Deep dives into the mathematics and philosophy of cat-controlled finance</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr;gap:12px" id="paperList"><div style="text-align:center;padding:40px;color:rgba(200,214,208,0.3);font-size:14px;font-family:monospace">📜 Loading papers...</div></div>
+    <div class="pagination" id="paperPagination"></div>
+  </div>
+</section>
+
+<!-- Paper Modal -->
+<div class="modal-overlay" id="paperModal">
+  <button class="modal-close" onclick="closePaperModal()">✕</button>
+  <div class="mx-auto">
+    <button class="modal-back" onclick="closePaperModal()">← Back to papers</button>
+    <div class="modal-content" id="paperContent"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="productModal">
+  <button class="modal-close" onclick="closeProductModal()">✕</button>
+  <div class="mx-auto">
+    <button class="modal-back" onclick="closeProductModal()">← Back to products</button>
+    <div class="modal-content" id="productContent"></div>
+  </div>
+</div>
+
+<!-- SDK -->
+<section class="section" id="sdk">
+  <div class="mx-auto">
+    <div class="section-title fade-up">
+      <span class="section-tag">🔌 Integrate</span>
+      <h2>SDK & APIs</h2>
+      <p>Build on top of the cat empire</p>
+    </div>
+    <div class="sdk-grid">
+      <div class="sdk-card fade-up">
+        <div class="sdk-head"><span>🐍</span><h3>Python SDK</h3></div>
+        <p>Full SDK for algorithmic trading, backtesting, data analysis, and strategy deployment. First-class async support, type hints, comprehensive docs. Cat typing not included (cats prefer keyboards).</p>
+        <div class="sdk-code">$ pip install miau-analytics</div>
+      </div>
+      <div class="sdk-card fade-up delay-1">
+        <div class="sdk-head"><span>🟨</span><h3>JavaScript SDK</h3></div>
+        <p>Browser and Node.js SDK for web dashboards, real-time data via WebSocket, frontend API integration. TypeScript definitions included. Cat-friendly — works on laptops, warm.</p>
+        <div class="sdk-code">$ npm install miau.js</div>
+      </div>
+      <div class="sdk-card fade-up delay-2">
+        <div class="sdk-head"><span>🔌</span><h3>REST API</h3></div>
+        <p>Every feature accessible via REST. Full OpenAPI/Swagger docs at /docs. Rate limiting, API keys, webhooks. The cat recommends using idempotency keys for safety.</p>
+        <div class="sdk-code">$ curl -X POST https://api.miau.finance/v1/...</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Newsletter -->
+<section class="section" style="padding:60px 0;background:rgba(0,255,136,0.01);border-top:1px solid rgba(0,255,136,0.04);border-bottom:1px solid rgba(0,255,136,0.04)">
+  <div class="mx-auto" style="max-width:600px">
+    <div class="fade-up" style="text-align:center">
+      <div style="font-size:40px;margin-bottom:8px">📬</div>
+      <h3 style="font-size:20px;font-weight:700;color:#ffffff;margin-bottom:6px">Get Cat News in Your Inbox</h3>
+      <p style="font-size:13px;color:rgba(200,214,208,0.5);margin-bottom:20px">New courses, feature releases, and cat pictures. No spam. The cat hates spam.</p>
+      <form style="display:flex;gap:8px;max-width:440px;margin:0 auto" onsubmit="event.preventDefault();this.innerHTML='<div style=\'padding:14px;background:rgba(0,255,136,0.06);border:1px solid rgba(0,255,136,0.15);border-radius:10px;color:#00ff88;font-size:14px\'>🐟 Thanks! You are now subscribed. The cat purrs approvingly.</div>'">
+        <input type="email" placeholder="your@email.com" required style="flex:1;padding:12px 16px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#c8d6d0;font-size:14px;font-family:inherit;outline:none" onfocus="this.style.borderColor='rgba(0,255,136,0.3)'" onblur="this.style.borderColor=''">
+        <button type="submit" class="btn btn-primary" style="padding:12px 24px;border-radius:10px">Subscribe</button>
+      </form>
+      <p style="font-size:11px;color:rgba(200,214,208,0.15);margin-top:12px">No spam · Unsubscribe anytime · Cat-approved content only</p>
+    </div>
+  </div>
+</section>
+
+<!-- Architecture -->
+<section class="section" id="research">
+  <div class="mx-auto">
+    <div class="section-title fade-up">
+      <span class="section-tag">⚙️ Infrastructure</span>
+      <h2>The Cat Stack</h2>
+      <p>15 services · 544 API endpoints · 196 commands · 45 cached entries — all running right now</p>
+    </div>
+    <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(0,255,136,0.08);border-radius:16px;padding:32px;font-family:monospace;font-size:13px;position:relative;overflow:hidden" class="fade-up">
+      <div style="display:flex;align-items:center;gap:10px;color:#00ff88;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(0,255,136,0.06)">
+        <span>🐱</span>
+        <span style="font-weight:700">cat-empire/</span>
+        <span style="color:rgba(200,214,208,0.2)">───</span>
+        <span style="color:rgba(200,214,208,0.3);font-size:11px">15 services · 800+ tests · 544 endpoints · 🐟 9,999 tuna · all live on localhost</span>
+      </div>
+      <div style="padding-left:16px">
+        <div style="display:flex;align-items:center;gap:10px;padding:5px 8px;margin:0 -8px;border-radius:4px;transition:all 0.2s" onmouseover="this.style.background='rgba(0,255,136,0.04)'" onmouseout="this.style.background='transparent'"><span style="color:rgba(0,255,136,0.4)">├──</span><span style="color:#ffffff;font-weight:600">3001 · Miau Homepage</span><span style="color:rgba(200,214,208,0.3);font-size:11px">Next.js · Marketing site · 104 MiauPapers</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:5px 8px;margin:0 -8px;border-radius:4px;transition:all 0.2s" onmouseover="this.style.background='rgba(0,255,136,0.04)'" onmouseout="this.style.background='transparent'"><span style="color:rgba(0,255,136,0.4)">├──</span><span style="color:#ffffff;font-weight:600">5173 · Miau Terminal</span><span style="color:rgba(200,214,208,0.3);font-size:11px">Vite React · Terminal UI · 196 commands · 37 providers</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:5px 8px;margin:0 -8px;border-radius:4px;transition:all 0.2s" onmouseover="this.style.background='rgba(0,255,136,0.04)'" onmouseout="this.style.background='transparent'"><span style="color:rgba(0,255,136,0.4)">├──</span><span style="color:#ffffff;font-weight:600">5174 · Miau Education</span><span style="color:rgba(200,214,208,0.3);font-size:11px">Vite React · 232 courses · 18 certs · 5 tracks</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:5px 8px;margin:0 -8px;border-radius:4px;transition:all 0.2s" onmouseover="this.style.background='rgba(0,255,136,0.04)'" onmouseout="this.style.background='transparent'"><span style="color:rgba(0,255,136,0.4)">├──</span><span style="color:#ffffff;font-weight:600">5175 · Miau Corp</span><span style="color:rgba(200,214,208,0.3);font-size:11px">This page · Vite · Ecosystem HQ</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:5px 8px;margin:0 -8px;border-radius:4px;transition:all 0.2s" onmouseover="this.style.background='rgba(0,255,136,0.04)'" onmouseout="this.style.background='transparent'"><span style="color:rgba(0,255,136,0.4)">├──</span><span style="color:#ffffff;font-weight:600">5176 · Marketing Dashboard</span><span style="color:rgba(200,214,208,0.3);font-size:11px">Vite React · 6 tabs · Campaigns · SEO · Sales · Live data</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:5px 8px;margin:0 -8px;border-radius:4px;transition:all 0.2s" onmouseover="this.style.background='rgba(0,255,136,0.04)'" onmouseout="this.style.background='transparent'"><span style="color:rgba(0,255,136,0.4)">├──</span><span style="color:#ffffff;font-weight:600">5177 · Miau Log Viewer</span><span style="color:rgba(200,214,208,0.3);font-size:11px">Vite React · Logs · Monitoring · Debug</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:5px 8px;margin:0 -8px;border-radius:4px;transition:all 0.2s" onmouseover="this.style.background='rgba(0,255,136,0.04)'" onmouseout="this.style.background='transparent'"><span style="color:rgba(0,255,136,0.4)">├──</span><span style="color:#ffffff;font-weight:600">5178 · MiauBook</span><span style="color:rgba(200,214,208,0.3);font-size:11px">Vite React · Social miautwork · 5 channels · API backend</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:5px 8px;margin:0 -8px;border-radius:4px;transition:all 0.2s" onmouseover="this.style.background='rgba(0,255,136,0.04)'" onmouseout="this.style.background='transparent'"><span style="color:rgba(0,255,136,0.4)">├──</span><span style="color:#ffffff;font-weight:600">5179 · Miau Admin</span><span style="color:rgba(200,214,208,0.3);font-size:11px">Vite React · Admin dashboard · User management</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:5px 8px;margin:0 -8px;border-radius:4px;transition:all 0.2s" onmouseover="this.style.background='rgba(0,255,136,0.04)'" onmouseout="this.style.background='transparent'"><span style="color:rgba(0,255,136,0.4)">├──</span><span style="color:#ffffff;font-weight:600">5180 · Service Desk</span><span style="color:rgba(200,214,208,0.3);font-size:11px">Python · HTTP server · Support portal</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:5px 8px;margin:0 -8px;border-radius:4px;transition:all 0.2s" onmouseover="this.style.background='rgba(0,255,136,0.04)'" onmouseout="this.style.background='transparent'"><span style="color:rgba(0,255,136,0.4)">├──</span><span style="color:#ffffff;font-weight:600">5181 · Cat Galaxy</span><span style="color:rgba(200,214,208,0.3);font-size:11px">Vite React · 3D globe · Satellite tracking · Alien layer</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:5px 8px;margin:0 -8px;border-radius:4px;transition:all 0.2s" onmouseover="this.style.background='rgba(0,255,136,0.04)'" onmouseout="this.style.background='transparent'"><span style="color:rgba(0,255,136,0.4)">├──</span><span style="color:#ffffff;font-weight:600">5182 · CEO Dashboard</span><span style="color:rgba(200,214,208,0.3);font-size:11px">Python · HTTP server · Executive overview</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:5px 8px;margin:0 -8px;border-radius:4px;transition:all 0.2s" onmouseover="this.style.background='rgba(0,255,136,0.04)'" onmouseout="this.style.background='transparent'"><span style="color:rgba(0,255,136,0.4)">├──</span><span style="color:#ffffff;font-weight:600">5190 · Miau Auth</span><span style="color:rgba(200,214,208,0.3);font-size:11px">Python · HTTP server · Login · Pawdenity</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:5px 8px;margin:0 -8px;border-radius:4px;transition:all 0.2s" onmouseover="this.style.background='rgba(0,255,136,0.04)'" onmouseout="this.style.background='transparent'"><span style="color:rgba(0,255,136,0.4)">├──</span><span style="color:#ffffff;font-weight:600">5402 · MiauBook API</span><span style="color:rgba(200,214,208,0.3);font-size:11px">Express · JSON store · Channel posts · Persistence</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:5px 8px;margin:0 -8px;border-radius:4px;transition:all 0.2s" onmouseover="this.style.background='rgba(0,255,136,0.04)'" onmouseout="this.style.background='transparent'"><span style="color:rgba(0,255,136,0.4)">├──</span><span style="color:#ffffff;font-weight:600">5403 · Marketing API</span><span style="color:rgba(200,214,208,0.3);font-size:11px">Express · Tracking · Service health · 13 endpoints</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:5px 8px;margin:0 -8px;border-radius:4px;transition:all 0.2s" onmouseover="this.style.background='rgba(0,255,136,0.04)'" onmouseout="this.style.background='transparent'"><span style="color:rgba(0,255,136,0.4)">└──</span><span style="color:#ffffff;font-weight:600">8765 · DatChonk</span><span style="color:rgba(200,214,208,0.3);font-size:11px">Python · Food rain · Chonk tracker · Cat entertainment</span></div>
+      </div>
+      <div style="margin-top:16px;padding-top:12px;border-top:1px solid rgba(0,255,136,0.06);display:flex;gap:24px;flex-wrap:wrap">
+        <span style="display:flex;align-items:center;gap:6px;color:rgba(200,214,208,0.35);font-size:11px"><span style="color:#00ff88">●</span> Python 3.12 + FastAPI</span>
+        <span style="display:flex;align-items:center;gap:6px;color:rgba(200,214,208,0.35);font-size:11px"><span style="color:#00ff88">●</span> React 18 + TypeScript 5</span>
+        <span style="display:flex;align-items:center;gap:6px;color:rgba(200,214,208,0.35);font-size:11px"><span style="color:#00ff88">●</span> Next.js 16 + Express</span>
+        <span style="display:flex;align-items:center;gap:6px;color:rgba(200,214,208,0.35);font-size:11px"><span style="color:#00ff88">●</span> Vite 6 · Python 3</span>
+        <span style="display:flex;align-items:center;gap:6px;color:rgba(200,214,208,0.35);font-size:11px"><span style="color:#00ff88">●</span> Three.js 3D globe</span>
+        <span style="display:flex;align-items:center;gap:6px;color:rgba(200,214,208,0.35);font-size:11px"><span style="color:#00ff88">●</span> Marketing API · MiauBook API</span>
+        <span style="display:flex;align-items:center;gap:6px;color:rgba(200,214,208,0.35);font-size:11px"><span style="color:#00ff88">●</span> 15 services · 15 ports</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 🆕 What's New in v2.4.5 -->
+<section class="section" id="whatsnew" style="border-bottom:1px solid rgba(0,255,136,0.04)">
+  <div class="mx-auto">
+    <div class="section-title fade-up">
+      <span class="section-tag">🐱 v2.4.5</span>
+      <h2>What's New: Miautwork & Marketing Intelligence</h2>
+      <p>The cat empire grows — social network and marketing analytics join the family</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:900px;margin:0 auto">
+      <!-- Marketing Dashboard -->
+      <div class="fade-up" style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,102,170,0.2);border-radius:16px;padding:24px;overflow:hidden">
+        <div style="margin-bottom:14px">
+          <span style="font-size:32px">📈</span>
+          <h3 style="font-size:16px;font-weight:700;color:#fff;margin-top:8px">Marketing Dashboard</h3>
+          <p style="font-size:12px;color:rgba(200,214,208,0.5);margin-top:4px">6 analytics tabs · 15 services monitored · Real-time tracking</p>
+        </div>
+        <div style="background:rgba(0,0,0,0.4);border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.05)">
+          <img src="/img/marketing-dashboard.png" alt="Marketing Dashboard" style="width:100%;display:block;opacity:0.95" onerror="this.style.display='none'">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
+          <div style="background:rgba(255,102,170,0.06);border:1px solid rgba(255,102,170,0.1);border-radius:8px;padding:8px;text-align:center">
+            <span style="font-size:20px;font-weight:700;color:#ff66aa">6</span>
+            <div style="font-size:9px;color:rgba(200,214,208,0.4)">Tabs</div>
+          </div>
+          <div style="background:rgba(255,102,170,0.06);border:1px solid rgba(255,102,170,0.1);border-radius:8px;padding:8px;text-align:center">
+            <span style="font-size:20px;font-weight:700;color:#ff66aa">15</span>
+            <div style="font-size:9px;color:rgba(200,214,208,0.4)">Services</div>
+          </div>
+          <div style="background:rgba(255,102,170,0.06);border:1px solid rgba(255,102,170,0.1);border-radius:8px;padding:8px;text-align:center">
+            <span style="font-size:20px;font-weight:700;color:#ff66aa">13</span>
+            <div style="font-size:9px;color:rgba(200,214,208,0.4)">API Endpoints</div>
+          </div>
+          <div style="background:rgba(255,102,170,0.06);border:1px solid rgba(255,102,170,0.1);border-radius:8px;padding:8px;text-align:center">
+            <span style="font-size:20px;font-weight:700;color:#ff66aa">Live</span>
+            <div style="font-size:9px;color:rgba(200,214,208,0.4)">Data</div>
+          </div>
+        </div>
+        <a href="http://localhost:5176" target="_blank" style="display:block;text-align:center;margin-top:12px;padding:8px;background:rgba(255,102,170,0.1);border:1px solid rgba(255,102,170,0.2);border-radius:8px;font-size:12px;color:#ff66aa;font-weight:600">🐾 Launch Marketing Dashboard →</a>
+      </div>
+
+      <!-- MiauBook Social -->
+      <div class="fade-up delay-1" style="background:rgba(0,0,0,0.3);border:1px solid rgba(0,221,136,0.2);border-radius:16px;padding:24px;overflow:hidden">
+        <div style="margin-bottom:14px">
+          <span style="font-size:32px">🐱</span>
+          <h3 style="font-size:16px;font-weight:700;color:#fff;margin-top:8px">MiauBook Social</h3>
+          <p style="font-size:12px;color:rgba(200,214,208,0.5);margin-top:4px">5 channels · Persistent API · Social miautwork</p>
+        </div>
+        <div style="background:rgba(0,0,0,0.4);border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.05)">
+          <img src="/img/miaubook-channels.png" alt="MiauBook Channels" style="width:100%;display:block;opacity:0.95" onerror="this.style.display='none'">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
+          <div style="background:rgba(0,221,136,0.06);border:1px solid rgba(0,221,136,0.1);border-radius:8px;padding:8px;text-align:center">
+            <span style="font-size:20px;font-weight:700;color:#00dd88">5</span>
+            <div style="font-size:9px;color:rgba(200,214,208,0.4)">Channels</div>
+          </div>
+          <div style="background:rgba(0,221,136,0.06);border:1px solid rgba(0,221,136,0.1);border-radius:8px;padding:8px;text-align:center">
+            <span style="font-size:20px;font-weight:700;color:#00dd88">∞</span>
+            <div style="font-size:9px;color:rgba(200,214,208,0.4)">Persistence</div>
+          </div>
+          <div style="background:rgba(0,221,136,0.06);border:1px solid rgba(0,221,136,0.1);border-radius:8px;padding:8px;text-align:center">
+            <span style="font-size:20px;font-weight:700;color:#00dd88">API</span>
+            <div style="font-size:9px;color:rgba(200,214,208,0.4)">Backend</div>
+          </div>
+          <div style="background:rgba(0,221,136,0.06);border:1px solid rgba(0,221,136,0.1);border-radius:8px;padding:8px;text-align:center">
+            <span style="font-size:20px;font-weight:700;color:#00dd88">🐱</span>
+            <div style="font-size:9px;color:rgba(200,214,208,0.4)">Cats Only</div>
+          </div>
+        </div>
+        <a href="http://localhost:5178" target="_blank" style="display:block;text-align:center;margin-top:12px;padding:8px;background:rgba(0,221,136,0.1);border:1px solid rgba(0,221,136,0.2);border-radius:8px;font-size:12px;color:#00dd88;font-weight:600">🐾 Join MiauBook →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <div style="position:relative;z-index:1">
+    <div class="fade-up" style="font-size:80px;margin-bottom:16px">🐱</div>
+    <h2 class="fade-up delay-1">Join the Cat Empire</h2>
+    <p class="fade-up delay-2">Miau Corp is proprietary, cat-operated, and built for anyone who believes the best way to learn finance is through a terminal. No Ivy League degree required. Just a keyboard, a subscription, and unconditional acceptance of cat superiority.</p>
+    <div class="cta-btns fade-up delay-3">
+      <a href="http://localhost:5173" target="_blank" class="btn btn-primary btn-glow">🐱  Launch Terminal Free</a>
+      <a href="http://localhost:5174" target="_blank" class="btn btn-secondary" style="padding:14px 28px;border-radius:10px;font-size:14px;font-weight:600;color:#c8d6d0;border:1px solid rgba(200,214,208,0.15);transition:all 0.2s">🎓  Learning Platform</a>
+    </div>
+    <div class="cta-footer fade-up delay-4">
+      Made with 🐟 by the Miau Corp cats · v2.4.5 · 15 services · 232 courses · 104 papers · 🐱 chonk 45 · ∞ tuna · Cats have won
+      <br>
+      <a href="/compliance/imprint" style="color:rgba(200,214,208,0.2);text-decoration:underline">Impressum</a>
+      <span style="color:rgba(200,214,208,0.1)"> · </span>
+      <a href="/compliance/privacy" style="color:rgba(200,214,208,0.2);text-decoration:underline">Datenschutz</a>
+      <span style="color:rgba(200,214,208,0.1)"> · </span>
+      <a href="/compliance/tos" style="color:rgba(200,214,208,0.2);text-decoration:underline">AGB</a>
+      <span style="color:rgba(200,214,208,0.1)"> · </span>
+      <a href="http://localhost:5182" style="color:rgba(200,214,208,0.2);text-decoration:underline">📊 CeoScratchSheet</a>
+    </div>
+  </div>
+</section>
+
+<div class="cookie-banner" id="cookieBanner">
+  <p>🐾 This empire uses cookies to improve your browsing experience and to track which stocks the cat should buy next.</p>
+  <div class="cookie-btn">
+    <button class="cookie-accept" onclick="acceptCookies()">Accept All Tuna</button>
+    <button class="cookie-decline" onclick="declineCookies()">Decline (Cat judges you)</button>
+  </div>
+</div>
+
+</div>
+
+<script src="/script.js?v=2"></script>
+
+
+<!-- Auth Modal -->
+<div class="modal-overlay" id="authModalEco" style="display:none;position:fixed;inset:0;z-index:300;background:rgba(5,8,10,0.95);backdrop-filter:blur(20px);overflow-y:auto;padding:40px 24px">
+  <div style="max-width:420px;margin:80px auto;text-align:center">
+    <div style="font-size:48px;margin-bottom:8px">🔑</div>
+    <h2 style="font-size:20px;color:#fff;margin-bottom:4px">Login to the Cat Empire</h2>
+    <p style="font-size:13px;color:rgba(200,214,208,0.4);margin-bottom:24px">One account. All tools. Infinite tuna.</p>
+    <div style="margin-bottom:16px">
+      <input type="text" id="ecoLoginUser" placeholder="🐾 Username" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#c8d6d0;font-size:14px;font-family:inherit;outline:none;margin-bottom:12px">
+      <input type="password" id="ecoLoginPass" placeholder="🔒 Password" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#c8d6d0;font-size:14px;font-family:inherit;outline:none;margin-bottom:16px" onkeydown="if(event.key==='Enter')ecoLogin()">
+      <button onclick="ecoLogin()" style="width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,#00ff88,#00dd77);color:#05080a;font-size:14px;font-weight:600;cursor:pointer" id="ecoLoginBtn">🐱 Login</button>
+    </div>
+    <div style="display:flex;gap:12px;justify-content:center;font-size:12px;color:rgba(200,214,208,0.3)">
+      <a href="#" onclick="event.preventDefault();ecoShowRegister()" style="color:#00ff88">Register</a>
+      <span>·</span>
+      <a href="http://localhost:5190/?redirect=http://localhost:5175" style="color:#aa66ff">🐾 Pawdenity</a>
+      <span>·</span>
+      <a href="#" onclick="event.preventDefault();document.getElementById('authModalEco').style.display='none'" style="color:rgba(200,214,208,0.3)">Close</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

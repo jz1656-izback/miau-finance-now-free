@@ -1,0 +1,68 @@
+[build]
+  publish = "apps/landing-page"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "https://app.miaufinance.com/*"
+  to = "https://app.miaufinance.com:5173/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://learn.miaufinance.com/*"
+  to = "https://learn.miaufinance.com:5174/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://papers.miaufinance.com/*"
+  to = "https://papers.miaufinance.com:3001/papers/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://corp.miaufinance.com/*"
+  to = "https://corp.miaufinance.com:5175/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://docs.miaufinance.com/*"
+  to = "https://docs.miaufinance.com:8000/docs/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://dev.miaufinance.com/*"
+  to = "https://dev.miaufinance.com:5175/sdk/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://galaxy.miaufinance.com/*"
+  to = "https://galaxy.miaufinance.com:5181/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://blog.miaufinance.com/*"
+  to = "https://blog.miaufinance.com:3001/blog/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://status.miaufinance.com/*"
+  to = "https://status.miaufinance.com:3000/:splat"
+  status = 200
+  force = true
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

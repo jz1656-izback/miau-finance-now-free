@@ -1,0 +1,7 @@
+Page: Admin Console
+Cat: 🔧
+Function: System administration dashboard
+Description: Admin panel for monitoring service health, provider status, user management, API usage stats, log file browsing, and system configuration.
+API: —
+Output: Health status, metrics, user list, log viewer
+Tuna: 6

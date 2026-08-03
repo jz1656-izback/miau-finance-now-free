@@ -1,0 +1,53 @@
+# MiauOS logrotate configuration
+# Managed by logrotate — do not edit manually
+
+/var/log/catpod/*.log {
+    daily
+    rotate 30
+    compress
+    delaycompress
+    missingok
+    notifempty
+    create 0640 miau miau
+    sharedscripts
+    postrotate
+        systemctl reload catpod.service > /dev/null 2>&1 || true
+    endscript
+}
+
+/var/log/catnet/*.log {
+    daily
+    rotate 14
+    compress
+    delaycompress
+    missingok
+    notifempty
+    create 0640 catnet catnet
+    sharedscripts
+}
+
+/var/log/miauos/*.log {
+    weekly
+    rotate 12
+    compress
+    delaycompress
+    missingok
+    notifempty
+    create 0640 miau miau
+    sharedscripts
+    postrotate
+        systemctl reload miauos-audit.service > /dev/null 2>&1 || true
+    endscript
+}
+
+/var/log/syslog {
+    weekly
+    rotate 4
+    compress
+    delaycompress
+    missingok
+    notifempty
+    postrotate
+        /usr/bin/systemctl kill -s HUP syslog.service > /dev/null 2>&1 || true
+    endscript
+}

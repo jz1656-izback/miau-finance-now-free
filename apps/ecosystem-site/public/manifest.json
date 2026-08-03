@@ -1,0 +1,13 @@
+{
+  "name": "Miau Corp — The Cat Empire",
+  "short_name": "Miau Corp",
+  "description": "A complete proprietary financial operating system built by cats",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#05080a",
+  "theme_color": "#00ff88",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

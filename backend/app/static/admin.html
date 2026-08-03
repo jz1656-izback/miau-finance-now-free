@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Miau Admin — System Monitor 🐱</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0f;color:#e0e0e0;font-family:monospace;padding:24px}
+h1{color:#00e676;margin-bottom:8px}
+h2{color:#a855f7;margin:16px 0 8px;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+.card{background:rgba(19,19,26,0.85);border:1px solid rgba(42,42,64,0.5);border-radius:8px;padding:12px}
+.card .label{color:#8899b0;font-size:10px;text-transform:uppercase}
+.card .value{color:#00e676;font-size:18px;font-weight:bold;margin-top:4px}
+.card .error{color:#ef4444}
+.card .warn{color:#facc15}
+table{width:100%;border-collapse:collapse;font-size:11px}
+td,th{padding:4px 8px;text-align:left;border-bottom:1px solid rgba(42,42,64,0.3)}
+th{color:#8899b0;font-size:10px;text-transform:uppercase}
+.healthy{color:#00e676}.unhealthy{color:#ef4444}.dim{color:#4a5568}
+#loading{text-align:center;padding:40px;color:#4a5568}
+.error-msg{color:#ef4444;font-size:12px;margin:8px 0}
+pre{font-size:10px;color:#4a5568;margin-top:4px}
+input{background:#1a1a24;border:1px solid rgba(42,42,64,0.5);border-radius:4px;padding:6px 10px;color:#e0e0e0;font-size:12px;width:200px;outline:none;margin-bottom:8px}
+button{background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.2);border-radius:4px;padding:6px 12px;color:#00e676;cursor:pointer;font-size:11px}
+button:hover{background:rgba(0,230,118,0.2)}
+</style>
+</head>
+<body>
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+  <span style="font-size:20px">🐱</span>
+  <h1>Miau Admin</h1>
+  <span style="color:#4a5568;font-size:11px">v2.3.0 — System Monitor</span>
+</div>
+<div style="margin-bottom:12px;display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+  <span style="font-size:11px;color:#8899b0">🔑 Pawdenity:</span>
+  <button onclick="window.location.href='http://localhost:5190/?redirect='+encodeURIComponent(window.location.href)" style="background:rgba(0,230,118,0.12);border:1px solid rgba(0,230,118,0.3);border-radius:4px;padding:6px 12px;color:#00e676;cursor:pointer;font-size:11px">🐾 Login via Pawdenity</button>
+  <span style="font-size:10px;color:#4a5568;margin:0 8px">or paste token:</span>
+  <input id="token-input" type="password" placeholder="Paste JWT token..." style="background:#1a1a24;border:1px solid rgba(42,42,64,0.5);border-radius:4px;padding:6px 10px;color:#e0e0e0;font-size:12px;outline:none;width:200px" />
+  <button onclick="setToken()" style="background:rgba(0,230,118,0.12);border:1px solid rgba(0,230,118,0.3);border-radius:4px;padding:6px 12px;color:#00e676;cursor:pointer;font-size:11px">Set</button>
+  <span id="token-status" class="dim" style="font-size:10px"></span>
+  <span style="font-size:10px;color:#4a5568;margin-left:4px">or <a href="/logs-viewer" style="color:#22d3ee;text-decoration:none">login via Log Viewer →</a></span>
+</div>
+<div id="loading">🐱 fetching system status...</div>
+<div id="content" style="display:none"></div>
+<script>
+let TOKEN = localStorage.getItem('miau_admin_token') || ''
+let TOKEN_SYNCED = false
+if (TOKEN) document.getElementById('token-input').value = TOKEN
+
+async function adminLogin() {
+  const u = document.getElementById('adminUser').value.trim();
+  const p = document.getElementById('adminPass').value;
+  if (!u || !p) return;
+  try {
+    const r = await fetch('/api/v1/auth/token', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({username: u, password: p}),
+    });
+    if (!r.ok) throw new Error(await r.text());
+    const d = await r.json();
+    localStorage.setItem('miau_admin_token', d.access_token);
+    localStorage.setItem('miau_token', d.access_token);
+    document.getElementById('token-input').value = d.access_token;
+    document.getElementById('adminUser').value = '';
+    document.getElementById('adminPass').value = '';
+    document.getElementById('adminAuthStatus').textContent = '✅ Logged in as ' + u;
+    setToken();
+  } catch(e) { document.getElementById('adminAuthStatus').textContent = '😿 ' + e.message; }
+}
+
+function setToken() {
+  TOKEN = document.getElementById('token-input').value
+  localStorage.setItem('miau_admin_token', TOKEN)
+  document.getElementById('token-status').textContent = '✅'
+  fetchAll()
+}
+
+async function authFetch(url) {
+  const h = {Accept:'application/json'}
+  if (TOKEN) h['Authorization'] = 'Bearer ' + TOKEN
+  const r = await fetch(url, {headers:h})
+  if (r.status === 401) throw new Error('Unauthorized — set a valid token')
+  return r.json()
+}
+
+async function fetchAll() {
+  const c = document.getElementById('content')
+  document.getElementById('loading').style.display = 'block'
+  c.style.display = 'none'
+  try {
+    const [health, logFiles] = await Promise.all([
+      authFetch('/api/v1/health').catch(() => null),
+      authFetch('/api/v1/logs/files').catch(() => null),
+    ])
+    render(health, logFiles)
+  } catch(e) {
+    c.innerHTML = '<div class="error-msg">❌ ' + e.message + '</div>'
+    c.innerHTML += '<div style="color:#4a5568;font-size:11px;margin-top:8px">💡 Get a token at <a href="/logs-viewer" style="color:#22d3ee">Log Viewer →</a></div>'
+  }
+  document.getElementById('loading').style.display = 'none'
+  c.style.display = 'block'
+}
+
+function render(health, logFiles) {
+  let html = '<div class="grid">'
+  const uptime = health?.uptime_seconds || 0
+  const days = Math.floor(uptime / 86400)
+  const hrs = Math.floor((uptime % 86400) / 3600)
+  html += card('🕐 Uptime', days + 'd ' + hrs + 'h', 'green')
+  html += card('📊 Requests', health?.metrics?.total_requests || 0, 'green')
+  html += card('❌ Errors', health?.metrics?.total_errors || 0, health?.metrics?.total_errors > 0 ? 'red' : 'green')
+  html += card('🔌 Providers', health?.services?.data_providers || 0, 'green')
+  html += card('✅ Healthy', health?.services?.providers_healthy || 0, 'green')
+  html += card('⚠️ Unhealthy', health?.services?.providers_unhealthy || 0, health?.services?.providers_unhealthy > 0 ? 'warn' : 'green')
+  html += '</div>'
+
+  if (health?.provider_health) {
+    html += '<h2>🔌 Data Providers</h2><table><tr><th>Provider</th><th>Status</th></tr>'
+    for (const [name, ok] of Object.entries(health.provider_health)) {
+      html += '<tr><td>' + name + '</td><td class="' + (ok ? 'healthy' : 'unhealthy') + '">' + (ok ? '✅' : '❌') + '</td></tr>'
+    }
+    html += '</table>'
+  }
+
+  if (logFiles?.files) {
+    html += '<h2>📄 Log Files</h2><table><tr><th>File</th><th>Size</th><th>Lines</th><th>Modified</th></tr>'
+    for (const f of logFiles.files) {
+      html += '<tr><td>' + f.name + '</td><td class="dim">' + f.size_display + '</td><td>' + (f.lines || '?') + '</td><td class="dim">' + (f.modified ? new Date(f.modified).toLocaleString() : '-') + '</td></tr>'
+    }
+    html += '</table>'
+  }
+
+  if (health) {
+    html += '<h2>📋 Raw Health</h2><pre>' + JSON.stringify(health, null, 2).slice(0, 1000) + '</pre>'
+  }
+
+  document.getElementById('content').innerHTML = html
+  setTimeout(fetchAll, 15000)
+}
+
+function card(label, value, color) {
+  const c = color === 'red' ? '#ef4444' : color === 'warn' ? '#facc15' : '#00e676'
+  return '<div class="card"><div class="label">' + label + '</div><div class="value" style="color:' + c + '">' + value + '</div></div>'
+}
+
+fetchAll()
+</script>
+</body>
+</html>

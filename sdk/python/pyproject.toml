@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "miau-finance"
+version = "0.1.0"
+description = "Miau Finance Python SDK — trade, analyze, automate"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+dependencies = ["httpx>=0.27"]
+
+[project.urls]
+Homepage = "https://miau.finance"
+Source = "https://github.com/LuZziD/cat-finance-analytics-shell-miau"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["miau*"]

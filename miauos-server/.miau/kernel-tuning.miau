@@ -1,0 +1,7 @@
+Page: Kernel Tuning
+Cat: ⚙️
+Function: sysctl kernel parameter optimization
+Description: Optimizes Linux kernel parameters for server workloads: network buffer sizes, TCP tuning, VM settings, filesystem limits, and security hardening.
+API: —
+Output: Optimized sysctl configuration
+Tuna: 4

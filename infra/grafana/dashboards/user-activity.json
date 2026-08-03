@@ -1,0 +1,89 @@
+{
+  "__inputs": [],
+  "__requires": [],
+  "title": "Miau Finance — User Activity",
+  "uid": "miau-user-activity",
+  "version": 1,
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "tags": ["miau", "users"],
+  "time": { "from": "now-24h", "to": "now" },
+  "panels": [
+    {
+      "title": "Active Users (24h)",
+      "type": "stat",
+      "gridPos": { "h": 6, "w": 6, "x": 0, "y": 0 },
+      "targets": [{
+        "expr": "miau_requests_by_path{path=\"/api/v1/auth/token\"}",
+        "legendFormat": "Logins"
+      }],
+      "description": "Total login requests (proxy for active users)"
+    },
+    {
+      "title": "Total API Requests (24h)",
+      "type": "stat",
+      "gridPos": { "h": 6, "w": 6, "x": 6, "y": 0 },
+      "targets": [{
+        "expr": "miau_requests_total",
+        "legendFormat": "Total Requests"
+      }]
+    },
+    {
+      "title": "Error Count (24h)",
+      "type": "stat",
+      "gridPos": { "h": 6, "w": 6, "x": 12, "y": 0 },
+      "targets": [{
+        "expr": "miau_errors_total",
+        "legendFormat": "Errors"
+      }]
+    },
+    {
+      "title": "Health Check Pass Rate",
+      "type": "stat",
+      "gridPos": { "h": 6, "w": 6, "x": 18, "y": 0 },
+      "targets": [{
+        "expr": "miau_providers_healthy / (miau_providers_healthy + miau_providers_unhealthy) * 100",
+        "legendFormat": "Health %"
+      }]
+    },
+    {
+      "title": "Request Activity Over Time",
+      "type": "graph",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 6 },
+      "targets": [{
+        "expr": "rate(miau_requests_total[5m])",
+        "legendFormat": "Requests/s"
+      }],
+      "description": "API request rate — proxy for user activity"
+    },
+    {
+      "title": "Errors Over Time",
+      "type": "graph",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 14 },
+      "targets": [{
+        "expr": "rate(miau_errors_total[5m])",
+        "legendFormat": "Errors/s"
+      }],
+      "description": "Error rate over time"
+    },
+    {
+      "title": "Provider Health Timeline",
+      "type": "graph",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 22 },
+      "targets": [
+        { "expr": "miau_providers_healthy", "legendFormat": "Healthy Providers" }
+      ],
+      "description": "Provider health over time"
+    },
+    {
+      "title": "Request Rate by Hour",
+      "type": "heatmap",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 30 },
+      "targets": [{
+        "expr": "rate(miau_requests_total[1m])",
+        "legendFormat": "Requests"
+      }],
+      "description": "Request rate heatmap by hour"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+{"title": "Forex & Currency", "panels": [{"title": "FX Rates", "type": "graph", "targets": [{"expr": "miau_fx_rate{from=\"USD\",to=\"EUR\"}"}]}, {"title": "Conversion Volume", "type": "stat", "targets": [{"expr": "miau_fx_conversion_count"}]}]}

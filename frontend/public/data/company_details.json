@@ -1,0 +1,1134 @@
+{
+  "AAPL": {
+    "ceo": "Tim Cook",
+    "founded": 1976,
+    "employees": 164000,
+    "revenue": 391.0
+  },
+  "MSFT": {
+    "ceo": "Satya Nadella",
+    "founded": 1975,
+    "employees": 228000,
+    "revenue": 211.0
+  },
+  "GOOGL": {
+    "ceo": "Sundar Pichai",
+    "founded": 1998,
+    "employees": 182000,
+    "revenue": 307.0
+  },
+  "AMZN": {
+    "ceo": "Andy Jassy",
+    "founded": 1994,
+    "employees": 1540000,
+    "revenue": 574.0
+  },
+  "NVDA": {
+    "ceo": "Jensen Huang",
+    "founded": 1993,
+    "employees": 29600,
+    "revenue": 60.9
+  },
+  "TSLA": {
+    "ceo": "Elon Musk",
+    "founded": 2003,
+    "employees": 140000,
+    "revenue": 96.8
+  },
+  "META": {
+    "ceo": "Mark Zuckerberg",
+    "founded": 2004,
+    "employees": 72000,
+    "revenue": 134.0
+  },
+  "BRK.A": {
+    "ceo": "Warren Buffett",
+    "founded": 1839,
+    "employees": 396000,
+    "revenue": 364.0
+  },
+  "JPM": {
+    "ceo": "Jamie Dimon",
+    "founded": 1799,
+    "employees": 293000,
+    "revenue": 158.0
+  },
+  "V": {
+    "ceo": "Ryan McInerney",
+    "founded": 1958,
+    "employees": 26500,
+    "revenue": 32.7
+  },
+  "MA": {
+    "ceo": "Michael Miebach",
+    "founded": 1966,
+    "employees": 33400,
+    "revenue": 25.1
+  },
+  "UNH": {
+    "ceo": "Andrew Witty",
+    "founded": 1977,
+    "employees": 440000,
+    "revenue": 371.0
+  },
+  "JNJ": {
+    "ceo": "Joaquin Duato",
+    "founded": 1886,
+    "employees": 155000,
+    "revenue": 85.2
+  },
+  "WMT": {
+    "ceo": "Doug McMillon",
+    "founded": 1962,
+    "employees": 2100000,
+    "revenue": 648.0
+  },
+  "PG": {
+    "ceo": "Jon Moeller",
+    "founded": 1837,
+    "employees": 100000,
+    "revenue": 82.0
+  },
+  "XOM": {
+    "ceo": "Darren Woods",
+    "founded": 1870,
+    "employees": 62000,
+    "revenue": 344.0
+  },
+  "LLY": {
+    "ceo": "David Ricks",
+    "founded": 1876,
+    "employees": 39000,
+    "revenue": 34.1
+  },
+  "CVX": {
+    "ceo": "Mike Wirth",
+    "founded": 1879,
+    "employees": 45000,
+    "revenue": 200.0
+  },
+  "AVGO": {
+    "ceo": "Hock Tan",
+    "founded": 1961,
+    "employees": 20000,
+    "revenue": 35.8
+  },
+  "KO": {
+    "ceo": "James Quincey",
+    "founded": 1886,
+    "employees": 70000,
+    "revenue": 45.8
+  },
+  "PEP": {
+    "ceo": "Ramon Laguarta",
+    "founded": 1898,
+    "employees": 318000,
+    "revenue": 91.5
+  },
+  "COST": {
+    "ceo": "Ron Vachris",
+    "founded": 1983,
+    "employees": 310000,
+    "revenue": 248.0
+  },
+  "MCD": {
+    "ceo": "Chris Kempczinski",
+    "founded": 1940,
+    "employees": 200000,
+    "revenue": 25.5
+  },
+  "DIS": {
+    "ceo": "Bob Iger",
+    "founded": 1923,
+    "employees": 225000,
+    "revenue": 88.9
+  },
+  "NFLX": {
+    "ceo": "Ted Sarandos",
+    "founded": 1997,
+    "employees": 12800,
+    "revenue": 33.7
+  },
+  "ADBE": {
+    "ceo": "Shantanu Narayen",
+    "founded": 1982,
+    "employees": 29000,
+    "revenue": 19.4
+  },
+  "CRM": {
+    "ceo": "Marc Benioff",
+    "founded": 1999,
+    "employees": 73000,
+    "revenue": 34.9
+  },
+  "INTC": {
+    "ceo": "Pat Gelsinger",
+    "founded": 1968,
+    "employees": 131000,
+    "revenue": 54.2
+  },
+  "AMD": {
+    "ceo": "Lisa Su",
+    "founded": 1969,
+    "employees": 26000,
+    "revenue": 22.7
+  },
+  "IBM": {
+    "ceo": "Arvind Krishna",
+    "founded": 1911,
+    "employees": 282000,
+    "revenue": 61.9
+  },
+  "BA": {
+    "ceo": "Kelly Ortberg",
+    "founded": 1916,
+    "employees": 145000,
+    "revenue": 77.8
+  },
+  "CAT": {
+    "ceo": "Jim Umpleby",
+    "founded": 1925,
+    "employees": 106000,
+    "revenue": 67.1
+  },
+  "GE": {
+    "ceo": "Larry Culp",
+    "founded": 1892,
+    "employees": 125000,
+    "revenue": 68.0
+  },
+  "HON": {
+    "ceo": "Vimal Kapur",
+    "founded": 1906,
+    "employees": 97000,
+    "revenue": 36.7
+  },
+  "SBUX": {
+    "ceo": "Brian Niccol",
+    "founded": 1971,
+    "employees": 383000,
+    "revenue": 38.8
+  },
+  "NKE": {
+    "ceo": "Elliott Hill",
+    "founded": 1964,
+    "employees": 81000,
+    "revenue": 51.4
+  },
+  "MRK": {
+    "ceo": "Robert Davis",
+    "founded": 1891,
+    "employees": 74000,
+    "revenue": 60.1
+  },
+  "PFE": {
+    "ceo": "Albert Bourla",
+    "founded": 1849,
+    "employees": 88000,
+    "revenue": 58.5
+  },
+  "ABBV": {
+    "ceo": "Richard Gonzalez",
+    "founded": 2013,
+    "employees": 48000,
+    "revenue": 54.3
+  },
+  "LMT": {
+    "ceo": "Jim Taiclet",
+    "founded": 1912,
+    "employees": 114000,
+    "revenue": 67.6
+  },
+  "HD": {
+    "ceo": "Ted Decker",
+    "founded": 1978,
+    "employees": 470000,
+    "revenue": 152.0
+  },
+  "LOW": {
+    "ceo": "Marvin Ellison",
+    "founded": 1921,
+    "employees": 260000,
+    "revenue": 86.4
+  },
+  "TMO": {
+    "ceo": "Marc Casper",
+    "founded": 1956,
+    "employees": 125000,
+    "revenue": 42.9
+  },
+  "DHR": {
+    "ceo": "Rainer Blair",
+    "founded": 1969,
+    "employees": 70000,
+    "revenue": 31.7
+  },
+  "ABT": {
+    "ceo": "Robert Ford",
+    "founded": 1888,
+    "employees": 107000,
+    "revenue": 40.3
+  },
+  "UBER": {
+    "ceo": "Dara Khosrowshahi",
+    "founded": 2009,
+    "employees": 30400,
+    "revenue": 37.2
+  },
+  "LIN": {
+    "ceo": "Sanjiv Lamba",
+    "founded": 1879,
+    "employees": 66000,
+    "revenue": 33.0
+  },
+  "SCHW": {
+    "ceo": "Walt Bettinger",
+    "founded": 1971,
+    "employees": 35300,
+    "revenue": 20.8
+  },
+  "GS": {
+    "ceo": "David Solomon",
+    "founded": 1869,
+    "employees": 48400,
+    "revenue": 47.4
+  },
+  "MS": {
+    "ceo": "Ted Pick",
+    "founded": 1935,
+    "employees": 82000,
+    "revenue": 54.1
+  },
+  "C": {
+    "ceo": "Jane Fraser",
+    "founded": 1812,
+    "employees": 240000,
+    "revenue": 78.5
+  },
+  "BAC": {
+    "ceo": "Brian Moynihan",
+    "founded": 1904,
+    "employees": 213000,
+    "revenue": 95.4
+  },
+  "WFC": {
+    "ceo": "Charlie Scharf",
+    "founded": 1852,
+    "employees": 239000,
+    "revenue": 82.6
+  },
+  "AXP": {
+    "ceo": "Stephen Squeri",
+    "founded": 1850,
+    "employees": 64000,
+    "revenue": 60.5
+  },
+  "BLK": {
+    "ceo": "Larry Fink",
+    "founded": 1988,
+    "employees": 21300,
+    "revenue": 20.2
+  },
+  "PANW": {
+    "ceo": "Nikesh Arora",
+    "founded": 2005,
+    "employees": 14700,
+    "revenue": 7.6
+  },
+  "SNOW": {
+    "ceo": "Sridhar Ramaswamy",
+    "founded": 2012,
+    "employees": 7400,
+    "revenue": 3.4
+  },
+  "PLTR": {
+    "ceo": "Alex Karp",
+    "founded": 2003,
+    "employees": 3700,
+    "revenue": 2.2
+  },
+  "SHOP": {
+    "ceo": "Tobi L\u00fctke",
+    "founded": 2004,
+    "employees": 8200,
+    "revenue": 6.7
+  },
+  "SQ": {
+    "ceo": "Jack Dorsey",
+    "founded": 2009,
+    "employees": 5400,
+    "revenue": 18.8
+  },
+  "DASH": {
+    "ceo": "Tony Xu",
+    "founded": 2013,
+    "employees": 6200,
+    "revenue": 8.3
+  },
+  "SYK": {
+    "ceo": "Timothy Scannell",
+    "founded": 1941,
+    "employees": 51000,
+    "revenue": 20.5
+  },
+  "BSX": {
+    "ceo": "Mike Mahoney",
+    "founded": 1979,
+    "employees": 40000,
+    "revenue": 14.2
+  },
+  "ISRG": {
+    "ceo": "Gary Guthart",
+    "founded": 1995,
+    "employees": 12000,
+    "revenue": 7.1
+  },
+  "PLD": {
+    "ceo": "Hamid Moghadam",
+    "founded": 1960,
+    "employees": 21000,
+    "revenue": 7.2
+  },
+  "AMT": {
+    "ceo": "Tom Bartlett",
+    "founded": 1997,
+    "employees": 5400,
+    "revenue": 11.1
+  },
+  "SPG": {
+    "ceo": "David Simon",
+    "founded": 1993,
+    "employees": 5600,
+    "revenue": 5.7
+  },
+  "WM": {
+    "ceo": "Jim Fish",
+    "founded": 1894,
+    "employees": 45000,
+    "revenue": 19.5
+  },
+  "RSG": {
+    "ceo": "Michael Allegretti",
+    "founded": 1993,
+    "employees": 21000,
+    "revenue": 12.6
+  },
+  "NEE": {
+    "ceo": "John Ketchum",
+    "founded": 1925,
+    "employees": 16800,
+    "revenue": 28.1
+  },
+  "COP": {
+    "ceo": "Ryan Lance",
+    "founded": 2002,
+    "employees": 10000,
+    "revenue": 56.0
+  },
+  "EOG": {
+    "ceo": "Ezra Yacob",
+    "founded": 1999,
+    "employees": 2800,
+    "revenue": 22.0
+  },
+  "SLB": {
+    "ceo": "Olivier Le Peuch",
+    "founded": 1926,
+    "employees": 85000,
+    "revenue": 32.4
+  },
+  "MCK": {
+    "ceo": "Brian Tyler",
+    "founded": 1833,
+    "employees": 80000,
+    "revenue": 276.0
+  },
+  "CVS": {
+    "ceo": "David Joyner",
+    "founded": 1963,
+    "employees": 300000,
+    "revenue": 357.0
+  },
+  "CI": {
+    "ceo": "David Cordani",
+    "founded": 1982,
+    "employees": 73000,
+    "revenue": 194.0
+  },
+  "HUM": {
+    "ceo": "Jim Rechtin",
+    "founded": 1984,
+    "employees": 56000,
+    "revenue": 93.6
+  },
+  "TGT": {
+    "ceo": "Brian Cornell",
+    "founded": 1902,
+    "employees": 440000,
+    "revenue": 109.0
+  },
+  "DAL": {
+    "ceo": "Ed Bastian",
+    "founded": 1924,
+    "employees": 100000,
+    "revenue": 54.1
+  },
+  "UAL": {
+    "ceo": "Scott Kirby",
+    "founded": 1928,
+    "employees": 100000,
+    "revenue": 48.2
+  },
+  "AAL": {
+    "ceo": "Robert Isom",
+    "founded": 1930,
+    "employees": 130000,
+    "revenue": 46.1
+  },
+  "LUV": {
+    "ceo": "Bob Jordan",
+    "founded": 1967,
+    "employees": 67000,
+    "revenue": 23.8
+  },
+  "DE": {
+    "ceo": "John May",
+    "founded": 1837,
+    "employees": 76000,
+    "revenue": 55.9
+  },
+  "EMR": {
+    "ceo": "Lal Karsanbhai",
+    "founded": 1890,
+    "employees": 63000,
+    "revenue": 16.3
+  },
+  "ITW": {
+    "ceo": "Christopher O'Herlihy",
+    "founded": 1912,
+    "employees": 45000,
+    "revenue": 16.1
+  },
+  "VZ": {
+    "ceo": "Hans Vestberg",
+    "founded": 2000,
+    "employees": 118000,
+    "revenue": 134.0
+  },
+  "T": {
+    "ceo": "John Stankey",
+    "founded": 1983,
+    "employees": 158000,
+    "revenue": 122.0
+  },
+  "CMCSA": {
+    "ceo": "Brian Roberts",
+    "founded": 1963,
+    "employees": 190000,
+    "revenue": 121.0
+  },
+  "NOW": {
+    "ceo": "Bill McDermott",
+    "founded": 2004,
+    "employees": 22000,
+    "revenue": 9.7
+  },
+  "CRWD": {
+    "ceo": "George Kurtz",
+    "founded": 2011,
+    "employees": 8400,
+    "revenue": 3.3
+  },
+  "MNST": {
+    "ceo": "Rodney Sacks",
+    "founded": 2002,
+    "employees": 5100,
+    "revenue": 6.8
+  },
+  "KDP": {
+    "ceo": "Robert Gamgort",
+    "founded": 2018,
+    "employees": 28000,
+    "revenue": 14.5
+  },
+  "GIS": {
+    "ceo": "Jeffrey Harmening",
+    "founded": 1928,
+    "employees": 34000,
+    "revenue": 18.9
+  },
+  "KHC": {
+    "ceo": "Carlos Abrams-Rivera",
+    "founded": 2015,
+    "employees": 36000,
+    "revenue": 26.4
+  },
+  "CL": {
+    "ceo": "Noel Wallace",
+    "founded": 1806,
+    "employees": 37000,
+    "revenue": 19.7
+  },
+  "KMB": {
+    "ceo": "Mike Hsu",
+    "founded": 1872,
+    "employees": 45000,
+    "revenue": 20.5
+  },
+  "EL": {
+    "ceo": "St\u00e9phane de La Faverie",
+    "founded": 1946,
+    "employees": 48000,
+    "revenue": 14.3
+  },
+  "HLT": {
+    "ceo": "Chris Nassetta",
+    "founded": 1919,
+    "employees": 17000,
+    "revenue": 9.5
+  },
+  "MAR": {
+    "ceo": "Tony Capuano",
+    "founded": 1927,
+    "employees": 13000,
+    "revenue": 22.0
+  },
+  "CCL": {
+    "ceo": "Josh Weinstein",
+    "founded": 1972,
+    "employees": 104000,
+    "revenue": 21.6
+  },
+  "RCL": {
+    "ceo": "Jason Liberty",
+    "founded": 1968,
+    "employees": 38000,
+    "revenue": 13.9
+  },
+  "TXN": {
+    "ceo": "Haviv Ilan",
+    "founded": 1930,
+    "employees": 34000,
+    "revenue": 18.3
+  },
+  "QCOM": {
+    "ceo": "Cristiano Amon",
+    "founded": 1985,
+    "employees": 50000,
+    "revenue": 44.2
+  },
+  "MU": {
+    "ceo": "Sanjay Mehrotra",
+    "founded": 1978,
+    "employees": 43000,
+    "revenue": 22.1
+  },
+  "ADI": {
+    "ceo": "Vincent Roche",
+    "founded": 1965,
+    "employees": 24000,
+    "revenue": 12.3
+  },
+  "CSCO": {
+    "ceo": "Chuck Robbins",
+    "founded": 1984,
+    "employees": 83000,
+    "revenue": 49.6
+  },
+  "ORCL": {
+    "ceo": "Safra Catz",
+    "founded": 1977,
+    "employees": 138000,
+    "revenue": 53.0
+  },
+  "ATVI": {
+    "ceo": "Bobby Kotick",
+    "founded": 1979,
+    "employees": 13000,
+    "revenue": 8.8
+  },
+  "EA": {
+    "ceo": "Andrew Wilson",
+    "founded": 1982,
+    "employees": 12000,
+    "revenue": 7.5
+  },
+  "MDB": {
+    "ceo": "Dev Ittycheria",
+    "founded": 2007,
+    "employees": 5100,
+    "revenue": 1.7
+  },
+  "TTD": {
+    "ceo": "Jeff Green",
+    "founded": 2009,
+    "employees": 3100,
+    "revenue": 1.9
+  },
+  "DDOG": {
+    "ceo": "Olivier Pomel",
+    "founded": 2010,
+    "employees": 4700,
+    "revenue": 2.3
+  },
+  "ZM": {
+    "ceo": "Eric Yuan",
+    "founded": 2011,
+    "employees": 7500,
+    "revenue": 4.5
+  },
+  "OKTA": {
+    "ceo": "Todd McKinnon",
+    "founded": 2009,
+    "employees": 5600,
+    "revenue": 2.3
+  },
+  "ZS": {
+    "ceo": "Jay Chaudhry",
+    "founded": 2007,
+    "employees": 7500,
+    "revenue": 1.9
+  },
+  "NET": {
+    "ceo": "Matthew Prince",
+    "founded": 2010,
+    "employees": 3800,
+    "revenue": 1.6
+  },
+  "WDAY": {
+    "ceo": "Carl Eschenbach",
+    "founded": 2005,
+    "employees": 18300,
+    "revenue": 7.2
+  },
+  "LRCX": {
+    "ceo": "Tim Archer",
+    "founded": 1980,
+    "employees": 13000,
+    "revenue": 14.4
+  },
+  "AMAT": {
+    "ceo": "Gary Dickerson",
+    "founded": 1967,
+    "employees": 32000,
+    "revenue": 26.8
+  },
+  "ABNB": {
+    "ceo": "Brian Chesky",
+    "founded": 2008,
+    "employees": 6800,
+    "revenue": 9.6
+  },
+  "BKNG": {
+    "ceo": "Glenn Fogel",
+    "founded": 1996,
+    "employees": 23000,
+    "revenue": 21.4
+  },
+  "TMUS": {
+    "ceo": "Mike Sievert",
+    "founded": 1994,
+    "employees": 75000,
+    "revenue": 78.0
+  },
+  "PYPL": {
+    "ceo": "Alex Chriss",
+    "founded": 1998,
+    "employees": 25600,
+    "revenue": 29.4
+  },
+  "MRNA": {
+    "ceo": "St\u00e9phane Bancel",
+    "founded": 2010,
+    "employees": 6400,
+    "revenue": 6.7
+  },
+  "VRTX": {
+    "ceo": "Reshma Kewalramani",
+    "founded": 1989,
+    "employees": 4800,
+    "revenue": 9.9
+  },
+  "GILD": {
+    "ceo": "Daniel O'Day",
+    "founded": 1987,
+    "employees": 11000,
+    "revenue": 27.1
+  },
+  "REGN": {
+    "ceo": "Leonard Schleifer",
+    "founded": 1988,
+    "employees": 10000,
+    "revenue": 13.4
+  },
+  "BMY": {
+    "ceo": "Christopher Boerner",
+    "founded": 1887,
+    "employees": 32000,
+    "revenue": 45.0
+  },
+  "AMGN": {
+    "ceo": "Robert Bradway",
+    "founded": 1980,
+    "employees": 22000,
+    "revenue": 28.2
+  },
+  "RTX": {
+    "ceo": "Chris Calio",
+    "founded": 1922,
+    "employees": 185000,
+    "revenue": 68.9
+  },
+  "NOC": {
+    "ceo": "Kathy Warden",
+    "founded": 1939,
+    "employees": 96000,
+    "revenue": 36.4
+  },
+  "GD": {
+    "ceo": "Phebe Novakovic",
+    "founded": 1952,
+    "employees": 106000,
+    "revenue": 42.3
+  },
+  "EQIX": {
+    "ceo": "Adaire Fox-Martin",
+    "founded": 1998,
+    "employees": 12000,
+    "revenue": 8.2
+  },
+  "SNAP": {
+    "ceo": "Evan Spiegel",
+    "founded": 2011,
+    "employees": 5200,
+    "revenue": 5.0
+  },
+  "PINS": {
+    "ceo": "Bill Ready",
+    "founded": 2009,
+    "employees": 3800,
+    "revenue": 3.2
+  },
+  "ROKU": {
+    "ceo": "Anthony Wood",
+    "founded": 2002,
+    "employees": 3200,
+    "revenue": 3.7
+  },
+  "SPOT": {
+    "ceo": "Daniel Ek",
+    "founded": 2006,
+    "employees": 8200,
+    "revenue": 13.2
+  },
+  "DOCU": {
+    "ceo": "Allan Thygesen",
+    "founded": 2003,
+    "employees": 6700,
+    "revenue": 2.9
+  },
+  "OXY": {
+    "ceo": "Vicki Hollub",
+    "founded": 1920,
+    "employees": 11000,
+    "revenue": 28.7
+  },
+  "PSX": {
+    "ceo": "Greg Garland",
+    "founded": 2012,
+    "employees": 14000,
+    "revenue": 141.0
+  },
+  "MPC": {
+    "ceo": "Bruce Linton",
+    "founded": 2012,
+    "employees": 10000,
+    "revenue": 130.0
+  },
+  "VLO": {
+    "ceo": "Gary Simmons",
+    "founded": 1982,
+    "employees": 10000,
+    "revenue": 141.0
+  },
+  "SHW": {
+    "ceo": "Heidi Petz",
+    "founded": 1866,
+    "employees": 64000,
+    "revenue": 23.0
+  },
+  "ECL": {
+    "ceo": "Christophe Beck",
+    "founded": 1923,
+    "employees": 40000,
+    "revenue": 15.2
+  },
+  "APD": {
+    "ceo": "Seifi Ghasemi",
+    "founded": 1940,
+    "employees": 22000,
+    "revenue": 12.8
+  },
+  "DG": {
+    "ceo": "Steve Philpott",
+    "founded": 1939,
+    "employees": 200000,
+    "revenue": 35.8
+  },
+  "DLTR": {
+    "ceo": "Mike Creedon",
+    "founded": 1986,
+    "employees": 192000,
+    "revenue": 30.6
+  },
+  "KR": {
+    "ceo": "Rodney McMullen",
+    "founded": 1883,
+    "employees": 465000,
+    "revenue": 148.0
+  },
+  "CAG": {
+    "ceo": "Sean Connolly",
+    "founded": 1919,
+    "employees": 19000,
+    "revenue": 11.8
+  },
+  "SAP": {
+    "ceo": "Christian Klein",
+    "founded": 1972,
+    "employees": 107000,
+    "revenue": 31.2
+  },
+  "ASML": {
+    "ceo": "Christophe Fouquet",
+    "founded": 1984,
+    "employees": 42000,
+    "revenue": 27.6
+  },
+  "NESN": {
+    "ceo": "Laurent Freixe",
+    "founded": 1866,
+    "employees": 275000,
+    "revenue": 93.0
+  },
+  "NOVN": {
+    "ceo": "Vas Narasimhan",
+    "founded": 1996,
+    "employees": 76000,
+    "revenue": 45.4
+  },
+  "ROG": {
+    "ceo": "Thomas Schinecker",
+    "founded": 1896,
+    "employees": 105000,
+    "revenue": 65.6
+  },
+  "AZN": {
+    "ceo": "Pascal Soriot",
+    "founded": 1999,
+    "employees": 83500,
+    "revenue": 45.8
+  },
+  "BP": {
+    "ceo": "Murray Auchincloss",
+    "founded": 1909,
+    "employees": 70000,
+    "revenue": 213.0
+  },
+  "TTE": {
+    "ceo": "Patrick Pouyann\u00e9",
+    "founded": 1924,
+    "employees": 100000,
+    "revenue": 219.0
+  },
+  "SHEL": {
+    "ceo": "Wael Sawan",
+    "founded": 1907,
+    "employees": 87000,
+    "revenue": 323.0
+  },
+  "HSBA": {
+    "ceo": "Georges Elhedery",
+    "founded": 1865,
+    "employees": 220000,
+    "revenue": 51.0
+  },
+  "BARC": {
+    "ceo": "C. S. Venkatakrishnan",
+    "founded": 1690,
+    "employees": 85000,
+    "revenue": 28.0
+  },
+  "DBK": {
+    "ceo": "Christian Sewing",
+    "founded": 1870,
+    "employees": 82000,
+    "revenue": 30.0
+  },
+  "ALV": {
+    "ceo": "Oliver B\u00e4te",
+    "founded": 1890,
+    "employees": 157000,
+    "revenue": 95.0
+  },
+  "MUV2": {
+    "ceo": "Joachim Wenning",
+    "founded": 1880,
+    "employees": 42000,
+    "revenue": 66.0
+  },
+  "MC": {
+    "ceo": "Bernard Arnault",
+    "founded": 1987,
+    "employees": 213000,
+    "revenue": 86.0
+  },
+  "OR": {
+    "ceo": "Nicolas Hieronimus",
+    "founded": 1909,
+    "employees": 88000,
+    "revenue": 41.2
+  },
+  "RMS": {
+    "ceo": "Axel Dumas",
+    "founded": 1837,
+    "employees": 22000,
+    "revenue": 13.4
+  },
+  "SAN": {
+    "ceo": "Hector Grisi",
+    "founded": 1857,
+    "employees": 190000,
+    "revenue": 55.0
+  },
+  "TEF": {
+    "ceo": "Marc Murtra",
+    "founded": 1924,
+    "employees": 105000,
+    "revenue": 43.0
+  },
+  "ITX": {
+    "ceo": "\u00d3scar Garc\u00eda Maceiras",
+    "founded": 1975,
+    "employees": 165000,
+    "revenue": 38.0
+  },
+  "NOK": {
+    "ceo": "Pekka Lundmark",
+    "founded": 1865,
+    "employees": 86000,
+    "revenue": 22.3
+  },
+  "ERIC": {
+    "ceo": "B\u00f6rje Ekholm",
+    "founded": 1876,
+    "employees": 100000,
+    "revenue": 24.9
+  },
+  "UBS": {
+    "ceo": "Sergio Ermotti",
+    "founded": 1862,
+    "employees": 120000,
+    "revenue": 36.0
+  },
+  "SONY": {
+    "ceo": "Kenichiro Yoshida",
+    "founded": 1946,
+    "employees": 113000,
+    "revenue": 90.0
+  },
+  "TM": {
+    "ceo": "Koji Sato",
+    "founded": 1937,
+    "employees": 380000,
+    "revenue": 320.0
+  },
+  "BYDDY": {
+    "ceo": "Wang Chuanfu",
+    "founded": 1995,
+    "employees": 700000,
+    "revenue": 81.0
+  },
+  "BABA": {
+    "ceo": "Eddie Wu",
+    "founded": 1999,
+    "employees": 205000,
+    "revenue": 130.0
+  },
+  "JD": {
+    "ceo": "Sandy Xu",
+    "founded": 1998,
+    "employees": 620000,
+    "revenue": 153.0
+  },
+  "PDD": {
+    "ceo": "Zhen Lei",
+    "founded": 2015,
+    "employees": 13000,
+    "revenue": 34.0
+  },
+  "NTES": {
+    "ceo": "William Ding",
+    "founded": 1997,
+    "employees": 29000,
+    "revenue": 13.6
+  },
+  "TCEHY": {
+    "ceo": "Ma Huateng",
+    "founded": 1998,
+    "employees": 108000,
+    "revenue": 86.0
+  },
+  "INFY": {
+    "ceo": "Salil Parekh",
+    "founded": 1981,
+    "employees": 235000,
+    "revenue": 18.6
+  },
+  "TCS": {
+    "ceo": "K Krithivasan",
+    "founded": 1968,
+    "employees": 615000,
+    "revenue": 27.9
+  },
+  "RELI": {
+    "ceo": "Mukesh Ambani",
+    "founded": 1966,
+    "employees": 390000,
+    "revenue": 109.0
+  },
+  "HDB": {
+    "ceo": "Sashidhar Jagdishan",
+    "founded": 1994,
+    "employees": 175000,
+    "revenue": 27.0
+  },
+  "IBN": {
+    "ceo": "Shanti Ekambaram",
+    "founded": 1994,
+    "employees": 127000,
+    "revenue": 17.0
+  },
+  "NIO": {
+    "ceo": "William Li",
+    "founded": 2014,
+    "employees": 15000,
+    "revenue": 7.5
+  },
+  "LI": {
+    "ceo": "Xiang Li",
+    "founded": 2015,
+    "employees": 32000,
+    "revenue": 17.4
+  },
+  "NPSNY": {
+    "employees": 45780,
+    "revenue": 10.8
+  },
+  "SBSW": {
+    "revenue": 129.7
+  },
+  "HCWB": {
+    "employees": 35
+  }
+}

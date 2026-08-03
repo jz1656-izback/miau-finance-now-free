@@ -1,0 +1,1 @@
+{"title": "Global Markets", "panels": [{"title": "Markets Open", "type": "stat", "targets": [{"expr": "miau_markets_open"}]}, {"title": "Exchange Status", "type": "table", "targets": [{"expr": "miau_exchange_status"}]}]}

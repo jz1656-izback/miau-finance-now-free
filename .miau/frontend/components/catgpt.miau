@@ -1,0 +1,7 @@
+Page: CatGPT
+Cat: 🤖
+Function: AI chat interface for financial queries
+Description: Natural language chat interface powered by GPT-4 and Claude. Users can ask "what are my top holdings?" or "analyze my portfolio risk" in plain English.
+API: —
+Output: Chat messages with AI responses, charts, and data
+Tuna: 8

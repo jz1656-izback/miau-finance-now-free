@@ -1,0 +1,7 @@
+Page: CatPod Service
+Cat: 🐋
+Function: Single-binary service runtime
+Description: CatPod is the MiauOS service runtime — a single 5MB binary with zero dependencies that runs all Miau Finance services as a self-contained pod.
+API: —
+Output: Running service instance with health endpoint
+Tuna: 8

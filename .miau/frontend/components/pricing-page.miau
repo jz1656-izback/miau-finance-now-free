@@ -1,0 +1,7 @@
+Page: Pricing Page
+Cat: 💵
+Function: Subscription tier display and checkout
+Description: Pricing page showing free/pro/enterprise tiers with feature comparison. Integrates Stripe checkout for subscription signup and payment processing.
+API: —
+Output: Tier cards, feature matrix, checkout modal
+Tuna: 5

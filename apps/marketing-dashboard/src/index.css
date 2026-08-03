@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+[data-theme="dark"] {
+  --bg: #0d0d1a;
+  --fg: #f0f0f5;
+  --dim: #8899b0;
+  --surface: rgba(20, 20, 31, 0.85);
+  --surface-alt: #1c1c2e;
+  --border: rgba(42, 42, 64, 0.6);
+  --glass-bg: linear-gradient(135deg, rgba(20, 20, 31, 0.85), rgba(28, 28, 46, 0.75));
+  --scrollbar-thumb: #2a2a40;
+  --scrollbar-track: #0d0d1a;
+}
+
+[data-theme="light"] {
+  --bg: #f0f2f5;
+  --fg: #1a1a2e;
+  --dim: #6b7280;
+  --surface: rgba(255, 255, 255, 0.85);
+  --surface-alt: #e5e7eb;
+  --border: rgba(0, 0, 0, 0.1);
+  --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 242, 245, 0.8));
+  --scrollbar-thumb: #c0c4cc;
+  --scrollbar-track: #f0f2f5;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+body {
+  margin: 0;
+  font-family: 'Geist', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+}
+
+.glass:hover {
+  border-color: rgba(0, 230, 118, 0.3);
+}
+
+.glow-green {
+  box-shadow: 0 0 24px rgba(0, 230, 118, 0.08);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #00e676, #a855f7, #22d3ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-theme="dark"] .gradient-bg {
+  background: linear-gradient(135deg, #0d0d1a 0%, #14141f 40%, #1a0a2e 70%, #0a1a2a 100%);
+}
+
+[data-theme="light"] .gradient-bg {
+  background: linear-gradient(135deg, #f0f2f5 0%, #e8ecf0 40%, #f0e8f8 70%, #e0eef5 100%);
+}
+
+@keyframes paw {
+  0%, 100% { transform: translateY(0); opacity: 0.3; }
+  50% { transform: translateY(-4px); opacity: 1; }
+}
+
+.cat-paw {
+  animation: paw 2s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(3deg); }
+}
+
+.float-anim {
+  animation: float 4s ease-in-out infinite;
+}

@@ -1,0 +1,7 @@
+Page: Trading Orders
+Cat: 📋
+Function: Places and manages buy/sell orders
+Description: Full order management system supporting market, limit, stop, stop-limit, and trailing stop orders. Includes paper trading mode with slippage and commission simulation.
+API: GET/POST/PUT/DELETE /api/v1/orders/*
+Output: Order status, fills, position updates, trade history
+Tuna: 8

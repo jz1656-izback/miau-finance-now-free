@@ -1,0 +1,145 @@
+{
+  "title": "API Usage & Billing",
+  "uid": "api-usage-dashboard",
+  "version": 1,
+  "timezone": "utc",
+  "editable": true,
+  "panels": [
+    {
+      "title": "API Requests (24h)",
+      "type": "stat",
+      "gridPos": {"x": 0, "y": 0, "w": 6, "h": 4},
+      "targets": [{
+        "expr": "sum(increase(api_requests_total[24h]))",
+        "legendFormat": "Total"
+      }],
+      "description": "Total API requests in the last 24 hours"
+    },
+    {
+      "title": "Active API Keys",
+      "type": "stat",
+      "gridPos": {"x": 6, "y": 0, "w": 3, "h": 4},
+      "targets": [{
+        "expr": "count(api_key_active == 1)",
+        "legendFormat": "Active Keys"
+      }],
+      "description": "Number of active API keys"
+    },
+    {
+      "title": "Monthly Active Users",
+      "type": "stat",
+      "gridPos": {"x": 9, "y": 0, "w": 3, "h": 4},
+      "targets": [{
+        "expr": "count(unique(count by(user_id)(api_requests_total[30d])))",
+        "legendFormat": "MAU"
+      }],
+      "description": "Monthly active API users"
+    },
+    {
+      "title": "Request Rate by Tier",
+      "type": "barchart",
+      "gridPos": {"x": 0, "y": 4, "w": 6, "h": 8},
+      "targets": [
+        {"expr": "sum(rate(api_requests_total{tier=\"free\"}[5m]))", "legendFormat": "Free"},
+        {"expr": "sum(rate(api_requests_total{tier=\"pro\"}[5m]))", "legendFormat": "Pro"},
+        {"expr": "sum(rate(api_requests_total{tier=\"enterprise\"}[5m]))", "legendFormat": "Enterprise"}
+      ],
+      "description": "Request rate per subscription tier"
+    },
+    {
+      "title": "Top Endpoints",
+      "type": "table",
+      "gridPos": {"x": 6, "y": 4, "w": 6, "h": 8},
+      "targets": [{
+        "expr": "topk(10, sum by(endpoint)(rate(api_requests_total[1h])))",
+        "legendFormat": "__auto"
+      }],
+      "transformations": [
+        {"id": "sortBy", "options": {"sort": [{"field": "Value", "desc": true}]}}
+      ],
+      "description": "Most frequently called API endpoints"
+    },
+    {
+      "title": "Latency P99 (5m)",
+      "type": "graph",
+      "gridPos": {"x": 0, "y": 12, "w": 6, "h": 6},
+      "targets": [{
+        "expr": "histogram_quantile(0.99, sum(rate(api_request_duration_seconds_bucket[5m])) by (le))",
+        "legendFormat": "P99"
+      }],
+      "description": "99th percentile API latency"
+    },
+    {
+      "title": "Error Rate",
+      "type": "graph",
+      "gridPos": {"x": 6, "y": 12, "w": 6, "h": 6},
+      "targets": [{
+        "expr": "sum(rate(api_requests_total{status=~\"4..|5..\"}[5m])) / sum(rate(api_requests_total[5m])) * 100",
+        "legendFormat": "Error %"
+      }],
+      "description": "Percentage of API requests returning 4xx or 5xx"
+    },
+    {
+      "title": "Revenue (Monthly)",
+      "type": "stat",
+      "gridPos": {"x": 0, "y": 18, "w": 4, "h": 4},
+      "targets": [{
+        "expr": "sum(billing_revenue_total{period=\"monthly\"})",
+        "legendFormat": "MRR"
+      }],
+      "description": "Monthly recurring revenue from subscriptions",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "color": {"mode": "thresholds"},
+          "thresholds": {"steps": [
+            {"color": "red", "value": null},
+            {"color": "yellow", "value": 1000},
+            {"color": "green", "value": 5000}
+          ]}
+        }
+      }
+    },
+    {
+      "title": "Active Subscriptions",
+      "type": "gauge",
+      "gridPos": {"x": 4, "y": 18, "w": 4, "h": 4},
+      "targets": [{
+        "expr": "count(billing_subscription_active == 1)",
+        "legendFormat": "Active"
+      }],
+      "description": "Currently active paid subscriptions"
+    },
+    {
+      "title": "Trial Conversions (30d)",
+      "type": "stat",
+      "gridPos": {"x": 8, "y": 18, "w": 4, "h": 4},
+      "targets": [{
+        "expr": "sum(increase(billing_trial_conversions_total[30d]))",
+        "legendFormat": "Conversions"
+      }],
+      "description": "Free trial → paid conversions in last 30 days"
+    }
+  ],
+  "templating": {
+    "list": [
+      {
+        "name": "tier",
+        "type": "query",
+        "query": "label_values(api_requests_total, tier)",
+        "includeAll": true,
+        "multi": true
+      }
+    ]
+  },
+  "annotations": {
+    "list": [
+      {
+        "name": "Stripe Events",
+        "datasource": "Prometheus",
+        "expr": "stripe_webhook_events_total",
+        "step": "60s"
+      }
+    ]
+  }
+}

@@ -1,0 +1,1 @@
+{"title": "Carbon & Climate", "panels": [{"title": "Total Emissions", "type": "stat", "targets": [{"expr": "miau_carbon_total_tons"}]}, {"title": "Emissions by Scope", "type": "bar", "targets": [{"expr": "miau_carbon_by_scope"}]}]}

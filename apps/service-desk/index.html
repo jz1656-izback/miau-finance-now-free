@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Miau Fire Brigade — Help & Service Desk</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🚒%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="header-logo">
+    <span class="logo-icon">🚒</span>
+    <div>
+      <div class="logo-name">MIAU FIRE BRIGADE</div>
+      <div class="logo-sub">Help & Service Desk</div>
+    </div>
+  </div>
+  <nav>
+    <a href="#" class="nav-link active" data-tab="board">🐱 Tickets</a>
+    <a href="#" class="nav-link" data-tab="submit">📮 New Ticket</a>
+    <a href="#" class="nav-link" data-tab="fighters">👨‍🚒 Firefighters</a>
+    <a href="#" class="nav-link" data-tab="faq">📖 Knowledge Base</a>
+    <a href="#" class="nav-link" data-tab="status">📊 System</a>
+  </nav>
+  <div class="header-cats" id="headerCats" title="Cats fighting fires right now">🐱 <span id="catCounter">0</span></div>
+  <button id="authBtn" class="auth-btn">🔑 Login</button>
+  <span id="authUser" class="auth-user"></span>
+  <button class="mobile-toggle" id="mobileToggle">☰</button>
+</header>
+
+<div id="toastContainer"></div>
+<div id="catReaction">🐱</div>
+<div id="catCompanion">🐱</div>
+<button id="soundToggle" class="sound-toggle" onclick="toggleSound()" title="Toggle cat sounds">🔊</button>
+<div id="offlineBadge" class="offline-badge">😴 Offline Mode (Backend napping)</div>
+
+<div class="dispatch-overlay" id="dispatchOverlay">
+  <div class="dispatch-box">
+    <div style="font-size:64px;margin-bottom:12px">🚒</div>
+    <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:4px">Dispatching <span id="dispatchName"></span></div>
+    <div style="font-size:13px;color:rgba(200,214,208,0.4);margin-bottom:16px" id="dispatchStatus">🔥 Locating fire...</div>
+    <div class="dispatch-bar-track"><div class="dispatch-bar" id="dispatchBar"></div></div>
+    <div style="margin-top:12px;font-size:11px;color:rgba(200,214,208,0.15)">🐱 The cat is coming. The cat always comes.</div>
+  </div>
+</div>
+
+<div id="tunaModal" class="modal-overlay" style="z-index:400">
+  <button class="modal-close" onclick="closeTuna()">✕</button>
+  <div class="modal-content" style="text-align:center;padding:60px 40px">
+    <div style="font-size:80px;margin-bottom:16px">🐟</div>
+    <h2 style="font-size:24px;color:#fff;margin-bottom:8px">Tuna Fact 🐟</h2>
+    <p id="tunaFact" style="font-size:16px;color:rgba(200,214,208,0.6);line-height:1.7;margin-bottom:24px"></p>
+    <button class="btn btn-primary" onclick="showRandomTunaFact()">🐟 Another Tuna Fact</button>
+    <button class="btn btn-secondary" onclick="closeTuna()" style="margin-left:8px">Close</button>
+  </div>
+</div>
+
+  <div class="bg-floating">
+  <span class="bg-item" style="top:5%;left:3%;font-size:50px;animation-delay:0s">🚒</span>
+  <span class="bg-item" style="top:15%;right:6%;font-size:40px;animation-delay:2s">🚒</span>
+  <span class="bg-item" style="bottom:20%;left:5%;font-size:45px;animation-delay:4s">🚒</span>
+  <span class="bg-item" style="top:40%;right:3%;font-size:55px;animation-delay:1s">🔥</span>
+  <span class="bg-item" style="top:8%;left:40%;font-size:35px;animation-delay:3s">🔥</span>
+  <span class="bg-item" style="bottom:10%;right:15%;font-size:60px;animation-delay:5s">🔥</span>
+  <span class="bg-item" style="top:60%;left:2%;font-size:30px;animation-delay:2.5s">🔥</span>
+  <span class="bg-item" style="top:70%;right:8%;font-size:25px;animation-delay:0.5s">🐱</span>
+  <span class="bg-item" style="top:25%;left:15%;font-size:20px;animation-delay:4.5s">🐱</span>
+  <span class="bg-item" style="bottom:30%;right:25%;font-size:35px;animation-delay:1.5s">🐱</span>
+  <span class="bg-item" style="top:50%;left:10%;font-size:28px;animation-delay:3.5s">😿</span>
+  <span class="bg-item" style="top:10%;right:25%;font-size:32px;animation-delay:0.8s">😿</span>
+  <span class="bg-item" style="bottom:40%;left:20%;font-size:28px;animation-delay:2.8s">😿</span>
+  <span class="bg-item" style="top:80%;left:8%;font-size:22px;animation-delay:5.5s">😿</span>
+  <span class="bg-item" style="top:35%;left:50%;font-size:18px;animation-delay:6s">😿</span>
+  <span class="bg-item" style="bottom:5%;left:70%;font-size:24px;animation-delay:3.2s">🚒</span>
+  <span class="bg-item" style="top:45%;right:40%;font-size:20px;animation-delay:4.2s">🔥</span>
+  <span class="bg-item" style="bottom:50%;left:3%;font-size:15px;animation-delay:0.2s">🐱</span>
+  <span class="bg-item" style="bottom:15%;left:40%;font-size:18px;animation-delay:1.2s">😿</span>
+  <span class="bg-item" style="top:25%;right:15%;font-size:28px;animation-delay:0.7s">💰</span>
+  <span class="bg-item" style="bottom:35%;left:25%;font-size:22px;animation-delay:2.3s">🪙</span>
+  <span class="bg-item" style="top:55%;right:25%;font-size:18px;animation-delay:5s">💎</span>
+  <span class="bg-item" style="bottom:8%;left:55%;font-size:20px;animation-delay:1.8s">💵</span>
+  <span class="bg-item" style="top:15%;left:55%;font-size:16px;animation-delay:3.5s">🐟</span>
+  <span class="bg-item" style="bottom:60%;right:10%;font-size:24px;animation-delay:4s">💰</span>
+</div>
+
+<main>
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="hero-fire-cat">
+        <span class="fire-cat-emoji">🚒</span>
+        <span class="fire-cat-emoji fire">🔥</span>
+        <span class="fire-cat-emoji cat">🐱</span>
+      </div>
+      <div style="font-size:clamp(14px,2vw,18px);color:rgba(200,214,208,0.4);font-family:monospace;margin-bottom:8px">🐾 Service Desk v1.0 — Cat Firefighters on Duty</div>
+      <h1 class="hero-title">MIAU FIRE BRIGADE</h1>
+      <p class="hero-sub">We put out portfolio fires. <span style="color:rgba(200,214,208,0.3)">And literal ones.</span></p>
+      <div class="hero-btns">
+        <a href="#" class="btn btn-danger" data-tab="submit" onclick="switchTab('submit')">🚨 Report an Emergency</a>
+        <a href="#" class="btn btn-secondary" data-tab="board" onclick="switchTab('board')">📋 View Tickets</a>
+      </div>
+      <div class="hero-stats-mini">
+        <span>🔥 <strong id="fireCount">3</strong> active fires</span>
+        <span>👨‍🚒 <strong>5</strong> firefighters</span>
+        <span>⏱️ <strong>2.4</strong> purrs avg response</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tab: Ticket Board -->
+  <section class="section tab-content active" id="tab-board">
+    <div class="mx-auto">
+      <div class="section-title">
+        <span class="section-tag">🐱 Rescue Board</span>
+        <h2>Ticket Fire Station</h2>
+        <p>Every ticket gets a firefighter. Every fire gets a cat.</p>
+      </div>
+      <div class="board-controls">
+        <button class="btn-filter active" data-filter="all">🔥 All Fires</button>
+        <button class="btn-filter" data-filter="fire">🚨 Emergencies</button>
+        <button class="btn-filter" data-filter="bug">🐛 Bugs</button>
+        <button class="btn-filter" data-filter="feature">💡 Features</button>
+        <button class="btn-filter" data-filter="question">❓ Questions</button>
+      </div>
+      <div class="board" id="ticketBoard">
+        <div class="board-col">
+          <div class="board-col-header" style="color:#ff8800">🚒 To The Rescue</div>
+          <div class="ticket-list" data-status="open"></div>
+        </div>
+        <div class="board-col">
+          <div class="board-col-header" style="color:#00aaff">👨‍🚒 On It!</div>
+          <div class="ticket-list" data-status="progress"></div>
+        </div>
+        <div class="board-col">
+          <div class="board-col-header" style="color:#00ff88">✅ Extinguished</div>
+          <div class="ticket-list" data-status="resolved"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tab: Submit Ticket -->
+  <section class="section tab-content" id="tab-submit">
+    <div class="mx-auto">
+      <div class="section-title">
+        <span class="section-tag">📮 Open a Ticket</span>
+        <h2>Report a Fire (or File a Request)</h2>
+        <p>Tell the cats what is burning and where it is happening in the ecosystem</p>
+      </div>
+      <div class="form-container">
+        <div class="form-row">
+          <div class="form-group">
+            <label>🔥 Category</label>
+            <select id="ticketCategory">
+              <option value="fire">🚨 Fire / Urgent — Portfolio is burning!</option>
+              <option value="bug">🐛 Bug — Something is broken</option>
+              <option value="feature">💡 Feature Request — Make the cat better</option>
+              <option value="question">❓ Question — I need cat wisdom</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>⚡ Priority</label>
+            <select id="ticketPriority">
+              <option value="low">😴 Low — When the cat naps</option>
+              <option value="medium">🙂 Medium — Normal cat business</option>
+              <option value="high">😰 High — Cat is concerned</option>
+              <option value="critical" selected>🔥 Critical — THE FIRE! THE FIRE!</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>📋 Title</label>
+          <input type="text" id="ticketTitle" placeholder="e.g. My portfolio is on fire and the cat is laughing" maxlength="100">
+        </div>
+        <div class="form-group">
+          <label>📝 Description</label>
+          <textarea id="ticketDesc" rows="5" placeholder="Tell the firefighters what's burning..."></textarea>
+        </div>
+          <div class="form-group">
+            <label>🐾 Your Name (optional)</label>
+            <input type="text" id="ticketAuthor" placeholder="e.g. Sir Burns-a-Lot">
+          </div>
+          <div class="form-group">
+            <label>🌐 Affected Service</label>
+            <select id="ticketService">
+              <option value="">❓ Not sure / General</option>
+              <option value="terminal">🐱 Terminal UI (5173)</option>
+              <option value="learning">🎓 Education Platform (5174)</option>
+              <option value="corp">🏢 Miau Corp (5175)</option>
+              <option value="marketing">📊 Marketing Dashboard (5176)</option>
+              <option value="service-desk">🚒 Service Desk (5180)</option>
+              <option value="galaxy">🌌 Cat Galaxy (5181)</option>
+              <option value="miaubook">📝 MiauBook (5178)</option>
+              <option value="admin">🔧 Admin Panel (5179)</option>
+              <option value="logviewer">📋 Log Viewer (5177)</option>
+              <option value="api">🔌 API Backend (8000)</option>
+              <option value="grafana">📈 Grafana (3000)</option>
+              <option value="homepage">🏠 Homepage / Blog (3001)</option>
+            </select>
+          </div>
+        <button class="btn btn-primary btn-submit" onclick="submitTicket()">
+          🐱 Send Cat to Rescue
+        </button>
+        <div id="submitSuccess" class="submit-success"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tab: Cat Firefighters -->
+  <section class="section tab-content" id="tab-fighters">
+    <div class="mx-auto">
+      <div class="section-title">
+        <span class="section-tag">👨‍🚒 The Paw-lice</span>
+        <h2>Meet the Cat Firefighters</h2>
+        <p>These brave felines fight portfolio fires 24/7. They also fight actual fires. Mostly the first one.</p>
+      </div>
+      <div class="fighters-grid" id="fightersGrid">
+      </div>
+    </div>
+  </section>
+
+  <!-- Tab: FAQ / Knowledge Base -->
+  <section class="section tab-content" id="tab-faq">
+    <div class="mx-auto">
+      <div class="section-title">
+        <span class="section-tag">📖 Cat Knowledge</span>
+        <h2>Frequently Asked Questions</h2>
+        <p>Answers that the cats bothered to type out</p>
+      </div>
+      <div style="max-width:700px;margin:0 auto 24px">
+        <input type="text" id="faqSearch" placeholder="🔍 Search the knowledge base..." oninput="searchFaq(this.value)" style="width:100%;padding:14px 18px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#c8d6d0;font-size:14px;font-family:inherit;outline:none">
+      </div>
+      <div class="faq-list" id="faqList">
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)"><span>🔥</span> How do I report a portfolio fire?<span class="faq-arrow">▾</span></div>
+          <div class="faq-a">Press the big red "🚨 Report an Emergency" button at the top. Or submit a ticket with category "Fire / Urgent". A cat firefighter will be dispatched within 2.4 purrs (approximately 47 seconds in human time). Do not attempt to extinguish the fire yourself. Cats are trained professionals.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)"><span>🐱</span> What counts as a "fire"?<span class="faq-arrow">▾</span></div>
+          <div class="faq-a">A "fire" is any urgent issue: your portfolio dropped 20%, the terminal won't start, the cat is not purring, or you accidentally deleted production. If you have to ask "is this a fire?", it probably is. When in doubt, set it on fire. Wait — don't. Call us.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)"><span>⏱️</span> How fast do the cat firefighters respond?<span class="faq-arrow">▾</span></div>
+          <div class="faq-a">Average response time is 2.4 purrs (≈47 seconds) for critical fires, 12 purrs (≈4 minutes) for high priority, and "when the cat feels like it" for everything else. Our cats are unionized and entitled to nap breaks every 47 minutes by law.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)"><span>🐾</span> Can I adopt a firefighter cat?<span class="faq-arrow">▾</span></div>
+          <div class="faq-a">No. These are highly trained professionals. They have families. They have tuna pensions. They have 401(k)s invested entirely in catnip futures. You cannot adopt them. However, you can sponsor a firefighter cat for just €4.99/month — you get a photo, a nameplate on their helmet, and a monthly purr report.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)"><span>📋</span> How do I check my ticket status?<span class="faq-arrow">▾</span></div>
+          <div class="faq-a">Go to the "Tickets" tab. Tickets move through three stages: "To The Rescue" (open), "On It!" (in progress), and "Extinguished" (resolved). You can also filter by category. If your ticket is stuck in "To The Rescue" for more than 24 hours, poke the cat. Literally — there's a "poke" button.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)"><span>🐟</span> What if my question is about tuna?<span class="faq-arrow">▾</span></div>
+          <div class="faq-a">All tuna-related inquiries are automatically escalated to Prof. Dr. Tuna (ESG & Sustainable Finance). He will respond with a 47-page dissertation on the tuna market outlook, a carbon pawprint analysis, and three recommendations for tuna futures. Expect his response within 2-3 business weeks. He is a fish. He has no hands. Be patient.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)"><span>🚒</span> Do you fight real fires too?<span class="faq-arrow">▾</span></div>
+          <div class="faq-a">The Miau Fire Brigade is certified to fight: portfolio fires, server fires, code review fires, and mild kitchen fires (toast level only). We do NOT fight: forest fires, relationship fires, or fires started by the cat playing with matches. The cat does not play with matches. The cat plays with your portfolio.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tab: System Status -->
+  <section class="section tab-content" id="tab-status">
+    <div class="mx-auto">
+      <div class="section-title">
+        <span class="section-tag">📊 Cat Monitor</span>
+        <h2>System Status</h2>
+        <p>Are the cats awake? Are the services running? Find out here.</p>
+      </div>
+      <div class="status-grid" id="statusGrid"></div>
+      <div style="margin-top:24px;padding:20px;background:rgba(255,68,68,0.03);border:1px solid rgba(255,68,68,0.08);border-radius:12px;text-align:center" class="fade-up">
+        <div style="font-size:13px;color:rgba(200,214,208,0.5)">
+          🚒 <strong style="color:#ff4444">Fire Report:</strong> If none of the above are on fire, check your own machine. The cats are fine.
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Firefighter Modal -->
+<div class="modal-overlay" id="fighterModal">
+  <button class="modal-close" onclick="closeFighter()">✕</button>
+  <div class="modal-content" id="fighterContent"></div>
+</div>
+
+<!-- Ticket Detail Modal -->
+<div class="modal-overlay" id="ticketModal">
+  <button class="modal-close" onclick="closeTicket()">✕</button>
+  <div class="modal-content" id="ticketContent"></div>
+</div>
+
+<footer class="footer">
+  <div class="mx-auto">
+    <pre class="footer-cat">
+  ╱|、
+ (˚ˎ 。7
+ |、˜〵
+ じしˍ,)ノ    <span class="cat-proverb"></span>
+    </pre>
+    <div style="text-align:center;margin-bottom:16px">
+    <button class="btn-tuna" onclick="showTuna()">🐟 Tuna Button</button>
+  </div>
+  <div id="catOfTheDay" style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px;min-height:40px"></div>
+  <div class="footer-links">
+      <a href="http://localhost:5173" target="_blank">Terminal</a>
+      <span class="sep">|</span>
+      <a href="http://localhost:5175" target="_blank">Miau Corp</a>
+      <span class="sep">|</span>
+      <a href="http://localhost:5174" target="_blank">Learning</a>
+      <span class="sep">|</span>
+      <a href="https://github.com/LuZziD/cat-finance-analytics-shell-miau" target="_blank">GitHub</a>
+    </div>
+    <p class="copyright">© 2026 MIAU FIRE BRIGADE — <span style="color:#ff4444">Saving portfolios</span> <span style="color:#00ff88">one purr at a time</span></p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+
+<!-- Login Modal -->
+<div class="modal-overlay" id="loginModal">
+  <button class="modal-close" onclick="this.closest('.modal-overlay').classList.remove('open')">✕</button>
+  <div class="modal-content" style="max-width:420px">
+    <div style="text-align:center;margin-bottom:24px">
+      <div style="font-size:48px;margin-bottom:8px">🔑</div>
+      <h2 style="font-size:20px;color:#fff;margin-bottom:4px">Login to Miau Fire Brigade</h2>
+      <p style="font-size:13px;color:rgba(200,214,208,0.4)">The cat knows who you are. Prove it.</p>
+    </div>
+    <div class="form-group"><label>🐾 Username</label><input type="text" id="loginUser" placeholder="cat_lover_42" autocomplete="username"></div>
+    <div class="form-group"><label>🔒 Password</label><input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()"></div>
+    <button class="btn btn-primary login-btn" onclick="login()" style="width:100%;justify-content:center">🐱 Login</button>
+    <div style="text-align:center;margin-top:12px;font-size:12px;color:rgba(200,214,208,0.3)">
+      No account? <a href="#" onclick="showRegister();return false" style="color:#00ff88;text-decoration:underline">Register here</a>
+      <span> · </span>
+      <a href="http://localhost:5190/?redirect=http://localhost:5180" style="color:#aa66ff;text-decoration:underline">🐾 Pawdenity</a>
+    </div>
+  </div>
+</div>
+
+<!-- Register Modal -->
+<div class="modal-overlay" id="registerModal">
+  <button class="modal-close" onclick="this.closest('.modal-overlay').classList.remove('open')">✕</button>
+  <div class="modal-content" style="max-width:420px">
+    <div style="text-align:center;margin-bottom:24px">
+      <div style="font-size:48px;margin-bottom:8px">🐈</div>
+      <h2 style="font-size:20px;color:#fff;margin-bottom:4px">Join the Cat Empire</h2>
+      <p style="font-size:13px;color:rgba(200,214,208,0.4)">Create an account. The cat will remember you.</p>
+    </div>
+    <div class="form-group"><label>📧 Email</label><input type="email" id="regEmail" placeholder="human@example.com"></div>
+    <div class="form-group"><label>🐾 Username</label><input type="text" id="regUser" placeholder="cat_lover_42"></div>
+    <div class="form-group"><label>🔒 Password</label><input type="password" id="regPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')register()"></div>
+    <button class="btn btn-primary register-btn" onclick="register()" style="width:100%;justify-content:center">🐱 Register</button>
+    <div style="text-align:center;margin-top:12px;font-size:12px;color:rgba(200,214,208,0.3)">
+      Already a cat? <a href="#" onclick="showLoginFromRegister();return false" style="color:#00ff88;text-decoration:underline">Login here</a>
+      <span> · </span>
+      <a href="http://localhost:5190/?redirect=http://localhost:5180" style="color:#aa66ff;text-decoration:underline">🐾 Pawdenity</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+Page: Cluster Join
+Cat: 🖇️
+Function: Node cluster membership protocol
+Description: Handles new node joining the MiauOS cluster with mutual TLS authentication, service registry update, and distributed configuration sync.
+API: —
+Output: Joined cluster node with replicated state
+Tuna: 7

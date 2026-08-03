@@ -1,0 +1,7 @@
+Page: Error Boundary
+Cat: 🚑
+Function: Catches and displays React errors gracefully
+Description: React error boundary that catches rendering errors and displays a friendly cat-themed error page with retry option, error details, and a comforting ASCII cat.
+API: —
+Output: Cat error page with retry button and debug info
+Tuna: 2

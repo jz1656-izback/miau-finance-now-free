@@ -1,0 +1,1 @@
+{"title": "Developer KPIs", "panels": [{"title": "Request Volume", "type": "graph", "targets": [{"expr": "miau_api_requests_total"}]}, {"title": "Error Rate", "type": "stat", "targets": [{"expr": "miau_api_error_rate"}]}]}

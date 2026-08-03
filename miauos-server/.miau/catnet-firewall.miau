@@ -1,0 +1,7 @@
+Page: CatNet Firewall
+Cat: 🔥
+Function: nftables-based firewall for MiauOS
+Description: CatNet is the MiauOS network firewall using nftables rulesets. It restricts traffic to authorized services and blocks all unauthorized ingress by default.
+API: —
+Output: nftables ruleset enforcing network segmentation
+Tuna: 5

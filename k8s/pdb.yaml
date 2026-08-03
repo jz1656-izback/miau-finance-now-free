@@ -1,0 +1,44 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: backend-pdb
+  namespace: miau-finance
+  labels:
+    app: miau-finance
+    component: backend
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: miau-finance
+      component: backend
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: frontend-pdb
+  namespace: miau-finance
+  labels:
+    app: miau-finance
+    component: frontend
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: miau-finance
+      component: frontend
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: postgres-pdb
+  namespace: miau-finance
+  labels:
+    app: miau-finance
+    component: postgres
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: miau-finance
+      component: postgres

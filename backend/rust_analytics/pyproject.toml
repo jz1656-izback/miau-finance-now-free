@@ -1,0 +1,14 @@
+[build-system]
+requires = ["maturin>=1.7,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "miau_analytics"
+requires-python = ">=3.11"
+version = "0.1.0"
+description = "Rust-accelerated analytics for Miau Finance"
+authors = [{ name = "rust-dev@miau.finance" }]
+
+[tool.maturin]
+features = ["pyo3/extension-module"]
+module-name = "miau_analytics._core"

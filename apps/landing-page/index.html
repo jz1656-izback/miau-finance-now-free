@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MIAU FINANCE — Terminal-Based Financial Analytics</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🐱%3C/text%3E%3C/svg%3E">
+<meta property="og:title" content="MIAU FINANCE — Where cats trade stocks">
+<meta property="og:description" content="Purrantir-inspired financial analytics platform with a cat-themed terminal UI. Real-time market data, portfolio optimization, risk analytics — all in a beautiful terminal interface.">
+<meta name="description" content="Purrantir-inspired financial analytics platform with a cat-themed terminal UI. Real-time market data, portfolio optimization, risk analytics.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="crt">
+  <div class="scanlines"></div>
+</div>
+
+<canvas id="stars"></canvas>
+
+<main>
+  <section class="hero">
+    <div class="terminal-box boot">
+      <span class="blink">_</span> MIAU FINANCE v9.0 — Global Domination
+      <div class="progress-bar"><span></span></div>
+    </div>
+
+    <div class="cat-rocket">
+      <pre class="cat-art" aria-label="Cat riding a rocket">       /\_/\
+     ( o.o )
+      > ^ <
+     /_||_\</pre>
+      <div class="rocket">
+        <div class="rocket-body">
+          <div class="window">🐱</div>
+          <div class="fin left"></div>
+          <div class="fin right"></div>
+        </div>
+        <div class="flames">
+          <div class="flame f1"></div>
+          <div class="flame f2"></div>
+          <div class="flame f3"></div>
+        </div>
+      </div>
+    </div>
+
+    <h1 class="glitch" data-text="MIAU FINANCE">MIAU FINANCE</h1>
+    <p class="tagline" id="tagline"></p>
+    <div class="cursor-line">
+      <span class="prompt">miau@finance:~$</span>
+      <span class="cmd" id="cmd"></span>
+      <span class="cursor-blink">▌</span>
+    </div>
+  </section>
+
+  <section class="products">
+    <div class="terminal-box title">
+      <span class="prompt">root@miau:~$</span> ./products —all
+    </div>
+
+    <div class="grid">
+      <a href="http://localhost:5173" class="card" data-cmd="terminal">
+        <span class="card-icon">🖥️</span>
+        <span class="card-title">Terminal</span>
+        <span class="card-desc">The flagship terminal UI — 200+ commands, real-time markets, portfolio analytics</span>
+        <span class="card-path">./run/terminal.sh</span>
+      </a>
+
+      <a href="http://localhost:5174" class="card" data-cmd="learn">
+        <span class="card-icon">📚</span>
+        <span class="card-title">Miau Learning</span>
+        <span class="card-desc">121+ interactive courses, 18 certifications, 5 career tracks</span>
+        <span class="card-path">./run/education.sh</span>
+      </a>
+
+      <a href="http://localhost:3001/papers" class="card" data-cmd="papers">
+        <span class="card-icon">📄</span>
+        <span class="card-title">MiauPapers</span>
+        <span class="card-desc">104+ whitepapers — quantum finance, CBDC, AGI, ESG, DeFi</span>
+        <span class="card-path">./run/papers.sh</span>
+      </a>
+
+      <a href="http://localhost:5175" class="card" data-cmd="corp">
+        <span class="card-icon">🏢</span>
+        <span class="card-title">Miau Corp</span>
+        <span class="card-desc">Ecosystem overview, <span style="text-decoration:line-through;text-decoration-color:#ff3344;color:#ff6688">pricing</span>, cabinet, infrastructure</span>
+        <span style="display:block;font-size:10px;color:#00ff88;margin-top:2px">🐱 NOW FREE & OPEN SOURCE!</span>
+        <span class="card-path">./run/ecosystem.sh</span>
+      </a>
+
+      <a href="http://localhost:8000/docs" class="card" data-cmd="docs">
+        <span class="card-icon">🔌</span>
+        <span class="card-title">API Docs</span>
+        <span class="card-desc">515+ REST endpoints — Swagger & ReDoc documentation</span>
+        <span class="card-path">./run/api.sh</span>
+      </a>
+
+      <a href="http://localhost:5175/sdk" class="card" data-cmd="dev">
+        <span class="card-icon">📦</span>
+        <span class="card-title">SDK & Developers</span>
+        <span class="card-desc">Python, JavaScript & curl SDKs — plugin system</span>
+        <span class="card-path">./run/sdk.sh</span>
+      </a>
+
+      <a href="http://localhost:5181" class="card" data-cmd="galaxy">
+        <span class="card-icon">🌌</span>
+        <span class="card-title">Cat Galaxy</span>
+        <span class="card-desc">3D WebGL galaxy with 3000 stars & 20 service nodes</span>
+        <span class="card-path">./run/galaxy.sh</span>
+      </a>
+
+      <a href="http://localhost:3001/blog" class="card" data-cmd="blog">
+        <span class="card-icon">✍️</span>
+        <span class="card-title">Blog</span>
+        <span class="card-desc">News, insights, tutorials & cat trading stories</span>
+        <span class="card-path">./run/blog.sh</span>
+      </a>
+
+      <a href="http://localhost:3000" class="card" data-cmd="status">
+        <span class="card-icon">📊</span>
+        <span class="card-title">System Status</span>
+        <span class="card-desc">Grafana dashboards, health monitoring, uptime</span>
+        <span class="card-path">./run/status.sh</span>
+      </a>
+    </div>
+
+    <div class="terminal-box info">
+      <span class="prompt">miau@finance:~$</span> echo "All systems operational. 9 services running."
+    </div>
+  </section>
+
+  <footer>
+    <pre class="footer-cat">   /\_/\
+ ( o.o )
+  > ^ <
+ /_||_\    "Profit purringly."</pre>
+    <div class="footer-links">
+      <a href="https://github.com/LuZziD/cat-finance-analytics-shell-miau" target="_blank" rel="noopener">GitHub</a>
+      <span class="sep">|</span>
+      <a href="https://miaufinance.com">miaufinance.com</a>
+      <span class="sep">|</span>
+      <a href="http://localhost:5180">🚒 Service Desk</a>
+      <span class="sep">|</span>
+      <a href="http://localhost:5190/?redirect=http://localhost:8080">🐾 Pawdenity Login</a>
+      <span class="sep">|</span>
+      <a href="#" onclick="showLandingLogin();return false">🔑 Login</a>
+    </div>
+    <p class="copyright">© 2026 MIAU FINANCE — <span class="green">Profit purringly</span></p>
+    <div class="sysinfo">
+      <span id="uptime">UPTIME: 0d 0h 0m</span>
+      <span class="sep">|</span>
+      <span>SERVICES: 9/9 ONLINE</span>
+      <span class="sep">|</span>
+      <span>v9.0-global-domination</span>
+    </div>
+  </footer>
+</main>
+
+<script src="script.js"></script>
+
+<script>
+// Simple auth for landing page
+function showLandingLogin() {
+  const u = prompt('🐾 Username:');
+  if (!u) return;
+  const p = prompt('🔒 Password:');
+  if (!p) return;
+  fetch('http://localhost:8000/api/v1/auth/token', {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({username: u, password: p}),
+  }).then(r => { if (!r.ok) throw new Error(); return r.json(); })
+    .then(d => { localStorage.setItem('miau_token', d.access_token); localStorage.setItem('miau_user', u); alert('🐱 Logged in as ' + u + '! All tools unlocked.'); })
+    .catch(() => alert('😿 Login failed. Is the backend running?'));
+}
+</script>
+</body>
+</html>

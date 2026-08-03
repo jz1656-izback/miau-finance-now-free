@@ -1,0 +1,7 @@
+Page: Health Check
+Cat: 🩺
+Function: Returns API health status
+Description: Simple liveness and readiness probe that returns 200 OK when the backend is operational. Used by Docker, K8s, and load balancers to determine service health.
+API: GET /api/v1/health
+Output: JSON with status, version, uptime, database connectivity
+Tuna: 1

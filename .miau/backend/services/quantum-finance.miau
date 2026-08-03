@@ -1,0 +1,7 @@
+Page: Quantum Finance
+Cat: ⚛️
+Function: Quantum computing for portfolio optimization
+Description: QUBO formulation for portfolio optimization, quantum annealing (D-Wave), VQE/QAOA hybrid algorithms, and amplitude estimation for Monte Carlo risk and options pricing.
+API: —
+Output: Quantum-optimized portfolios, annealing schedules, hybrid results
+Tuna: 10

@@ -1,0 +1,7 @@
+Page: Immutable Root
+Cat: 🔒
+Function: Read-only root filesystem enforcement
+Description: Implements immutable root filesystem using overlayfs and tmpfiles.d. Only /var, /tmp, and /etc are writable. Prevents unauthorized binary modifications.
+API: —
+Output: Immutable root filesystem with tmpfiles configuration
+Tuna: 5

@@ -1,0 +1,7 @@
+Page: Learning Platform
+Cat: 🎓
+Function: Financial education courses
+Description: 230+ courses across investing, trading, DeFi, options, risk management, and professional development. 18 certifications with quizzes, progress tracking, and achievements.
+API: GET/POST /api/v1/education/*
+Output: Course catalog, lesson viewer, quiz interface, certificates
+Tuna: 8

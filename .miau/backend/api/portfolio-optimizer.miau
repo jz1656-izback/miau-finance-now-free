@@ -1,0 +1,7 @@
+Page: Portfolio Optimizer
+Cat: 🎯
+Function: Computes optimal portfolio allocations
+Description: Mean-variance optimization engine that maximizes Sharpe ratio, minimizes variance, or applies Black-Litterman models. Supports constraints, benchmarks, and efficient frontier computation.
+API: POST /api/v1/optimizer/*
+Output: Optimal weights, expected return, volatility, Sharpe ratio
+Tuna: 8

@@ -1,0 +1,7 @@
+Page: Admin Panel
+Cat: 🔧
+Function: System administration interface
+Description: Full admin panel for managing users, monitoring provider health, viewing API usage statistics, browsing server logs, and configuring system settings.
+API: —
+Output: Admin dashboard with health metrics, user management, logs
+Tuna: 6

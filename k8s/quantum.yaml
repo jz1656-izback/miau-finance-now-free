@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: quantum-config
+data:
+  DWAVE_API_URL: "https://cloud.dwavesys.com/sapi"
+  QUANTUM_SIMULATOR_THREADS: "4"
+  MAX_QUBO_SIZE: "100"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quantum-solver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quantum-solver
+  template:
+    metadata:
+      labels:
+        app: quantum-solver
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: solver
+        image: miau/quantum-solver:latest
+        ports:
+        - containerPort: 8006
+        envFrom:
+        - configMapRef:
+            name: quantum-config
+        resources:
+          requests:
+            cpu: "2"
+            memory: "4Gi"
+          limits:
+            cpu: "4"
+            memory: "8Gi"

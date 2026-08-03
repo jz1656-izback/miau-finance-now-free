@@ -1,0 +1,7 @@
+Page: WorldMap Data
+Cat: 🌍
+Function: Provides geospatial market data for 3D globe
+Description: Serves continent-sharded company marker data, exchange locations, trade route arcs, and overlay layers (weather, satellites, cats) for the WebGL MiauGlobe and Leaflet WorldMap.
+API: GET /api/v1/map/*
+Output: GeoJSON markers, arc coordinates, layer configs
+Tuna: 7

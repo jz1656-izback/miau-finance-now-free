@@ -1,0 +1,7 @@
+Page: Risk Analytics
+Cat: 🛡️
+Function: Calculates VaR, CVaR, and portfolio risk metrics
+Description: Comprehensive risk analysis including Value at Risk (parametric/historical/Monte Carlo), Conditional VaR, beta, stress testing, scenario analysis, Greeks, and rolling risk metrics.
+API: GET /api/v1/risk/*
+Output: VaR numbers, stress test results, risk decomposition, Greeks
+Tuna: 9

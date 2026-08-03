@@ -1,0 +1,1 @@
+{"title": "ESG & Sustainability", "panels": [{"title": "Avg ESG Score", "type": "stat", "targets": [{"expr": "miau_esg_avg_score"}]}, {"title": "E/S/G Distribution", "type": "pie", "targets": [{"expr": "miau_esg_distribution"}]}]}

@@ -1,0 +1,7 @@
+Page: Broker Integrations
+Cat: 🏦
+Function: Connects to external brokerage APIs
+Description: Integrates with Alpaca, Interactive Brokers, DEGIRO, Saxo Bank, Rakuten, and Zerodha for real trading. Handles auth, order routing, position sync, and portfolio reconciliation.
+API: —
+Output: Broker accounts, positions, orders, trade execution status
+Tuna: 8

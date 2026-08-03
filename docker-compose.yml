@@ -1,0 +1,299 @@
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --requirepass ${REDIS_PASSWORD:-miau_redis}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-miau_redis}", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  postgres:
+    image: postgres:16
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: miau
+      POSTGRES_USER: miau
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./services/postgres/init:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-miau}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  minio:
+    image: minio/minio:latest
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    env_file:
+      - .env
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    # 🔒 SECURITY (V7-005): run as non-root, drop all capabilities
+    user: "10001:10001"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./backend/app:/app/app
+      - backend_logs:/var/log/miau
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  frontend:
+    build:
+      context: ./frontend
+      target: development
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: http://backend:8000
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend/src:/build/src
+      - ./frontend/public:/build/public
+      - ./frontend/index.html:/build/index.html
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O-", "http://localhost:5173"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+  cube:
+    image: cubejs/cube:latest
+    ports:
+      - "4000:4000"
+    env_file:
+      - .env
+    environment:
+      CUBEJS_DB_TYPE: postgres
+      CUBEJS_DB_HOST: postgres
+      CUBEJS_DB_PORT: 5432
+      CUBEJS_DB_NAME: ${POSTGRES_DB:-miau}
+      CUBEJS_DB_USER: ${POSTGRES_USER:-miau}
+      CUBEJS_DB_PASS: ${CUBEJS_DB_PASS:-${POSTGRES_PASSWORD}}
+      CUBEJS_API_SECRET: ${CUBEJS_API_SECRET}
+      CUBEJS_DEV_MODE: "true"
+    volumes:
+      - ./services/cube/schema:/cube/conf/schema
+      - ./services/cube/cube.js:/cube/conf/cube.js
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  superset:
+    image: apache/superset:latest
+    ports:
+      - "8088:8088"
+    env_file:
+      - .env
+    environment:
+      SUPERSET_SECRET_KEY: ${SUPERSET_SECRET_KEY}
+      SUPERSET_ADMIN_USERNAME: ${SUPERSET_ADMIN_USERNAME:-superset_admin}
+      SUPERSET_ADMIN_PASSWORD: ${SUPERSET_ADMIN_PASSWORD}
+    volumes:
+      - superset_data:/app/superset_home
+      - ./services/superset/config:/app/pythonpath
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8088/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    command: >
+      sh -c "
+        (superset fab list-users | grep -q \"$$SUPERSET_ADMIN_USERNAME\") ||
+        superset fab create-admin --username \"$$SUPERSET_ADMIN_USERNAME\" --password \"$$SUPERSET_ADMIN_PASSWORD\" --firstname Admin --lastname User --email admin@miau.local &&
+        superset db upgrade &&
+        superset init &&
+        superset run -p 8088 --with-threads --reload --debugger
+      "
+
+  airflow:
+    image: apache/airflow:2.9.0
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER:-miau}:${POSTGRES_PASSWORD}@postgres:5432/airflow
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__WEBSERVER__DEFAULT_UI_TIMEZONE: UTC
+      AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW_FERNET_KEY:-miau-fernet-key-change-in-production}
+      _AIRFLOW_DB_UPGRADE: "true"
+      _AIRFLOW_WWW_USER_CREATE: "true"
+      _AIRFLOW_WWW_USER_USERNAME: ${AIRFLOW_USERNAME:-airflow_admin}
+      _AIRFLOW_WWW_USER_PASSWORD: ${AIRFLOW_PASSWORD}
+    volumes:
+      - ./services/airflow/dags:/opt/airflow/dags
+      - ./services/airflow/config:/opt/airflow/config
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./services/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_USERNAME:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin}
+      GF_INSTALL_PLUGINS: grafana-piechart-panel
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./services/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./services/grafana/datasources:/etc/grafana/provisioning/datasources
+    restart: unless-stopped
+    depends_on:
+      prometheus:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  education-platform:
+    image: node:20-alpine
+    ports:
+      - "5174:5174"
+    working_dir: /app
+    volumes:
+      - ./services/education-platform:/app
+      - education_node_modules:/app/node_modules
+    command: sh -c "npm install --include=dev && npm run dev -- --host 0.0.0.0"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O-", "http://localhost:5174"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+  ecosystem-site:
+    image: node:20-alpine
+    ports:
+      - "5175:5175"
+    working_dir: /app
+    volumes:
+      - ./services/ecosystem-site:/app
+      - ecosystem_node_modules:/app/node_modules
+    command: sh -c "npm install --include=dev && npm run dev -- --host 0.0.0.0"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O-", "http://localhost:5175"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+  marketing-dashboard:
+    profiles: ["full"]
+    image: node:20-alpine
+    ports:
+      - "5176:5176"
+    working_dir: /app
+    environment:
+      VITE_API_URL: http://backend:8000
+    volumes:
+      - ./services/marketing-dashboard:/app
+      - marketing_node_modules:/app/node_modules
+    command: sh -c "npm install --include=dev && npm run dev -- --host 0.0.0.0"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O-", "http://localhost:5176"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  postgres_data:
+  minio_data:
+  superset_data:
+  redis_data:
+  grafana_data:
+  prometheus_data:
+  backend_logs:
+  education_node_modules:
+  ecosystem_node_modules:
+  marketing_node_modules:

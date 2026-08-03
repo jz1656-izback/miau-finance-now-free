@@ -1,0 +1,7 @@
+Page: Ticket Board
+Cat: 🚒
+Function: Customer support ticket system
+Description: Miau Fire Brigade ticket management system with ticket creation, assignment, status tracking, priority levels, and real-time updates for customer support.
+API: GET/POST/PUT /api/v1/tickets/*
+Output: Ticket list, detail view, activity timeline
+Tuna: 5

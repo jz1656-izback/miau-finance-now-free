@@ -1,0 +1,7 @@
+Page: AI Advisor
+Cat: 🤖
+Function: GPT-4o powered financial advisor
+Description: AI-powered portfolio analysis, market insights, and risk assessment using GPT-4 and Claude models. Supports natural language queries, automated report generation, and multi-agent research.
+API: POST /api/v1/ai/*
+Output: Analysis text, recommendations, confidence scores, citations
+Tuna: 10

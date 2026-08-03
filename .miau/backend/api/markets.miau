@@ -1,0 +1,7 @@
+Page: Markets
+Cat: 📈
+Function: Provides live market data for all asset classes
+Description: Real-time and historical prices for stocks, crypto, forex, commodities, and treasury yields. Aggregates from 50+ data providers including Finnhub, CoinGecko, Alpha Vantage, and FRED.
+API: GET /api/v1/markets/*
+Output: Price, change, volume, OHLCV, sparkline data
+Tuna: 8

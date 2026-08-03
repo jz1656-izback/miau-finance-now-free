@@ -1,0 +1,48 @@
+{
+  "title": "Miau Fire Brigade — Ticket Trends",
+  "uid": "miau-fire-brigade",
+  "description": "Service Desk ticket metrics: open vs resolved, firefighter workload, response times",
+  "tags": ["miau", "service-desk", "tickets"],
+  "schemaVersion": 38,
+  "version": 1,
+  "timezone": "browser",
+  "panels": [
+    {
+      "title": "Open vs Resolved Tickets",
+      "type": "timeseries",
+      "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8},
+      "targets": [
+        {"expr": "sum(miau_tickets{status=\"open\"})", "legendFormat": "Open"},
+        {"expr": "sum(miau_tickets{status=\"resolved\"})", "legendFormat": "Resolved"}
+      ]
+    },
+    {
+      "title": "Tickets by Category",
+      "type": "piechart",
+      "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8},
+      "targets": [
+        {"expr": "sum by (category) (miau_tickets)", "legendFormat": "{{category}}"}
+      ]
+    },
+    {
+      "title": "Firefighter Workload",
+      "type": "bargauge",
+      "gridPos": {"x": 0, "y": 8, "w": 12, "h": 8},
+      "targets": [
+        {"expr": "sum by (assigned_to) (miau_tickets{status!=\"resolved\"})", "legendFormat": "{{assigned_to}}"}
+      ]
+    },
+    {
+      "title": "Avg Response Time (purrs)",
+      "type": "stat",
+      "gridPos": {"x": 12, "y": 8, "w": 6, "h": 4},
+      "targets": [{"expr": "avg(miau_ticket_response_time_seconds) / 47", "legendFormat": "Purrs"}]
+    },
+    {
+      "title": "Total Pokes 👆",
+      "type": "stat",
+      "gridPos": {"x": 18, "y": 8, "w": 6, "h": 4},
+      "targets": [{"expr": "sum(miau_ticket_pokes_total)", "legendFormat": "Pokes"}]
+    }
+  ]
+}

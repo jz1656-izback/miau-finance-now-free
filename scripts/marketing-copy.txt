@@ -1,0 +1,49 @@
+🐱 MIAU FINANCE — COPY-PASTE MARKETING
+
+=== REDDIT (r/SideProject, r/financialindependence) ===
+Title: I built a Bloomberg Terminal for cats. And humans. It's free to start.
+
+Body:
+I spent months building Miau Finance — a financial analytics terminal that does what Bloomberg does, but for €0–€99/mo instead of $24k/yr.
+
+160+ commands. AI advisor. 3D charts. Real-time markets. Paper trading. Quant analysis. And yes, there are cats everywhere.
+
+FREE tier: market data, portfolio tracking, terminal access, unlimited commands.
+PRO tier (€99/mo): AI advisor, paper trading, backtesting, all data providers.
+Enterprise (€396/mo): workspaces, custom brokers, SLA.
+
+Built with FastAPI + React/TypeScript. Open source (proprietary license).
+
+Try it: https://miau.finance
+Type 'help' to start. Your cat will thank you. 🐱
+
+=== TWITTER/X ===
+🐱 I built a Bloomberg Terminal competitor. For cats. 160 commands. AI advisor. 3D charts. Free to start.
+
+Bloomberg: $24k/year
+Miau: €0–€99/month
+
+Try it free: https://miau.finance
+
+#FinTech #Bloomberg #trading #AI #buildinpublic
+
+=== DISCORD (Finance/Trading servers) ===
+Hey! I built a financial terminal — think Bloomberg but affordable and with cats 🐱
+
+• 160+ commands for market data, analysis, trading
+• AI advisor for portfolio recommendations
+• 3D charts and real-time data
+• Free tier available, Pro €99/mo
+
+Would love feedback from actual traders. Try it here: https://miau.finance
+
+=== WHATSAPP — DM to friends who trade ===
+Bro! Check this out. I built a Bloomberg Terminal clone. For real. With AI. And cats.
+160 commands, live markets, paper trading, quant analysis.
+Free to use. Pro is €99/mo — still 95% cheaper than Bloomberg.
+Type 'pricing' in the terminal. Tell me what you think! 🐱
+
+=== TAGLINE ===
+"Bloomberg costs $24k/yr. Miau costs €0. Your cat approves."
+"Miau Finance — Where cats trade stocks and portfolios purr with delight."
+"The only financial terminal that comes with a cat."

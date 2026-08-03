@@ -1,0 +1,7 @@
+Page: Audit Log
+Cat: 📝
+Function: System audit logging configuration
+Description: Configures comprehensive audit logging for all system events: user logins, service starts/stops, firewall changes, and privilege escalations.
+API: —
+Output: Structured audit log entries via syslog
+Tuna: 4

@@ -1,0 +1,7 @@
+Page: Auth Login
+Cat: 🔐
+Function: Authenticates users and issues JWT tokens
+Description: Handles user login via username/password credentials. Returns access and refresh JWT tokens with configurable expiration. Supports Pawdenity SSO integration.
+API: POST /api/v1/auth/token
+Output: JWT access token + refresh token + user profile
+Tuna: 3

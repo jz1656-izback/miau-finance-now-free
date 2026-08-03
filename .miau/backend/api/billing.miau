@@ -1,0 +1,7 @@
+Page: Billing
+Cat: 💰
+Function: Manages subscriptions and payments
+Description: Stripe-powered subscription management with free/pro/enterprise tiers. Handles checkout, webhooks, invoice generation, usage-based billing, and auto-topup for API keys.
+API: GET/POST /api/v1/billing/*
+Output: Subscription status, invoices, payment history, usage metrics
+Tuna: 6

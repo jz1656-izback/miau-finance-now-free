@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: intl-brokers-config
+data:
+  DEGIRO_BASE_URL: "https://degiro.adaptable.app"
+  SAXO_BASE_URL: "https://gateway.saxobank.com/sim/openapi"
+  RAKUTEN_BASE_URL: "https://api.rakuten-sec.co.jp"
+  ZERODHA_BASE_URL: "https://api.kite.trade"

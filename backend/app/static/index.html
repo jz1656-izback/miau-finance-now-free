@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Miau Finance — Services Dashboard 🐱</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#06080f;color:#c8d6e5;font-family:"JetBrains Mono","Fira Code",monospace;padding:32px;min-height:100vh}
+h1{color:#00e676;font-size:24px;margin-bottom:4px}
+.sub{color:#4a5568;font-size:11px;margin-bottom:24px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;max-width:900px}
+.card{background:rgba(19,19,26,0.9);border:1px solid rgba(42,42,64,0.4);border-radius:10px;padding:16px;transition:border-color .2s,transform .15s}
+.card:hover{border-color:rgba(0,230,118,0.25);transform:translateY(-1px)}
+.card .name{color:#00e676;font-size:13px;font-weight:bold;margin-bottom:4px}
+.card .url{color:#4a5568;font-size:11px;word-break:break-all;margin-bottom:6px}
+.card .desc{color:#8899b0;font-size:10px}
+.card .port{color:#facc15;font-size:10px;margin-top:4px}
+a{color:inherit;text-decoration:none}
+.section-label{color:#a855f7;font-size:12px;text-transform:uppercase;letter-spacing:.5px;margin:24px 0 10px;grid-column:1/-1}
+.external{grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:1px solid rgba(42,42,64,0.2);font-size:10px;color:#4a5568;display:flex;gap:16px;flex-wrap:wrap}
+.external a{color:#00e676;text-decoration:none}
+.external a:hover{text-decoration:underline}
+.footer{margin-top:32px;font-size:10px;color:#2a2a40;text-align:center}
+</style>
+</head>
+<body>
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+  <span style="font-size:28px">🐱</span>
+  <div>
+    <h1>Miau Finance</h1>
+    <div class="sub">Services Dashboard — all running services at a glance</div>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="section-label">🖥️ Core Applications</div>
+
+  <a href="http://localhost:5173" target="_blank" class="card">
+    <div class="name">🐱 Terminal UI</div>
+    <div class="url">localhost:5173</div>
+    <div class="desc">Cat-themed financial terminal — live market data, AI advisor, trading</div>
+    <div class="port">Port 5173</div>
+  </a>
+
+  <a href="http://localhost:8000/docs" target="_blank" class="card">
+    <div class="name">📡 REST API Docs</div>
+    <div class="url">localhost:8000/docs</div>
+    <div class="desc">Swagger UI — 150+ endpoints, try them live</div>
+    <div class="port">Port 8000</div>
+  </a>
+
+  <a href="http://localhost:8000/redoc" target="_blank" class="card">
+    <div class="name">📄 API Reference</div>
+    <div class="url">localhost:8000/redoc</div>
+    <div class="desc">ReDoc — clean API reference documentation</div>
+    <div class="port">Port 8000</div>
+  </a>
+
+  <a href="http://localhost:3001" target="_blank" class="card">
+    <div class="name">🌐 Marketing Homepage</div>
+    <div class="url">localhost:3001</div>
+    <div class="desc">Landing page with features, <span style="text-decoration:line-through;text-decoration-color:#ff3344;color:#ff6688">pricing</span>, blog, papers</div>
+    <div class="port">Port 3001</div>
+  </a>
+
+  <a href="http://localhost:3001/papers" target="_blank" class="card">
+    <div class="name">📜 MiauPapers (42)</div>
+    <div class="url">localhost:3001/papers</div>
+    <div class="desc">42 whitepapers covering all 27 phases of Miau Finance</div>
+    <div class="port">Port 3001</div>
+  </a>
+
+  <a href="http://localhost:3001/blog" target="_blank" class="card">
+    <div class="name">📝 Blog</div>
+    <div class="url">localhost:3001/blog</div>
+    <div class="desc">Quantum Finance, Catberg, v2.0.0 launch, and more</div>
+    <div class="port">Port 3001</div>
+  </a>
+
+  <div class="section-label">🔧 Admin & Monitoring</div>
+
+  <a href="http://localhost:8000/static/admin.html" target="_blank" class="card">
+    <div class="name">📊 System Monitor</div>
+    <div class="url">localhost:8000/static/admin.html</div>
+    <div class="desc">Service health, cache stats, API metrics, errors</div>
+    <div class="port">Port 8000</div>
+  </a>
+
+  <a href="http://localhost:8000/logs-viewer" target="_blank" class="card">
+    <div class="name">📋 Log Viewer</div>
+    <div class="url">localhost:8000/logs-viewer</div>
+    <div class="desc">Real-time log stream with filtering and search</div>
+    <div class="port">Port 8000</div>
+  </a>
+
+  <a href="http://localhost:3000" target="_blank" class="card">
+    <div class="name">📈 Grafana</div>
+    <div class="url">localhost:3000</div>
+    <div class="desc">Prometheus metrics dashboards — 6 panels</div>
+    <div class="port">Port 3000</div>
+  </a>
+
+  <a href="http://localhost:9090" target="_blank" class="card">
+    <div class="name">📡 Prometheus</div>
+    <div class="url">localhost:9090</div>
+    <div class="desc">Metrics collection and alerting</div>
+    <div class="port">Port 9090</div>
+  </a>
+
+  <div class="section-label">🗄️ Data & Analytics</div>
+
+  <a href="http://localhost:4000" target="_blank" class="card">
+    <div class="name">📦 Cube.js</div>
+    <div class="url">localhost:4000</div>
+    <div class="desc">Analytics API — semantic layer for data queries</div>
+    <div class="port">Port 4000</div>
+  </a>
+
+  <a href="http://localhost:8088" target="_blank" class="card">
+    <div class="name">📊 Superset</div>
+    <div class="url">localhost:8088</div>
+    <div class="desc">BI dashboards and data exploration</div>
+    <div class="port">Port 8088 · admin / admin</div>
+  </a>
+
+  <a href="http://localhost:8080" target="_blank" class="card">
+    <div class="name">⚡ Airflow</div>
+    <div class="url">localhost:8080</div>
+    <div class="desc">Workflow orchestration — ETL pipelines</div>
+    <div class="port">Port 8080 · admin / admin</div>
+  </a>
+
+  <a href="http://localhost:9001" target="_blank" class="card">
+    <div class="name">💾 MinIO Console</div>
+    <div class="url">localhost:9001</div>
+    <div class="desc">Object storage — S3-compatible admin console</div>
+    <div class="port">Port 9001</div>
+  </a>
+</div>
+
+<div class="external">
+  <span>📂 External:</span>
+  <a href="https://github.com/LuZziD/cat-finance-analytics-shell-miau" target="_blank">GitHub Repo</a>
+  <span>·</span>
+  <a href="https://github.com/LuZziD/cat-finance-analytics-shell-miau/blob/dev/ROADMAP.md" target="_blank">Roadmap</a>
+  <span>·</span>
+  <a href="https://github.com/LuZziD/cat-finance-analytics-shell-miau/blob/dev/CHANGELOG.md" target="_blank">Changelog</a>
+  <span>·</span>
+  <a href="https://github.com/LuZziD/cat-finance-analytics-shell-miau/blob/dev/MIAUPAPERS.md" target="_blank">MiauPapers</a>
+  <span>·</span>
+  <a href="https://github.com/LuZziD/cat-finance-analytics-shell-miau/blob/dev/docs/API.md" target="_blank">API Docs</a>
+</div>
+
+<div class="footer">🐱 Miau Finance v2.3.0 — 10 Docker services, 800+ tests, 27 phases complete</div>
+</body>
+</html>

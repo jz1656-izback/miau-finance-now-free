@@ -1,0 +1,7 @@
+Page: Docker Compose
+Cat: 🐳
+Function: Container orchestration configuration
+Description: Docker Compose setup for 12+ services including PostgreSQL, Redis, MinIO, backend, frontend, Cube.js, Superset, Airflow, Prometheus, and Grafana.
+API: —
+Output: Multi-service container deployment with health checks
+Tuna: 5

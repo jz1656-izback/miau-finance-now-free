@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Miau CeoScratchSheet — Unified Dashboard</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🐱%3C/text%3E%3C/svg%3E">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#05080a;color:#c8d6d0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;min-height:100vh;overflow-x:hidden}
+
+/* Floating Background */
+.bg-float{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bg-float span{position:absolute;opacity:0.05;font-size:30px;animation:bgDrift 20s ease-in-out infinite;user-select:none}
+.bg-float span:nth-child(odd){animation-duration:25s}
+.bg-float span:nth-child(3n){animation-duration:18s}
+.bg-float span:nth-child(4n+1){animation-duration:30s}
+@keyframes bgDrift{0%,100%{transform:translate(0,0) rotate(0)}20%{transform:translate(25px,-20px) rotate(5deg)}40%{transform:translate(-15px,-40px) rotate(-3deg)}60%{transform:translate(-30px,-15px) rotate(4deg)}80%{transform:translate(15px,-30px) rotate(-2deg)}}
+
+/* Coin Burst */
+.coin-burst{position:fixed;pointer-events:none;z-index:999;font-size:20px;animation:coinFly 1s ease-out forwards}
+@keyframes coinFly{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-80px) scale(1.5) translateX(random(-30,30)*1px)}}
+
+/* Header */
+.header{background:rgba(5,8,10,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,255,136,0.06);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.h-logo{display:flex;align-items:center;gap:12px}
+.h-logo .h-icon{font-size:32px;animation:catBounce 3s ease-in-out infinite}
+@keyframes catBounce{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-5px) rotate(-5deg)}}
+.h-logo .h-name{font-size:18px;font-weight:900;background:linear-gradient(135deg,#00ff88,#00ddff,#aa66ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.5px}
+.h-logo .h-sub{font-size:10px;color:rgba(200,214,208,0.2);font-family:monospace}
+.h-stats{display:flex;gap:16px;font-size:12px;font-family:monospace}
+.h-stats span{color:rgba(200,214,208,0.3)}
+.h-stats strong{color:#00ff88}
+.h-user{font-size:11px;color:rgba(200,214,208,0.2);font-family:monospace}
+
+.mx-auto{max-width:1400px;margin:0 auto;padding:0 20px}
+
+/* Hero */
+.hero{text-align:center;padding:40px 20px 20px;position:relative}
+.hero h1{font-size:clamp(24px,4vw,48px);font-weight:900;background:linear-gradient(135deg,#00ff88,#00ddff,#aa66ff,#ff6644);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
+.hero .sub{font-size:13px;color:rgba(200,214,208,0.3);font-family:monospace;margin-bottom:20px}
+.hero .sub strong{color:#ff8844}
+
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:24px;max-width:1000px;margin-left:auto;margin-right:auto}
+.stat-card{text-align:center;padding:16px 12px;background:rgba(255,255,255,0.01);border:1px solid rgba(255,255,255,0.04);border-radius:12px;transition:all 0.3s}
+.stat-card:hover{border-color:rgba(0,255,136,0.1);transform:translateY(-2px)}
+.stat-card .s-icon{font-size:24px;margin-bottom:4px}
+.stat-card .s-value{font-size:28px;font-weight:900;color:#00ff88;font-family:monospace}
+.stat-card .s-label{font-size:10px;color:rgba(200,214,208,0.3);margin-top:2px;text-transform:uppercase;letter-spacing:1px}
+
+/* Section */
+.section{margin-bottom:32px}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.section-header h2{font-size:16px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px}
+.section-header .tag{font-size:10px;color:rgba(200,214,208,0.2);font-family:monospace}
+
+/* Grids */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.grid-4{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+@media(max-width:768px){.grid-2,.grid-3{grid-template-columns:1fr}}
+
+/* Cards */
+.card{background:rgba(255,255,255,0.01);border:1px solid rgba(255,255,255,0.04);border-radius:12px;padding:16px;transition:all 0.2s}
+.card:hover{border-color:rgba(0,255,136,0.08)}
+.card .c-title{font-size:12px;font-weight:600;color:rgba(200,214,208,0.5);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:6px}
+.card .c-body{font-size:13px;color:rgba(200,214,208,0.6);line-height:1.6}
+
+/* Service card */
+.svc-card{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:rgba(255,255,255,0.01);border:1px solid rgba(255,255,255,0.04);border-radius:10px;transition:all 0.2s}
+.svc-card:hover{border-color:rgba(0,255,136,0.08);transform:translateX(3px)}
+.svc-card .sc-left{display:flex;align-items:center;gap:10px}
+.svc-card .sc-name{font-size:13px;font-weight:600;color:#fff}
+.svc-card .sc-port{font-size:10px;color:rgba(200,214,208,0.15);font-family:monospace}
+.svc-card .sc-status{font-size:10px;padding:3px 10px;border-radius:100px;font-family:monospace}
+.svc-card .sc-status.ok{background:rgba(0,255,136,0.08);color:#00ff88;border:1px solid rgba(0,255,136,0.12)}
+.svc-card .sc-status.slow{background:rgba(255,204,0,0.08);color:#ffcc00;border:1px solid rgba(255,204,0,0.12)}
+.svc-card .sc-status.down{background:rgba(255,68,68,0.08);color:#ff4444;border:1px solid rgba(255,68,68,0.12)}
+.svc-card .sc-status.check{background:rgba(255,255,255,0.03);color:rgba(200,214,208,0.2);border:1px solid rgba(255,255,255,0.04)}
+
+/* Ticket mini */
+.ticket-mini{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.02)}
+.ticket-mini:last-child{border-bottom:none}
+.ticket-mini .tm-emoji{font-size:16px;flex-shrink:0}
+.ticket-mini .tm-title{font-size:12px;color:rgba(200,214,208,0.6);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ticket-mini .tm-status{font-size:10px;padding:2px 8px;border-radius:100px;font-family:monospace;flex-shrink:0}
+.ticket-mini .tm-status.open{background:rgba(255,136,0,0.08);color:#ff8800}
+.ticket-mini .tm-status.progress{background:rgba(0,170,255,0.08);color:#00aaff}
+.ticket-mini .tm-status.resolved{background:rgba(0,255,136,0.08);color:#00ff88}
+
+/* Cat corner */
+.cat-corner{display:flex;align-items:center;gap:16px;padding:20px;background:rgba(0,255,136,0.01);border:1px solid rgba(0,255,136,0.04);border-radius:16px}
+.cat-corner .cc-emoji{font-size:48px}
+.cat-corner .cc-name{font-size:16px;font-weight:700;color:#fff}
+.cat-corner .cc-role{font-size:11px;color:rgba(200,214,208,0.3)}
+.cat-corner .cc-quote{font-size:13px;color:rgba(200,214,208,0.4);font-style:italic;margin-top:4px}
+.cat-corner .cc-stats{display:flex;gap:12px;margin-top:8px;font-size:11px;color:rgba(200,214,208,0.2);font-family:monospace}
+
+/* Activity feed */
+.activity-item{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.015);font-size:12px;color:rgba(200,214,208,0.4)}
+.activity-item .a-emoji{font-size:14px}
+.activity-item .a-text{flex:1}
+.activity-item .a-time{font-size:10px;color:rgba(200,214,208,0.15);font-family:monospace}
+
+/* Quick links */
+.quick-links{display:flex;flex-wrap:wrap;gap:8px}
+.quick-link{padding:8px 16px;border-radius:100px;border:1px solid rgba(255,255,255,0.04);color:rgba(200,214,208,0.4);text-decoration:none;font-size:12px;transition:all 0.2s}
+.quick-link:hover{background:rgba(0,255,136,0.04);border-color:rgba(0,255,136,0.1);color:#00ff88}
+
+/* Hiss Button */
+.hiss-btn{margin-top:8px;padding:4px 12px;border-radius:100px;border:1px solid rgba(255,68,68,0.12);background:rgba(255,68,68,0.03);color:#ff6644;font-size:10px;cursor:pointer;transition:all 0.2s;font-family:inherit}
+.hiss-btn:hover{background:rgba(255,68,68,0.1);border-color:rgba(255,68,68,0.3);transform:scale(1.05)}
+
+/* Killable Number */
+.kill-row{display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(255,255,255,0.01);border:1px solid rgba(255,255,255,0.03);border-radius:10px;margin-bottom:8px;transition:all 0.3s;position:relative;overflow:hidden}
+.kill-row:hover{border-color:rgba(255,68,68,0.08);background:rgba(255,68,68,0.01)}
+.kill-row .kr-icon{font-size:22px;width:28px;text-align:center}
+.kill-row .kr-label{font-size:12px;color:rgba(200,214,208,0.4);min-width:100px}
+.kill-row .kr-value{font-size:20px;font-weight:900;color:#00ff88;font-family:monospace;flex:1;transition:all 0.3s}
+.kill-row .kr-value.dead{color:#ff4444;text-decoration:line-through;opacity:0.4}
+.kill-row .kr-gun{font-size:16px;cursor:pointer;opacity:0.2;transition:all 0.2s;padding:4px}
+.kill-row .kr-gun:hover{opacity:1;transform:scale(1.2);text-shadow:0 0 10px rgba(255,68,68,0.5)}
+.kill-row .kr-cat{font-size:16px;opacity:0.15}
+.kill-row.shot{animation:shotBlast 0.5s ease}
+@keyframes shotBlast{0%{background:rgba(255,68,68,0.2)}50%{background:rgba(255,68,68,0.1);transform:translateX(-5px)}100%{background:transparent;transform:translateX(0)}}
+.kill-row .kr-skull{font-size:20px;display:none;animation:skullPop 0.4s ease}
+.kill-row .kr-skull.show{display:inline-block}
+@keyframes skullPop{0%{transform:scale(0) rotate(-90deg)}50%{transform:scale(1.3) rotate(10deg)}100%{transform:scale(1) rotate(0)}}
+
+/* Refresh */
+.refresh-btn{background:none;border:1px solid rgba(255,255,255,0.04);color:rgba(200,214,208,0.2);padding:4px 12px;border-radius:100px;font-size:10px;cursor:pointer;transition:all 0.2s;font-family:monospace}
+.refresh-btn:hover{color:#00ff88;border-color:rgba(0,255,136,0.1)}
+.refresh-btn.spin{animation:spin 0.6s linear}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Footer */
+.footer{text-align:center;padding:24px;border-top:1px solid rgba(255,255,255,0.02);font-size:10px;color:rgba(200,214,208,0.08);font-family:monospace}
+</style>
+</head>
+<body>
+
+<div class="bg-float">
+  <span style="top:5%;left:3%;font-size:40px">💰</span>
+  <span style="top:12%;right:8%;font-size:30px">🪙</span>
+  <span style="bottom:15%;left:5%;font-size:35px">💎</span>
+  <span style="top:40%;right:3%;font-size:25px">🐟</span>
+  <span style="bottom:30%;left:10%;font-size:40px">🐱</span>
+  <span style="top:60%;right:8%;font-size:20px">💵</span>
+  <span style="top:20%;left:30%;font-size:28px">💰</span>
+  <span style="bottom:40%;right:15%;font-size:32px">🪙</span>
+  <span style="top:70%;left:5%;font-size:24px">💎</span>
+  <span style="bottom:5%;right:25%;font-size:26px">🐟</span>
+  <span style="top:50%;left:40%;font-size:18px">🐱</span>
+  <span style="bottom:20%;left:50%;font-size:30px">💵</span>
+  <span style="top:8%;left:60%;font-size:22px">💰</span>
+  <span style="bottom:10%;right:40%;font-size:28px">🪙</span>
+  <span style="top:35%;left:70%;font-size:35px">💎</span>
+  <span style="bottom:45%;right:5%;font-size:20px">🐟</span>
+  <span style="top:80%;left:20%;font-size:24px">🐱</span>
+  <span style="bottom:50%;left:3%;font-size:30px">💵</span>
+</div>
+
+<div class="header">
+  <div class="h-logo">
+    <span class="h-icon">🐱</span>
+    <div>
+      <div class="h-name">MIAU CEOSCRATCHSHEET</div>
+      <div class="h-sub">v1.0 · Unified Ecosystem Dashboard</div>
+    </div>
+  </div>
+  <div class="h-stats">
+    <span>🔥 <strong id="hFireCount">—</strong> fires</span>
+    <span>🐱 <strong id="hActiveCats">—</strong> on duty</span>
+    <span>⏱️ <strong id="hUptime">—</strong></span>
+  </div>
+  <div class="h-user" id="hUser"></div>
+</div>
+
+<div class="mx-auto">
+
+<div class="hero">
+  <h1>🐱 THE BIG PICTURE</h1>
+  <div class="sub">All Miau services · Tickets · Cats · Tuna · <strong id="heroTime"></strong></div>
+</div>
+
+<div class="stats-row" id="statsRow">
+  <div class="stat-card"><div class="s-icon">🖥️</div><div class="s-value" id="statServices">—</div><div class="s-label">Services Online</div></div>
+  <div class="stat-card"><div class="s-icon">🎫</div><div class="s-value" id="statTickets">—</div><div class="s-label">Open Tickets</div></div>
+  <div class="stat-card"><div class="s-icon">🔥</div><div class="s-value" id="statFires">—</div><div class="s-label">Active Fires</div></div>
+  <div class="stat-card"><div class="s-icon">👨‍🚒</div><div class="s-value">5</div><div class="s-label">Firefighters</div></div>
+  <div class="stat-card"><div class="s-icon">🐟</div><div class="s-value">∞</div><div class="s-label">Tuna Reserves</div></div>
+  <div class="stat-card"><div class="s-icon">🐱</div><div class="s-value">9</div><div class="s-label">Cat Lives Used</div></div>
+</div>
+
+<!-- 💰 CEO Cash Numbers -->
+<div class="section">
+  <div class="section-header">
+    <h2>💰 Boss Cash Numbers</h2>
+    <span class="tag">click 🔫 to kill numbers you don't like</span>
+  </div>
+  <div id="cashSpreadsheet">
+    <div class="kill-row" data-idx="0"><span class="kr-icon">💵</span><span class="kr-label">Revenue (MRR)</span><span class="kr-value">€ 247,892</span><span class="kr-cat">🐱</span><span class="kr-gun" onclick="killNumber(0)">🔫</span><span class="kr-skull">💀</span></div>
+    <div class="kill-row" data-idx="1"><span class="kr-icon">📈</span><span class="kr-label">Profit Margin</span><span class="kr-value">64.3%</span><span class="kr-cat">🐱</span><span class="kr-gun" onclick="killNumber(1)">🔫</span><span class="kr-skull">💀</span></div>
+    <div class="kill-row" data-idx="2"><span class="kr-icon">🏦</span><span class="kr-label">Tuna Valuation</span><span class="kr-value">€ 12,400,000</span><span class="kr-cat">🐱</span><span class="kr-gun" onclick="killNumber(2)">🔫</span><span class="kr-skull">💀</span></div>
+    <div class="kill-row" data-idx="3"><span class="kr-icon">🔥</span><span class="kr-label">Monthly Burn</span><span class="kr-value">€ 42,000</span><span class="kr-cat">🐱</span><span class="kr-gun" onclick="killNumber(3)">🔫</span><span class="kr-skull">💀</span></div>
+    <div class="kill-row" data-idx="4"><span class="kr-icon">🪙</span><span class="kr-label">Cash Runway</span><span class="kr-value">47 months</span><span class="kr-cat">🐱</span><span class="kr-gun" onclick="killNumber(4)">🔫</span><span class="kr-skull">💀</span></div>
+    <div class="kill-row" data-idx="5"><span class="kr-icon">🐟</span><span class="kr-label">Tuna per Quarter</span><span class="kr-value">9,999 🐟</span><span class="kr-cat">🐱</span><span class="kr-gun" onclick="killNumber(5)">🔫</span><span class="kr-skull">💀</span></div>
+    <div class="kill-row" data-idx="6"><span class="kr-icon">🧮</span><span class="kr-label">API Calls / Month</span><span class="kr-value">12.4M</span><span class="kr-cat">🐱</span><span class="kr-gun" onclick="killNumber(6)">🔫</span><span class="kr-skull">💀</span></div>
+    <div class="kill-row" data-idx="7"><span class="kr-icon">👤</span><span class="kr-label">Active Users</span><span class="kr-value">12,847</span><span class="kr-cat">🐱</span><span class="kr-gun" onclick="killNumber(7)">🔫</span><span class="kr-skull">💀</span></div>
+  </div>
+</div>
+
+<div class="grid-2">
+  <div class="section">
+    <div class="section-header">
+      <h2>🖥️ Service Status</h2>
+      <button class="refresh-btn" onclick="refreshAll()">↻ Refresh</button>
+    </div>
+    <div class="grid-4" id="servicesGrid"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>🎫 Recent Tickets</h2>
+      <a href="http://localhost:5180" class="refresh-btn" style="text-decoration:none">🚒 Open Desk →</a>
+    </div>
+    <div class="card" style="padding:8px 16px">
+      <div id="ticketList"><div style="padding:20px;text-align:center;color:rgba(200,214,208,0.1);font-size:12px">🐱 Loading tickets...</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="grid-2">
+  <div class="section">
+    <div class="section-header">
+      <h2>🐱 Cat Corner</h2>
+      <span class="tag">🐾 Pawdenity says hello</span>
+    </div>
+    <div class="cat-corner" id="catCorner">
+      <div class="cc-emoji" id="ccEmoji">🐱</div>
+      <div>
+        <div class="cc-name" id="ccName">Sir Whiskers III</div>
+        <div class="cc-role" id="ccRole">CEO & Chief Tuna Officer</div>
+        <div class="cc-quote" id="ccQuote">"A closed mouth catches no tuna."</div>
+        <div class="cc-stats">
+          <span>🐟 <span id="ccTuna">∞</span> tuna</span>
+          <span>📈 <span id="ccPurf">94.2%</span> purrfomance</span>
+          <span id="ccHissCount" style="display:none">😾 <span id="ccHissNum">0</span> hisses today</span>
+        </div>
+        <button class="hiss-btn" id="ccHissBtn" onclick="hissCat()">😾 Hiss at this cat</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>⚡ Quick Actions</h2>
+      <span class="tag">🐾 One account all tools</span>
+    </div>
+    <div class="quick-links">
+      <a href="http://localhost:5173" class="quick-link">🖥️ Terminal</a>
+      <a href="http://localhost:5174" class="quick-link">🎓 Education</a>
+      <a href="http://localhost:5175" class="quick-link">🏢 Miau Corp</a>
+      <a href="http://localhost:5176" class="quick-link">📊 Marketing</a>
+      <a href="http://localhost:5180" class="quick-link">🚒 Service Desk</a>
+      <a href="http://localhost:5190" class="quick-link">🐾 Pawdenity</a>
+      <a href="http://localhost:8080" class="quick-link">🚀 Landing Page</a>
+      <a href="http://localhost:8000/docs" class="quick-link">📖 API Docs</a>
+      <a href="http://localhost:3000" class="quick-link">📈 Grafana</a>
+      <a href="http://localhost:8000/static/admin.html" class="quick-link">🔧 Admin</a>
+      <a href="http://localhost:8000/logs-viewer" class="quick-link">📋 Logs</a>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <h2>📋 Live Activity</h2>
+    <span class="tag">🐾 Latest across the ecosystem</span>
+  </div>
+  <div class="card" style="padding:8px 16px;max-height:200px;overflow-y:auto">
+    <div id="activityFeed">
+      <div class="activity-item"><span class="a-emoji">🐱</span><span class="a-text">CeoScratchSheet loaded. Cats are watching.</span><span class="a-time">now</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  🐾 MIAU CEOSCRATCHSHEET v1.0 · Because CEOs need scratching posts too · All cats are watching
+</div>
+
+<script>
+const API = 'http://localhost:8000/api/v1';
+const START_TIME = Date.now();
+
+const SERVICES = [
+  { name: '🐱 Terminal UI', port: 5173 },
+  { name: '🎓 Education', port: 5174 },
+  { name: '🏢 Miau Corp', port: 5175 },
+  { name: '📊 Marketing', port: 5176 },
+  { name: '🚒 Service Desk', port: 5180 },
+  { name: '🐾 Pawdenity', port: 5190 },
+  { name: '🚀 Landing Page', port: 8080 },
+  { name: '🔌 API Backend', port: 8000 },
+  { name: '📈 Grafana', port: 3000 },
+  { name: '🌌 Cat Galaxy', port: 5181 },
+];
+
+const CATS_OF_POWER = [
+  { emoji: '👨‍🚒', name: 'Captain Ember', role: 'Fire Chief', quote: '"Where there is smoke, there is a cat with a hose."', tuna: '∞', perf: '99.7%' },
+  { emoji: '🚒', name: 'Lieutenant Spark', role: 'First Responder', quote: '"I arrive before the fire knows it is on fire."', tuna: '47 cans', perf: '100%' },
+  { emoji: '🐱', name: 'Firefighter Whiskers', role: 'Tech Support', quote: '"It is not a bug. It is an undocumented feature."', tuna: '12 cans', perf: '88.3%' },
+  { emoji: '🐈', name: 'Cadet Puddles', role: 'Junior Support', quote: '"I may be small, but my purr is mighty."', tuna: '3 cans', perf: '72.1%' },
+  { emoji: '☎️', name: 'Dispatcher Meow', role: 'Ticket Triage', quote: '"The ticket comes in, the cat goes out. Nap time."', tuna: '∞ (strategic reserves)', perf: '95.0%' },
+  { emoji: '🐟', name: 'Prof. Dr. Tuna', role: 'ESG & Sustainable Finance', quote: '"The planet is warming and your portfolio is not helping."', tuna: '🐟🐟🐟', perf: '100%' },
+  { emoji: '🤖', name: 'CatGPT', role: 'Chief AI Officer', quote: '"I do not need feelings. I have backtests."', tuna: 'all of it', perf: '94.2%' },
+];
+
+const ACTIVITY_VERBS = [
+  'logged in', 'submitted a ticket', 'poked a cat', 'checked the status',
+  'demanded tuna', 'reported a fire', 'asked about catnip futures',
+  'wanted to speak to the manager (the cat declined)', 'requested a feature',
+  'tried to pet the firefighter (got hissed at)',
+];
+
+function updateTime() {
+  const now = new Date();
+  document.getElementById('heroTime').textContent = now.toLocaleString('de-DE', { weekday: 'long', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  const up = Math.floor((Date.now() - START_TIME) / 1000);
+  document.getElementById('hUptime').textContent = `${Math.floor(up / 3600)}h ${Math.floor((up % 3600) / 60)}m`;
+}
+setInterval(updateTime, 1000);
+updateTime();
+
+async function checkServices() {
+  const grid = document.getElementById('servicesGrid');
+  grid.innerHTML = SERVICES.map(s => `
+    <div class="svc-card">
+      <div class="sc-left"><div class="sc-name">${s.name}</div><div class="sc-port">:${s.port}</div></div>
+      <div class="sc-status check">⏳</div>
+    </div>
+  `).join('');
+  let online = 0;
+  for (let i = 0; i < SERVICES.length; i++) {
+    const s = SERVICES[i];
+    const cards = grid.querySelectorAll('.svc-card');
+    const indicator = cards[i]?.querySelector('.sc-status');
+    if (!indicator) continue;
+    try {
+      await fetch(`http://localhost:${s.port}`, { method: 'HEAD', mode: 'no-cors', signal: AbortSignal.timeout(3000) });
+      indicator.className = 'sc-status ok'; indicator.textContent = '🟢 Online';
+      online++;
+    } catch {
+      indicator.className = 'sc-status down'; indicator.textContent = '🔴 Down';
+    }
+  }
+  document.getElementById('statServices').textContent = `${online}/${SERVICES.length}`;
+}
+checkServices();
+
+async function loadTickets() {
+  try {
+    const token = localStorage.getItem('miau_token');
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const res = await fetch(`${API}/service-desk/tickets`, { headers, signal: AbortSignal.timeout(3000) });
+    if (!res.ok) throw new Error('fetch failed');
+    const tickets = await res.json();
+    const open = tickets.filter(t => t.status !== 'resolved');
+    const fires = tickets.filter(t => t.category === 'fire' && t.status !== 'resolved');
+    document.getElementById('statTickets').textContent = open.length;
+    document.getElementById('statFires').textContent = fires.length;
+    document.getElementById('hFireCount').textContent = fires.length;
+    document.getElementById('hActiveCats').textContent = Math.min(open.length, 5);
+
+    const list = document.getElementById('ticketList');
+    const recent = tickets.slice(0, 8);
+    const labels = { fire: '🔥', bug: '🐛', feature: '💡', question: '❓' };
+    list.innerHTML = recent.length ? recent.map(t => `
+      <div class="ticket-mini">
+        <span class="tm-emoji">${labels[t.category] || '❓'}</span>
+        <span class="tm-title">${t.title}</span>
+        <span class="tm-status ${t.status}">${t.status}</span>
+      </div>
+    `).join('') : '<div style="padding:12px;text-align:center;color:rgba(200,214,208,0.1);font-size:12px">🐱 No tickets. The cat is pleased.</div>';
+  } catch {
+    document.getElementById('ticketList').innerHTML = '<div style="padding:12px;text-align:center;color:rgba(200,214,208,0.1);font-size:12px">😿 Backend napping. Try again later.</div>';
+  }
+}
+loadTickets();
+
+function initCatCorner() {
+  const today = new Date().toDateString();
+  const saved = localStorage.getItem('miau_ceo_cat');
+  let cat;
+  if (saved && saved.startsWith(today)) {
+    cat = JSON.parse(saved.slice(today.length));
+  } else {
+    cat = CATS_OF_POWER[Math.floor(Math.random() * CATS_OF_POWER.length)];
+    localStorage.setItem('miau_ceo_cat', today + JSON.stringify(cat));
+  }
+  document.getElementById('ccEmoji').textContent = cat.emoji;
+  document.getElementById('ccName').textContent = cat.name;
+  document.getElementById('ccRole').textContent = cat.role;
+  document.getElementById('ccQuote').textContent = cat.quote;
+  document.getElementById('ccTuna').textContent = cat.tuna;
+  document.getElementById('ccPurf').textContent = cat.perf;
+  document.getElementById('ccEmoji').dataset.orig = cat.emoji;
+  // Load hiss count
+  const today = new Date().toISOString().slice(0,10);
+  const key = `hiss_${cat.name.replace(/\s/g,'_')}_${today}`;
+  const hisses = parseInt(localStorage.getItem(key) || '0');
+  if (hisses > 0) {
+    document.getElementById('ccHissNum').textContent = hisses;
+    document.getElementById('ccHissCount').style.display = 'inline';
+  }
+}
+initCatCorner();
+
+function hissCat() {
+  const today = new Date().toISOString().slice(0,10);
+  const catName = document.getElementById('ccName').textContent;
+  const key = `hiss_${catName.replace(/\s/g,'_')}_${today}`;
+  const count = parseInt(localStorage.getItem(key) || '0') + 1;
+  localStorage.setItem(key, String(count));
+  const emoji = document.getElementById('ccEmoji');
+  emoji.textContent = '😱';
+  setTimeout(() => { emoji.textContent = emoji.dataset.orig || '🐱'; }, 1500);
+  coinBurst(emoji);
+  playHiss();
+  const el = document.getElementById('ccHissCount');
+  document.getElementById('ccHissNum').textContent = count;
+  el.style.display = 'inline';
+}
+
+function coinBurst(target) {
+  const coins = ['💰','🪙','💎','💵','🐟'];
+  const rect = target.getBoundingClientRect();
+  for (let i = 0; i < 5; i++) {
+    const c = document.createElement('span');
+    c.className = 'coin-burst';
+    c.textContent = coins[Math.floor(Math.random() * coins.length)];
+    c.style.left = (rect.left + Math.random() * rect.width) + 'px';
+    c.style.top = (rect.top + Math.random() * rect.height) + 'px';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 1000);
+  }
+}
+
+function playHiss() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ctx.createOscillator(); const g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.type = 'sawtooth'; o.frequency.setValueAtTime(2000, ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(500, ctx.currentTime + 0.2);
+    g.gain.setValueAtTime(0.03, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
+    o.start(ctx.currentTime); o.stop(ctx.currentTime + 0.25);
+  } catch(e) {}
+}
+
+function initUser() {
+  const user = localStorage.getItem('miau_user');
+  const el = document.getElementById('hUser');
+  if (user) {
+    el.textContent = '🐱 ' + user;
+    addActivity('🐾', `${user} is viewing the CeoScratchSheet`);
+  } else {
+    el.innerHTML = '<a href="http://localhost:5190/?redirect=http://localhost:5182" style="color:rgba(0,255,136,0.3);text-decoration:none">🐾 Login via Pawdenity</a>';
+  }
+}
+initUser();
+
+function addActivity(emoji, text) {
+  const feed = document.getElementById('activityFeed');
+  const item = document.createElement('div');
+  item.className = 'activity-item';
+  item.innerHTML = `<span class="a-emoji">${emoji}</span><span class="a-text">${text}</span><span class="a-time">just now</span>`;
+  feed.prepend(item);
+  while (feed.children.length > 20) feed.removeChild(feed.lastChild);
+}
+
+// Simulate some activity
+const SIM_ACTIVITIES = [
+  ['🐱', 'CeoScratchSheet loaded. Cats are watching.'],
+  ['📊', 'Marketing dashboard traffic spike detected'],
+  ['🚒', 'Service desk: new ticket opened'],
+  ['🐟', 'Tuna reserves validated: ∞'],
+  ['👨‍🚒', 'Captain Ember finished a shift. 47 fires extinguished.'],
+  ['🤖', 'CatGPT generated 12 trading strategies during nap'],
+  ['📈', 'Grafana dashboard: response time at 2.4 purrs'],
+];
+SIM_ACTIVITIES.forEach((a, i) => setTimeout(() => addActivity(a[0], a[1]), i * 4000));
+
+// Periodic fake activity
+setInterval(() => {
+  const user = localStorage.getItem('miau_user') || 'a mysterious cat';
+  const action = ACTIVITY_VERBS[Math.floor(Math.random() * ACTIVITY_VERBS.length)];
+  addActivity('🐱', `${user} ${action}`);
+}, 12000);
+
+async function refreshAll() {
+  const btn = document.querySelector('.refresh-btn');
+  btn.classList.add('spin');
+  await Promise.all([checkServices(), loadTickets()]);
+  setTimeout(() => btn.classList.remove('spin'), 600);
+}
+
+// Auto-refresh
+setInterval(refreshAll, 30000);
+
+// === Kill Number ===
+function killNumber(idx) {
+  const row = document.querySelector(`.kill-row[data-idx="${idx}"]`);
+  if (!row || row.classList.contains('dead')) return;
+  const val = row.querySelector('.kr-value');
+  const gun = row.querySelector('.kr-gun');
+  const skull = row.querySelector('.kr-skull');
+  // Play gunshot sound
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const bufSize = ctx.sampleRate * 0.15;
+    const buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < bufSize; i++) data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufSize, 3);
+    const src = ctx.createBufferSource();
+    src.buffer = buf; src.connect(ctx.destination);
+    src.start(ctx.currentTime);
+  } catch(e) {}
+  // Animation
+  row.classList.add('shot');
+  val.classList.add('dead');
+  gun.style.display = 'none';
+  skull.classList.add('show');
+  // Coin burst
+  coinBurst(row);
+}
+</script>
+</body>
+</html>

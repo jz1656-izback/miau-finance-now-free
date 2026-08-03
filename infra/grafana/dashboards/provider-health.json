@@ -1,0 +1,120 @@
+{
+  "__inputs": [],
+  "__requires": [],
+  "title": "Miau Finance — Provider Health",
+  "uid": "miau-provider-health",
+  "version": 1,
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "tags": ["miau", "providers"],
+  "time": { "from": "now-6h", "to": "now" },
+  "panels": [
+    {
+      "title": "Provider Health Overview",
+      "type": "stat",
+      "gridPos": { "h": 6, "w": 6, "x": 0, "y": 0 },
+      "targets": [{
+        "expr": "miau_providers_healthy",
+        "legendFormat": "Healthy"
+      }],
+      "description": "Number of healthy data providers",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "yellow", "value": 3 },
+              { "color": "green", "value": 7 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "title": "Unhealthy Providers",
+      "type": "stat",
+      "gridPos": { "h": 6, "w": 6, "x": 6, "y": 0 },
+      "targets": [{
+        "expr": "miau_providers_unhealthy",
+        "legendFormat": "Unhealthy"
+      }],
+      "description": "Number of unhealthy data providers",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 3 },
+              { "color": "red", "value": 6 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "title": "Provider Uptime %",
+      "type": "gauge",
+      "gridPos": { "h": 6, "w": 6, "x": 12, "y": 0 },
+      "targets": [{
+        "expr": "miau_providers_healthy / (miau_providers_healthy + miau_providers_unhealthy) * 100",
+        "legendFormat": "Uptime %"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "min": 0,
+          "max": 100,
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "yellow", "value": 40 },
+              { "color": "green", "value": 70 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "title": "Provider Health Over Time",
+      "type": "graph",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 6 },
+      "targets": [
+        { "expr": "miau_providers_healthy", "legendFormat": "Healthy" },
+        { "expr": "miau_providers_unhealthy", "legendFormat": "Unhealthy" }
+      ],
+      "description": "Track provider health changes over time"
+    },
+    {
+      "title": "Total API Requests",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 8, "x": 0, "y": 14 },
+      "targets": [{
+        "expr": "miau_requests_total",
+        "legendFormat": "Total"
+      }]
+    },
+    {
+      "title": "Error Rate",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 8, "x": 8, "y": 14 },
+      "targets": [{
+        "expr": "rate(miau_errors_total[5m])",
+        "legendFormat": "Errors/s"
+      }]
+    },
+    {
+      "title": "Avg Response Time",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 8, "x": 16, "y": 14 },
+      "targets": [{
+        "expr": "rate(miau_request_duration_seconds_total[5m])",
+        "legendFormat": "Duration/s"
+      }]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+Page: Marketing Analytics
+Cat: 📊
+Function: Marketing campaign analytics dashboard
+Description: Tracks marketing campaigns, SEO performance, traffic sources, conversion rates, and user acquisition metrics across all Miau Finance channels.
+API: GET /api/v1/analytics/marketing
+Output: Campaign performance, traffic charts, conversion funnels
+Tuna: 6

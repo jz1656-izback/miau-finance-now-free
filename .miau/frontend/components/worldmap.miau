@@ -1,0 +1,7 @@
+Page: WorldMap
+Cat: 🗺️
+Function: 2D Leaflet world map
+Description: Leaflet-based 2D map with 40+ exchange markers, 50K+ company locations, boat/jet trade routes, ISS tracking, and live weather radar overlay from RainViewer.
+API: —
+Output: Interactive 2D map with markers, routes, and overlays
+Tuna: 7

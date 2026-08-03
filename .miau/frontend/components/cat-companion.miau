@@ -1,0 +1,7 @@
+Page: Cat Companion
+Cat: 🐱
+Function: Animated cat reacting to P&L
+Description: A cute animated cat that appears in the terminal and reacts to portfolio performance — purrs on gains, hides on losses, plays with yarn during neutral markets.
+API: —
+Output: Animated ASCII/emoji cat with mood-based reactions
+Tuna: 4

@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pwa-config
+  namespace: miau-finance
+data:
+  PWA_ENABLED: "true"
+  PWA_NAME: "Miau Finance"
+  PWA_SHORT_NAME: "Miau"
+  PWA_THEME_COLOR: "#0a1a14"
+  PWA_BACKGROUND_COLOR: "#0a1a14"
+  PWA_DISPLAY: "standalone"
+  PWA_ORIENTATION: "any"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-pwa
+  namespace: miau-finance
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend-pwa
+  template:
+    metadata:
+      labels:
+        app: frontend-pwa
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: frontend
+          image: miau-finance/frontend:latest
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: pwa-config
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-pwa
+  namespace: miau-finance
+spec:
+  selector:
+    app: frontend-pwa
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP

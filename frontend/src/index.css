@@ -1,0 +1,402 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*── CSS Custom Properties ──*/
+:root {
+  --bp-mobile: 320px;
+  --bp-tablet: 768px;
+  --bp-desktop: 1024px;
+  --font-base: 16px;
+  --font-line-height: 1.5;
+  --tap-min: 44px;
+}
+
+@layer base {
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body, #root {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+  body {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+    background: #0a1a14;
+    color: #00ff88;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /*── Scrollbar Styling ──*/
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #0a1a14; }
+  ::-webkit-scrollbar-thumb { background: #1a3a2a; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #00ff88; }
+
+/*── Smooth scrollbar for firefox ──*/
+* { scrollbar-width: thin; scrollbar-color: #1a3a2a #0a1a14; }
+
+/* Ensure terminal output is always scrollable */
+.terminal-output { overflow-y: scroll !important; }
+.terminal-output::-webkit-scrollbar { width: 6px; }
+.terminal-output::-webkit-scrollbar-track { background: #0a1a14; }
+.terminal-output::-webkit-scrollbar-thumb { background: #1a3a2a; border-radius: 3px; }
+
+  /*── Selection Colors ──*/
+  ::selection { background: rgba(0, 255, 136, 0.25); color: #88ffbb; }
+  ::-moz-selection { background: rgba(0, 255, 136, 0.25); color: #88ffbb; }
+}
+
+/*── CRT Scanline Overlay ──*/
+.crt::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.12) 2px,
+    rgba(0, 0, 0, 0.12) 4px
+  );
+  animation: scanline-move 10s linear infinite;
+}
+
+/*── CRT Curvature / Vignette ──*/
+.crt::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+}
+
+/*── Phosphor Bloom Simulation ──*/
+.crt-bloom {
+  filter: contrast(1.05) brightness(1.02);
+}
+
+/*── Text Glow ──*/
+.text-glow-green {
+  text-shadow:
+    0 0 2px rgba(0, 255, 136, 0.8),
+    0 0 8px rgba(0, 255, 136, 0.5),
+    0 0 16px rgba(0, 255, 136, 0.3),
+    0 0 32px rgba(0, 255, 136, 0.1);
+}
+
+
+/*── Color Fringing (subtle chromatic aberration) ──*/
+.crt .crt-fringe {
+  text-shadow:
+    -0.5px 0 0 rgba(0, 255, 136, 0.3),
+    0.5px 0 0 rgba(0, 204, 255, 0.3);
+}
+
+/*── Blinking Block Cursor ──*/
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 1.1em;
+  background: #00ff88;
+  animation: cursor-blink 1.1s step-end infinite;
+  vertical-align: text-bottom;
+  margin-left: 1px;
+  border-radius: 1px;
+  box-shadow: 0 0 4px rgba(0, 255, 136, 0.6);
+}
+
+/*── Smooth Beam Cursor ──*/
+.terminal-cursor-smooth {
+  display: inline-block;
+  width: 8px;
+  height: 1.1em;
+  background: linear-gradient(180deg, #00ff88 0%, #00ccff 100%);
+  animation: cursor-blink-smooth 1.1s ease-in-out infinite;
+  vertical-align: text-bottom;
+  margin-left: 1px;
+  border-radius: 1px;
+  box-shadow:
+    0 0 4px rgba(0, 255, 136, 0.6),
+    0 0 12px rgba(0, 255, 136, 0.3);
+}
+
+/*── Terminal Output Line Fade-In ──*/
+.terminal-line {
+  animation: fade-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/*── Staggered Line Entry ──*/
+.terminal-line-stagger {
+  animation: fade-in-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/*── Loading Bar ──*/
+.loading-bar {
+  height: 2px;
+  width: 100%;
+  background: rgba(0, 255, 136, 0.1);
+  position: relative;
+  overflow: hidden;
+  border-radius: 1px;
+}
+.loading-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 25%;
+  background: linear-gradient(90deg, transparent, #00ff88, transparent);
+  animation: loading-bar 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/*── Loading Bar (cyan variant) ──*/
+.loading-bar-cyan::after {
+  background: linear-gradient(90deg, transparent, #00ccff, transparent);
+}
+
+/*── Spinner Ring ──*/
+.spinner-ring {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(0, 255, 136, 0.15);
+  border-top-color: #00ff88;
+  border-right-color: rgba(0, 255, 136, 0.4);
+  border-radius: 50%;
+  animation: spinner-rotate 0.85s linear infinite;
+}
+
+/*── Map Canvas Overlay ──*/
+.map-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(10, 26, 20, 0.6) 100%);
+  z-index: 5;
+}
+
+/*── Panel Glass ──*/
+.glass-panel {
+  background: rgba(13, 32, 24, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(26, 58, 42, 0.6);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+
+/*── Glow Border on Hover ──*/
+.glow-border {
+  position: relative;
+  transition: box-shadow 0.3s ease;
+}
+.glow-border:hover {
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.15), inset 0 0 12px rgba(0, 255, 136, 0.05);
+}
+
+/* ── Animations ── */
+
+@keyframes scanline-move {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(4px); }
+}
+
+@keyframes pulse-dot {
+  0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes spinner-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes loading-bar {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(400%); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in-up {
+  0% { opacity: 0; transform: translateY(12px) scale(0.97); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.animate-fadeIn {
+  animation: fade-in-up 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-zoomIn {
+  animation: zoom-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes zoom-in {
+  0% { opacity: 0; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.leaflet-popup {
+  animation: fade-in 0.2s ease-out both;
+}
+
+.leaflet-marker-icon {
+  transition: transform 0.15s ease;
+}
+.leaflet-marker-icon:hover {
+  transform: scale(1.2);
+}
+
+/*── Reduced motion ──*/
+@media (prefers-reduced-motion: reduce) {
+  .crt::after { animation: none; }
+  .crt { animation: none; }
+  .terminal-line { animation: none; }
+  .terminal-line-stagger { animation: none; }
+  .loading-bar::after { animation: none; }
+  .spinner-ring { animation: none; }
+  .shimmer { animation: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/*── Skip Link (keyboard accessibility) ──*/
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 8px;
+  z-index: 9999;
+  background: #00ff88;
+  color: #0a1a14;
+  padding: 8px 16px;
+  border-radius: 0 0 4px 4px;
+  font-size: 14px;
+  font-family: monospace;
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/*── Responsive Breakpoints ──*/
+@media (min-width: 320px) {
+  :root { --font-base: 12px; }
+  .container-responsive { width: 100%; padding: 0 8px; }
+}
+
+@media (min-width: 768px) {
+  :root { --font-base: 14px; }
+  .container-responsive { width: 720px; margin: 0 auto; }
+}
+
+@media (min-width: 1024px) {
+  :root { --font-base: 16px; }
+  .container-responsive { width: 960px; }
+}
+
+/*── Responsive Font Scaling ──*/
+body {
+  font-size: clamp(12px, var(--font-base), 16px);
+  line-height: clamp(1.3, var(--font-line-height), 1.7);
+}
+
+h1 { font-size: clamp(1.25rem, 2vw, 2rem); }
+h2 { font-size: clamp(1.1rem, 1.5vw, 1.5rem); }
+.terminal-line { font-size: clamp(11px, 0.9rem, 15px); }
+
+/*── Touch-Optimized Input ──*/
+input, button, select, textarea, a, .tap-target {
+  min-height: var(--tap-min);
+  min-width: var(--tap-min);
+}
+
+@media (max-width: 767px) {
+  input, select, textarea { width: 100%; }
+  button, .btn { padding: 12px 20px; }
+  .tap-target {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/*── Safe Area + Notch Handling ──*/
+@supports (padding: env(safe-area-inset-top)) {
+  .safe-area {
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+  .safe-area-top { padding-top: env(safe-area-inset-top, 0px); }
+  .safe-area-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+}
+
+/*── Reduced Data Mode ──*/
+@media (prefers-reduced-data: reduce) {
+  .crt::after, .crt::before { display: none; }
+  .crt-bloom { filter: none; }
+  .map-overlay { display: none; }
+  .glow-border:hover { box-shadow: none; }
+  img { max-width: 50vw; }
+  .loading-bar::after { display: none; }
+  .spinner-ring { animation: none; }
+  [data-animation="off"] { animation: none !important; transition: none !important; }
+}
+
+@layer components {
+  .text-green { color: #00ff88; }
+  .text-cyan { color: #00ccff; }
+  .text-yellow { color: #ffcc00; }
+  .text-red { color: #ff4444; }
+  .text-purple { color: #cc88ff; }
+  .text-dim { color: #5a9a6a; } /* 4.7:1 contrast against #0a1a14 */
+  .text-orange { color: #ff8844; }
+  .text-bright { color: #88ffbb; }
+}
+
+@layer components {
+  .text-miau-green { color: #00ff88; }
+  .text-miau-text-dim { color: #557755; }
+  .text-miau-amber { color: #ffcc00; }
+  .text-miau-red { color: #ff4444; }
+  .text-miau-text { color: #c8e0c8; }
+}
+
+/*── Cat Map Markers ──*/
+.miau-cat-marker { cursor: pointer; transition: transform 0.1s; background: none !important; border: none !important; }
+.miau-cat-marker:hover { transform: scale(1.4); z-index: 10000 !important; }
+
+/*── MarkerCluster overrides ──*/
+.leaflet-cluster-anim .leaflet-marker-icon, .leaflet-cluster-anim .leaflet-marker-shadow { transition: none !important; }
+.marker-cluster-small, .marker-cluster-medium, .marker-cluster-large { background: transparent !important; }
+.marker-cluster-small div, .marker-cluster-medium div, .marker-cluster-large div { background: transparent !important; }
+
+/*── MiauBook animations ──*/
+@keyframes catFall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+@keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } } .animate-spin-slow { animation: spin-slow 8s linear infinite; }

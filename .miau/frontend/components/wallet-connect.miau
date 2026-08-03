@@ -1,0 +1,7 @@
+Page: Wallet Connect
+Cat: 👛
+Function: Web3 wallet connection interface
+Description: WalletConnect v2 integration with QR code and deep link support. Connects to EVM and Solana wallets including Ledger/Trezor. SIWE (EIP-4361) authentication.
+API: —
+Output: Wallet connection modal, balance display, transaction signing
+Tuna: 6

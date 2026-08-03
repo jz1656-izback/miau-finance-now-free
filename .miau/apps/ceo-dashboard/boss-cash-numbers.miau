@@ -1,0 +1,7 @@
+Page: Boss Cash Numbers
+Cat: 👑
+Function: CEO financial overview dashboard
+Description: Executive dashboard showing key financial metrics: revenue, MRR, churn, customer acquisition cost, lifetime value, and growth trends for the Miau Finance business.
+API: GET /api/v1/analytics/executive
+Output: KPI cards, trend charts, revenue breakdown
+Tuna: 7

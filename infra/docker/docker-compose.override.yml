@@ -1,0 +1,30 @@
+services:
+  # Stripe CLI for local webhook testing (Phase 11 — Stripe integration)
+  # Usage: docker compose -f docker-compose.yml -f docker-compose.override.yml up stripe-cli
+  stripe-cli:
+    image: stripe/stripe-cli:latest
+    profiles:
+      - stripe-testing
+    environment:
+      - STRIPE_API_KEY=${STRIPE_SECRET_KEY:-sk_test_placeholder}
+    command: >
+      listen
+      --forward-to http://backend:8000/api/v1/billing/webhook
+      --events checkout.session completed,customer.subscription.deleted,customer.subscription.updated
+      --log-level debug
+    networks:
+      - miau-network
+    restart: unless-stopped
+
+  # Dev: Stripe webhook forwarding via ngrok (optional)
+  # ngrok:
+  #   image: ngrok/ngrok:latest
+  #   command: http backend:8000 --domain your-ngrok-domain.ngrok.io
+  #   networks:
+  #     - miau-network
+  #   profiles:
+  #     - stripe-testing
+
+networks:
+  miau-network:
+    external: true

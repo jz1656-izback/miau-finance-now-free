@@ -1,0 +1,7 @@
+Page: Chart 3D
+Cat: 📊
+Function: 3D chart visualizations
+Description: Three.js-powered 3D financial charts including candlestick, surface, and scatter plots. Supports rotation, zoom, and data point inspection for advanced technical analysis.
+API: —
+Output: Interactive 3D charts with WebGL rendering
+Tuna: 7

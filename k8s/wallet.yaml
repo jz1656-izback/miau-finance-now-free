@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wallet-config
+data:
+  WALLETCONNECT_PROJECT_ID: "miau_walletconnect"
+  WALLETCONNECT_RELAY_URL: "wss://relay.walletconnect.com"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: defi-wallet
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: defi-wallet
+  template:
+    metadata:
+      labels:
+        app: defi-wallet
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: wallet
+        image: miau/defi-wallet:latest
+        ports:
+        - containerPort: 8004
+        envFrom:
+        - configMapRef:
+            name: wallet-config

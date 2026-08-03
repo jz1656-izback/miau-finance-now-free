@@ -1,0 +1,7 @@
+Page: DeFi Protocols
+Cat: 🔗
+Function: Integrates with DeFi protocols for Web3 finance
+Description: WalletConnect v2 integration for 8 DeFi protocols: Uniswap, Aave, Curve, Lido, Yearn, Maker, Jupiter, Raydium. Supports swap, LP, lending, staking, and vault operations.
+API: GET/POST /api/v1/defi/*
+Output: Protocol data, balances, positions, APY, transaction status
+Tuna: 9

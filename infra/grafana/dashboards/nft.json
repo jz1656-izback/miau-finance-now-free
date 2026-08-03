@@ -1,0 +1,1 @@
+{"title":"NFT Portfolio","panels":[{"title":"Floor Prices","type":"graph","targets":[{"expr":"miau_nft_floor_price"}]},{"title":"Collection Value","type":"stat","targets":[{"expr":"miau_nft_portfolio_value"}]},{"title":"Rarity Distribution","type":"bar","targets":[{"expr":"miau_nft_rarity"}]}]}

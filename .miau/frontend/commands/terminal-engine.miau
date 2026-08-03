@@ -1,0 +1,7 @@
+Page: Terminal Engine
+Cat: ⚙️
+Function: Command parsing and execution engine
+Description: The core terminal engine that parses user input, matches commands, executes handlers, and formats output. Supports 200+ commands with autocomplete and history.
+API: —
+Output: Parsed command execution with formatted terminal output
+Tuna: 9

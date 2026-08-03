@@ -1,0 +1,80 @@
+{
+  "events": [
+    {
+      "ts": 1779567322623,
+      "event": "page_view",
+      "path": "/",
+      "host": "localhost:5175",
+      "referrer": "https://google.com",
+      "session_id": "test_001"
+    },
+    {
+      "ts": 1779567322630,
+      "event": "page_view",
+      "path": "/pricing",
+      "host": "localhost:5175",
+      "session_id": "test_001"
+    },
+    {
+      "ts": 1779567322636,
+      "event": "conversion",
+      "path": "/signup",
+      "host": "localhost:5175",
+      "session_id": "test_002",
+      "conversion_type": "signup"
+    },
+    {
+      "ts": 1779567378322,
+      "path": "/",
+      "host": "unknown"
+    },
+    {
+      "ts": 1779567843913,
+      "path": "/",
+      "host": "unknown"
+    },
+    {
+      "ts": 1779567852942,
+      "path": "/",
+      "host": "unknown"
+    },
+    {
+      "ts": 1779568600528,
+      "path": "/",
+      "host": "unknown"
+    },
+    {
+      "ts": 1779568609077,
+      "path": "/",
+      "host": "unknown"
+    },
+    {
+      "ts": 1779569108603,
+      "path": "/",
+      "host": "unknown"
+    }
+  ],
+  "pages": {
+    "/": 7,
+    "/pricing": 1,
+    "/signup": 1
+  },
+  "hourly": {
+    "2026-05-23T20": {
+      "page_views": 9,
+      "visitors": 2
+    }
+  },
+  "geo": {
+    "United States": 9
+  },
+  "referrers": {
+    "google.com": 1,
+    "direct": 8
+  },
+  "conversions": 1,
+  "sessions": {
+    "test_001_2026-05-23T20": true,
+    "test_002_2026-05-23T20": true
+  }
+}

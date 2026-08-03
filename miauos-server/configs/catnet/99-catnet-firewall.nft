@@ -1,0 +1,58 @@
+#!/usr/sbin/nft -f
+
+# CatNet Firewall — MiauOS nftables Ruleset
+# Default drop inbound, allow outbound, restrict to authorized services
+
+flush ruleset
+
+table inet catnet {
+    chain base_checks {
+        ct state invalid drop
+        ct state { established, related } accept
+        ip protocol icmp accept
+        ip6 protocol icmpv6 accept
+        meta l4proto ipv6-icmp accept
+    }
+
+    chain inbound {
+        type filter hook input priority 0; policy drop;
+
+        # Allow loopback
+        iif lo accept
+
+        # Run base checks
+        jump base_checks
+
+        # SSH — management access only from internal network
+        tcp dport 22 ip saddr 10.0.0.0/8 accept
+        tcp dport 22 ip saddr 172.16.0.0/12 accept
+        tcp dport 22 ip saddr 192.168.0.0/16 accept
+
+        # CatPod service ports
+        tcp dport 8080 accept   # HTTP API
+        tcp dport 8443 accept   # HTTPS API
+        tcp dport 9090 accept   # Metrics
+
+        # Cluster communication
+        tcp dport 2379 accept   # etcd
+        tcp dport 2380 accept   # etcd peer
+        tcp dport 6443 accept   # Kubernetes API
+        tcp dport 10250 accept  # Kubelet
+
+        # Monitoring
+        tcp dport 9100 accept   # Node exporter
+
+        # Log all other drops
+        log prefix "CatNet-DROP: " flags all counter drop
+    }
+
+    chain forward {
+        type filter hook forward priority 0; policy drop;
+        ct state { established, related } accept
+        log prefix "CatNet-FWD-DROP: " counter drop
+    }
+
+    chain outbound {
+        type filter hook output priority 0; policy accept;
+    }
+}

@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: miau-finance-config
+  namespace: miau-finance
+  labels:
+    app: miau-finance
+data:
+  DATABASE_URL: "postgresql+asyncpg://miau:$(DB_PASSWORD)@postgres:5432/miau"
+  DATABASE_URL_SYNC: "postgresql+psycopg2://miau:$(DB_PASSWORD)@postgres:5432/miau"
+  MINIO_ENDPOINT: "minio:9000"
+  CUBEJS_API_URL: "http://cube:4000"
+  REDIS_URL: "redis://redis:6379/0"
+  APP_NAME: "Miau Finance"
+  POSTGRES_DB: "miau"
+  POSTGRES_USER: "miau"
+  POSTGRES_PORT: "5432"
+  CUBEJS_DB_TYPE: "postgres"
+  CUBEJS_DB_HOST: "postgres"
+  CUBEJS_DB_PORT: "5432"
+  CUBEJS_DB_NAME: "miau"
+  CUBEJS_DB_USER: "miau"
+  CUBEJS_DEV_MODE: "false"
+  AIRFLOW__CORE__EXECUTOR: "LocalExecutor"
+  AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+  AIRFLOW__WEBSERVER__DEFAULT_UI_TIMEZONE: "UTC"

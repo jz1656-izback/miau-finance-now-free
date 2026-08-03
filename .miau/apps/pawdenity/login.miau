@@ -1,0 +1,7 @@
+Page: Pawdenity Login
+Cat: 🐾
+Function: Central authentication provider
+Description: Pawdenity is the single sign-on provider for all Miau Finance apps. One account works everywhere — register once, login to all services via broadcast relay.
+API: POST /api/v1/auth/*
+Output: Login/register form, token management, SSO relay
+Tuna: 5
