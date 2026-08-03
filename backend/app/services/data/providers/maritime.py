@@ -102,25 +102,32 @@ class MaritimeProvider(DataSource):
         return True
 
     async def fetch_globe_maritime(self) -> dict:
+        import math, time
+        now = time.time()
         ships = []
-        for i, port in enumerate(MAJOR_PORTS):
-            import random, time
-            drift_lat = (random.random() - 0.5) * 0.5
-            drift_lng = (random.random() - 0.5) * 0.5
-            speed = random.uniform(5, 25)
-            heading = random.uniform(0, 360)
-            ships.append({
-                "lat": port["lat"] + drift_lat,
-                "lng": port["lng"] + drift_lng,
-                "name": f"{port['name']} Express",
-                "speed": round(speed, 1),
-                "heading": round(heading, 1),
-                "destination": port["name"],
-                "type": "cargo",
-                "flag": random.choice(["PA", "MH", "LR", "HK", "SG"]),
-            })
-        return {
-            "ships": ships,
-            "ports": MAJOR_PORTS,
-            "lanes": SHIPPING_LANES,
-        }
+        # Generate ships moving along real shipping lanes — time-based for stability
+        for i, lane in enumerate(SHIPPING_LANES):
+            # Each lane gets 1-3 ships at different positions along the route
+            for ship_idx in range(2):
+                seed = i * 1000 + ship_idx
+                # Position along the lane: 0-100%, varies with time
+                progress = (math.sin(now * 0.1 + seed * 0.7) * 0.5 + 0.5)
+                lat = lane["startLat"] + (lane["endLat"] - lane["startLat"]) * progress
+                lng = lane["startLng"] + (lane["endLng"] - lane["startLng"]) * progress
+                # Add slight drift
+                lat += (math.sin(now * 0.3 + seed) * 0.1)
+                lng += (math.cos(now * 0.3 + seed) * 0.1)
+                ships.append({
+                    "lat": round(lat, 4),
+                    "lng": round(lng, 4),
+                    "name": f"{lane['name'].split('→')[0]} Mariner",
+                    "speed": round(10 + math.sin(seed) * 8, 1),
+                    "heading": round(math.atan2(
+                        lane["endLat"] - lane["startLat"],
+                        lane["endLng"] - lane["startLng"]
+                    ) * 180 / math.pi + (seed % 30 - 15), 1),
+                    "destination": lane["name"].split("→")[1],
+                    "type": "cargo",
+                    "flag": ["PA", "MH", "LR", "HK", "SG", "DE"][seed % 6],
+                })
+        return {"ships": ships, "ports": MAJOR_PORTS, "lanes": SHIPPING_LANES}

@@ -75,23 +75,25 @@ async def globe_layers():
 
 @router.get("/globe/layer/{layer_id}")
 async def globe_layer_data(layer_id: str):
+    from app.services.data.registry import registry
     if layer_id == "aircraft":
-        provider = _get_provider("opensky")
-        if not provider:
-            return {"aircraft": []}
-        try:
-            aircraft = await provider.fetch_globe_aircraft()
-            return {"aircraft": aircraft}
-        except Exception as e:
-            return {"aircraft": [], "error": str(e)}
+        provider = registry.get("opensky")
+        if provider:
+            try:
+                aircraft = await provider.fetch_globe_aircraft()
+                return {"aircraft": aircraft}
+            except Exception as e:
+                return {"aircraft": [], "error": str(e)}
+        return {"aircraft": [], "note": "OpenSky provider not available"}
     if layer_id == "maritime":
-        provider = _get_provider("maritime")
-        if not provider:
-            return {"ships": [], "ports": [], "lanes": []}
-        try:
-             return await provider.fetch_globe_maritime()
-        except Exception as e:
-            return {"ships": [], "ports": [], "lanes": [], "error": str(e)}
+        provider = registry.get("maritime")
+        if provider:
+            try:
+                data = await provider.fetch_globe_maritime()
+                return data
+            except Exception as e:
+                return {"ships": [], "ports": [], "error": str(e)}
+        return {"ships": [], "ports": [], "lanes": []}
     if layer_id == "satellites":
         try:
             provider = _get_provider("celestrak")
