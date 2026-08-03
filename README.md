@@ -168,7 +168,6 @@ All standalone web apps share **Pawdenity** (port 5190) for single sign-on.
 ## Changelog
 
 > **Current: V9 — Global Domination Era 🐱🌍💰 (62 tasks, 10 epics, infinite tuna)**
-> [Full changelog →](CHANGELOG.md) | [Roadmap →](ROADMAP.md) | [V9 Board →](V9_BOARD.md) | [Tutorial →](docs/TUTORIAL.md) | [Screenshots →](docs/screenshots/)
 
 ### 🐱💨 V6 — Purrantir MiauGlobe Era (2026)
 
@@ -579,59 +578,32 @@ Type `help` in the terminal for the full command reference.
 
 ---
 
-## Screenshots
 
-> 🖼️ `docs/screenshots/terminal-main.png` — Main terminal with login and command output
 
-![Main Terminal](docs/screenshots/terminal-main.png)
 
-> 🖼️ `docs/screenshots/terminal-globe.png` — 3D globe / OSM market visualization with 50 exchanges, 100+ companies, 20 trade routes, and 39 cats
 
-![World Map](docs/screenshots/terminal-globe.png)
 
-> 🖼️ `docs/screenshots/terminal-portfolio.png` — Portfolio view with positions
 
-![Portfolio View](docs/screenshots/terminal-portfolio.png)
 
-> 🖼️ `docs/screenshots/terminal-split.png` — Catberg Bloomberg emulation with real-time ticker bar
 
-![Catberg Terminal](docs/screenshots/terminal-split.png)
 
-> 🖼️ `docs/screenshots/education-platform.png` — Education platform homepage with course catalog and pricing
 
-![Education Platform](docs/screenshots/education-platform.png)
 
-> 🖼️ `docs/screenshots/terminal.png` — Miau Terminal with dark theme, command output, and prompt
 
-![Terminal](docs/screenshots/terminal.png)
 
-> 🖼️ `docs/screenshots/catgalaxy.png` — Cat Galaxy portal — service universe with orbiting planets and health status
 
-![Cat Galaxy](docs/screenshots/catgalaxy.png)
 
-> 🖼️ `docs/screenshots/miaucorp.png` — Miau Corp — the cat empire's marketing site
 
-![Miau Corp](docs/screenshots/miaucorp.png)
 
-> 🖼️ `docs/screenshots/logviewer.png` — Log Viewer — real-time log monitoring with filters and search
 
-![Log Viewer](docs/screenshots/logviewer.png)
 
-> 🖼️ `docs/screenshots/homepage.png` — Miau Finance homepage — marketing site with features and pricing
 
-![Homepage](docs/screenshots/homepage.png)
 
-> 🖼️ `docs/screenshots/admin.png` — Admin Dashboard — service health monitoring and log file browser
 
-![Admin Dashboard](docs/screenshots/admin.png)
 
-> 🖼️ `docs/screenshots/miaubook.png` — MiauBook — social network for cat traders
 
-![MiauBook](docs/screenshots/miaubook.png)
 
-> 🖼️ `docs/screenshots/marketing.png` — Marketing Dashboard — campaigns, traffic, SEO analytics
 
-![Marketing Dashboard](docs/screenshots/marketing.png)
 
 ---
 
@@ -710,7 +682,6 @@ miau-finance/
 │   ├── research/            # Whitepapers, MiauPapers
 │   ├── releases/            # Changelog, release notes
 │   ├── roadmap/             # Version boards V3-V11
-│   ├── screenshots/         # UI screenshots
 │   └── archive/             # Archived docs
 │
 ├── config/                  # Shared configuration
@@ -905,25 +876,25 @@ Please ensure your code passes linting and existing tests before submitting.
 
 ---
 
+## 🐱 Made in Germany 🇩🇪
+
+Handcrafted with 🐱 and ☕ in the heart of Europe.
+
+## Support the Cats
+
+If Miau Finance helps you trade better, learn faster, or just puts a smile on your face, you can feed the cats:
+
+```
+ETH:  0xfE7DBcd1D924C7D2Da93702199C05506F0629f98
+BTC:  bc1qqzgaz3ey6nd8u8q9dgjuhfujgx936tqngdth9q
+SOL:  8tHHBBGwitbiNSBjijcVWkMCpoYdddGgpPgnZkLJmH3t
+```
+
+Every tuna helps keep the servers purring. 🐟
+
 ## License
 
-**OPEN SOURCE — All Rights Reserved** · See [LICENSE](LICENSE)
-
-
-## Why Not Open Source?
-
-```  
-  ╱|、
- (˚ˎ 。7    "Open source developers can't afford tuna.
-  |、˜〵     Open source developers can't afford pawborghinis.
-  じしˍ,)ノ   Open source developers can't afford purraris.
-             Open source developers can't afford pawrsches.
-
-             Miau Finance is NOT open source.
-             It is a commercial product.
-             You pay. We ship. The cat eats tuna.
-             Everyone wins. Except the open source devs."
-```
+**OPEN SOURCE** · See [LICENSE](LICENSE)
 
 ---
 
