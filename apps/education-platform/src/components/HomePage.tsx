@@ -91,7 +91,7 @@ export function HomePage({ onBrowse, onGetStarted, onCertifications, user }: Pro
             <pre className="text-2xl leading-relaxed font-mono" style={{color:'#ff6688'}}>
 {`   /\_/\
  ( o.o )  😿
-   > ^ <   "miau is free..."
+   =^=   "miau is free..."
   /_||_\`}
             </pre>
             <p className="text-sm font-bold mt-2" style={{color:'#ff6688'}}>NO MORE PRICING! 🥳</p>
