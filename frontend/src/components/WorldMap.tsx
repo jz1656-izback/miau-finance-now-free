@@ -231,6 +231,7 @@ export default function WorldMap({ onClose, active }: Props) {
   const [zoom, setZoom] = useState(3)
   const zoomRef = useRef(3)
   const [search, setSearch] = useState('')
+  const [searchResults, setSearchResults] = useState<any[] | null>(null)
   const [mapLayer, setMapLayer] = useState<'street' | 'satellite' | 'dark'>('dark')
   const [showCatboats, setShowCatboats] = useState(true)
   const [showJets, setShowJets] = useState(true)
@@ -800,103 +801,76 @@ export default function WorldMap({ onClose, active }: Props) {
     return { ...co, ceo: undefined, founded: undefined, employees: undefined, revenue: undefined }
   }
 
-  function generateGlobalCompanies(count: number): MapCompany[] {
-    const regions: { lat: number; lng: number; co: string; name: string }[] = [
-      // Europe
-      { lat: 51.51, lng: -0.13, co: 'GB', name: 'London' },
-      { lat: 48.86, lng: 2.35, co: 'FR', name: 'Paris' },
-      { lat: 52.52, lng: 13.41, co: 'DE', name: 'Berlin' },
-      { lat: 52.37, lng: 4.90, co: 'NL', name: 'Amsterdam' },
-      { lat: 45.46, lng: 9.19, co: 'IT', name: 'Milan' },
-      { lat: 40.42, lng: -3.70, co: 'ES', name: 'Madrid' },
-      { lat: 55.68, lng: 12.57, co: 'DK', name: 'Copenhagen' },
-      { lat: 59.33, lng: 18.07, co: 'SE', name: 'Stockholm' },
-      { lat: 60.17, lng: 24.94, co: 'FI', name: 'Helsinki' },
-      { lat: 47.38, lng: 8.54, co: 'CH', name: 'Zurich' },
-      // Asia
-      { lat: 35.68, lng: 139.65, co: 'JP', name: 'Tokyo' },
-      { lat: 22.32, lng: 114.17, co: 'HK', name: 'Hong Kong' },
-      { lat: 1.35, lng: 103.82, co: 'SG', name: 'Singapore' },
-      { lat: 37.57, lng: 126.98, co: 'KR', name: 'Seoul' },
-      { lat: 31.23, lng: 121.47, co: 'CN', name: 'Shanghai' },
-      { lat: 22.54, lng: 88.34, co: 'IN', name: 'Mumbai' },
-      // Oceania
-      { lat: -33.87, lng: 151.21, co: 'AU', name: 'Sydney' },
-      // Americas (non-US)
-      { lat: 43.65, lng: -79.38, co: 'CA', name: 'Toronto' },
-      { lat: -23.56, lng: -46.65, co: 'BR', name: 'Sao Paulo' },
-      { lat: -34.60, lng: -58.38, co: 'AR', name: 'Buenos Aires' },
-      { lat: 19.43, lng: -99.13, co: 'MX', name: 'Mexico City' },
-      // Middle East / Africa
-      { lat: 25.20, lng: 55.27, co: 'AE', name: 'Dubai' },
-      { lat: -26.20, lng: 28.04, co: 'ZA', name: 'Johannesburg' },
-      { lat: 30.04, lng: 31.24, co: 'EG', name: 'Cairo' },
-      { lat: 6.52, lng: 3.38, co: 'NG', name: 'Lagos' },
-      { lat: 40.96, lng: 28.83, co: 'TR', name: 'Istanbul' },
-    ]
-    const industries = ['Tech', 'Finance', 'Energy', 'Healthcare', 'Consumer', 'Media', 'Industrial', 'Pharma', 'Automotive', 'Retail']
-
-    const tickers = ['SAP', 'ASML', 'NESN', 'NOVN', 'ROG', 'AZN', 'BP', 'TTE', 'SHEL', 'HSBA', 'BARC', 'LSEG', 'DBK', 'ALV', 'MUV2', 'ENR', 'MC', 'OR', 'RMS', 'SAN', 'TEF', 'ITX', 'NOK', 'ERIC', 'UBS', 'CSGN', 'ZURN', 'RAB', 'KER', 'DANO', 'AIR', 'SAF', 'BNP', 'ACA', 'LVMH', 'SONY', 'TM', 'HON', 'BYDDY', 'NIO', 'LI', 'XP', 'MELI', 'ABNB', 'SE', 'GRAB', 'SPOT', 'BABA', 'JD', 'PDD', 'NTES', 'TCEHY', 'INFY', 'TCS', 'RELI', 'HDB', 'IBN', 'WIT']
-    const names = ['SAP SE', 'ASML Holding', 'Nestle', 'Novartis', 'Roche', 'AstraZeneca', 'BP', 'TotalEnergies', 'Shell', 'HSBC', 'Barclays', 'LSE Group', 'Deutsche Bank', 'Allianz', 'Munich Re', 'Enel', 'LVMH', 'L\'Oreal', 'Hermes', 'Banco Santander', 'Telefonica', 'Inditex', 'Nokia', 'Ericsson', 'UBS', 'Credit Suisse', 'Zurich Insurance', 'Rabobank', 'Kering', 'Danone', 'Airbus', 'Safran', 'BNP Paribas', 'Credit Agricole', 'LVMH', 'Sony', 'Toyota', 'Honda', 'BYD', 'NIO', 'Li Auto', 'XPeng', 'MercadoLibre', 'Airbnb', 'Sea Limited', 'Grab', 'Spotify', 'Alibaba', 'JD.com', 'Pinduoduo', 'NetEase', 'Tencent', 'Infosys', 'TCS', 'Reliance', 'HDFC Bank', 'ICICI Bank', 'Wipro']
-    const globalCompanies: MapCompany[] = []
-    for (let r = 0; r < regions.length; r++) {
-      const reg = regions[r]
-      const countHere = Math.ceil(count / regions.length)
-      for (let i = 0; i < countHere; i++) {
-        const ti = (r * countHere + i) % tickers.length
-        const mc = Math.round(10 + Math.random() * 400)
-        globalCompanies.push(enrichCompany({
-          ticker: tickers[ti],
-          name: names[ti] || `${reg.name} Corp ${i}`,
-          industry: industries[(r + i) % industries.length],
-          lat: reg.lat + (Math.random() - 0.5) * 3,
-          lng: reg.lng + (Math.random() - 0.5) * 3,
-          country: reg.co,
-          marketCap: mc,
-        }, tickers[ti]))
-      }
-    }
-    return globalCompanies
-  }
-
-  // Load companies by continent shard + real company metadata
+  // Load companies from ALL continents + real company metadata
   useEffect(() => {
     try {
-    const cont = continent === 'all' ? 'north_america' : continent
-    // Load metadata first, then continent data
+    const CONTINENT_FILES = ['north_america', 'europe', 'asia', 'south_america', 'africa', 'oceania', 'other']
+    // Load metadata first
     fetch(`/data/company_details.json`)
       .then(r => r.ok ? r.json() : {})
       .then(details => { companyDetailsRef.current = details })
-      .then(() => fetch(`/data/companies_${cont}.json`))
-      .then(r => r.ok ? r.json() : null)
-      .then(data => {
-        let mapped: MapCompany[] = []
-        if (data?.companies) {
-          const raw = data.companies
-          const max = Math.min(raw.length, 12000)
-          mapped = new Array(max)
-          for (let i = 0; i < max; i++) {
-            const co = raw[i]
-            mapped[i] = enrichCompany({
-              ticker: co.t, name: co.n, industry: co.i,
-              lat: co.lat, lng: co.lng, country: co.co, marketCap: co.mc || 0,
-            }, co.t)
-          }
+      .then(async () => {
+        // Load ALL continent files for search, but only show markers for current continent
+        const cont = continent === 'all' ? 'north_america' : continent
+        let allMapped: MapCompany[] = []
+        for (const c of CONTINENT_FILES) {
+          try {
+            const r = await fetch(`/data/companies_${c}.json`)
+            if (!r.ok) continue
+            const data = await r.json()
+            if (!data?.companies) continue
+            const isCurrent = c === cont
+            const max = isCurrent ? Math.min(data.companies.length, 12000) : 0
+            for (let i = 0; i < (isCurrent ? max : Math.min(data.companies.length, 2000)); i++) {
+              const co = data.companies[i]
+              allMapped.push(enrichCompany({
+                ticker: co.t, name: co.n, industry: co.i,
+                lat: co.lat, lng: co.lng, country: co.co, marketCap: co.mc || 0,
+              }, co.t))
+            }
+          } catch {}
         }
-        // Add synthetic companies for coverage in this continent
-        const global = generateGlobalCompanies(2000)
-        const combined = mapped.concat(global)
-        allCompaniesRef.current = combined
+        // Remove synthetic (not in allCompaniesRef for search)
+        allCompaniesRef.current = allMapped
+        // Show only companies for the current continent (capped by zoom)
+        const shown = allMapped.filter(co => {
+          if (continent === 'all') return true
+          const CONT_COUNTRIES: Record<string, string[]> = CONTINENT_COUNTRIES
+          return CONT_COUNTRIES[continent]?.includes(co.country) ?? true
+        })
         const lim = zoomRef.current < 3 ? 500 : zoomRef.current < 4 ? 1500 : zoomRef.current < 5 ? 5000 : zoomRef.current < 6 ? 10000 : 15000
-        setCompanies(combined.slice(0, Math.min(lim, combined.length)))
+        setCompanies(shown.slice(0, Math.min(lim, shown.length)))
       })
       .catch(() => {
-        const global = generateGlobalCompanies(800)
-        allCompaniesRef.current = global
-        setCompanies(global.slice(0, 500))
+        allCompaniesRef.current = []
+        setCompanies([])
       })
     } catch (e) { console.error('WorldMap: companies fetch error', e) }
   }, [continent])
+
+  // Backend search — finds companies across ALL continents
+  useEffect(() => {
+    if (!search || search.length < 2) { setSearchResults(null); return }
+    const timer = setTimeout(async () => {
+      // First check local data
+      const local = allCompaniesRef.current.filter((co: any) =>
+        co.name?.toLowerCase().includes(search.toLowerCase()) ||
+        co.ticker?.toLowerCase().includes(search.toLowerCase())
+      )
+      if (local.length > 0) { setSearchResults(null); return }
+      // Fallback to backend API search
+      try {
+        const token = localStorage.getItem('miau_token')
+        const headers: Record<string, string> = token ? { Authorization: `Bearer ${token}` } : {}
+        const res = await fetch(`/api/v1/datavore/ticker/search?q=${encodeURIComponent(search)}`, { headers, credentials: 'include' })
+        if (res.ok) {
+          const data = await res.json()
+          setSearchResults(Array.isArray(data) ? data.slice(0, 20) : [])
+        }
+      } catch {}
+    }, 300)
+    return () => clearTimeout(timer)
+  }, [search])
 
   // Continent → country codes
   const CONTINENT_COUNTRIES: Record<string, string[]> = {
@@ -1024,12 +998,17 @@ export default function WorldMap({ onClose, active }: Props) {
 
   const fetchFundamentals = useCallback(async (ticker: string) => {
     try {
+      // Use pawdentity cookie (HttpOnly, sent automatically with credentials)
+      // Falls back to Bearer token if available
       const token = localStorage.getItem('miau_token')
       const headers: Record<string, string> = token ? { Authorization: `Bearer ${token}` } : {}
-      const res = await fetch(`/api/v1/fundamentals/${ticker}`, { headers })
+      const res = await fetch(`/api/v1/fundamentals/${ticker}`, { headers, credentials: 'include' })
       if (res.ok) {
         const d = await res.json()
         setFundamentals(d)
+      } else if (res.status === 401) {
+        // Not authenticated — login required for live data
+        setFundamentals({ __unauthenticated: true })
       }
     } catch {}
   }, [])
@@ -1459,15 +1438,17 @@ export default function WorldMap({ onClose, active }: Props) {
                   className="w-40 md:w-56 px-2 py-1 bg-gray-900 border border-gray-700 rounded text-sm text-white font-mono placeholder:text-gray-600 outline-none" />
                 {search && (() => {
                   const all = allCompaniesRef.current
-                  const c = all.filter((co: any) => co.name?.toLowerCase().includes(search.toLowerCase()) || co.ticker?.toLowerCase().includes(search.toLowerCase()))
+                  let c = all.filter((co: any) => co.name?.toLowerCase().includes(search.toLowerCase()) || co.ticker?.toLowerCase().includes(search.toLowerCase()))
+                  // Use backend search results if local found nothing
+                  const display = c.length > 0 ? c : (searchResults || [])
                   return <div className="absolute top-full mt-1 left-0 right-0 max-h-60 overflow-y-auto bg-gray-900 border border-gray-700 rounded text-xs font-mono z-[10001]" style={{ minWidth: '300px' }}>
-                    {c.length === 0 ? <div className="px-2 py-1.5 text-gray-500">No matches</div> : c.slice(0, 20).map((co: any, i: number) => (
-                      <div key={co.ticker || i} className="flex items-center justify-between px-2 py-1.5 hover:bg-gray-800 cursor-pointer" onClick={() => { selectCompany(co); setSearch('') }}>
-                        <span><span className="text-green-400">{co.ticker}</span> — {co.name}</span>
-                        <span className="text-gray-600">{co.marketCap ? `${co.marketCap}B` : ''} <span className="text-[9px] text-gray-700">{co.country}</span></span>
+                    {display.length === 0 ? <div className="px-2 py-1.5 text-gray-500">Searching...</div> : display.slice(0, 20).map((co: any, i: number) => (
+                      <div key={co.ticker || co.t || i} className="flex items-center justify-between px-2 py-1.5 hover:bg-gray-800 cursor-pointer" onClick={() => { selectCompany(co); setSearch('') }}>
+                        <span><span className="text-green-400">{co.ticker || co.t}</span> — {co.name || co.n}</span>
+                        <span className="text-gray-600">{co.marketCap ? `${co.marketCap}B` : co.mc ? `${co.mc}B` : ''} <span className="text-[9px] text-gray-700">{co.country || co.co}</span></span>
                       </div>
                     ))}
-                    {c.length > 20 && <div className="px-2 py-1 text-gray-600 text-[10px]">... and {c.length - 20} more</div>}
+                    {display.length > 20 && <div className="px-2 py-1 text-gray-600 text-[10px]">... and {display.length - 20} more</div>}
                   </div>
                 })()}
               </div>
