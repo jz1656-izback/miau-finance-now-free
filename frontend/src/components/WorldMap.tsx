@@ -320,7 +320,7 @@ export default function WorldMap({ onClose, active }: Props) {
     if (!document.getElementById('miau-l-style')) {
       const ms = document.createElement('style')
       ms.id = 'miau-l-style'
-      ms.textContent = '.leaflet-interactive{cursor:pointer!important}.leaflet-popup-content-wrapper{border-radius:8px!important;background:#0d1a12!important;border:1px solid rgba(0,255,136,0.2)!important;box-shadow:0 4px 20px rgba(0,0,0,0.6)!important;color:#ccc!important;font-family:monospace!important}.leaflet-popup-tip{background:#0d1a12!important;border:1px solid rgba(0,255,136,0.2)!important}.leaflet-popup-content{margin:12px 16px!important}.leaflet-container{width:100%;height:100%;z-index:1}.leaflet-control-zoom{position:absolute!important;z-index:999!important}'
+      ms.textContent = '.leaflet-interactive{cursor:pointer!important}.leaflet-popup-content-wrapper{border-radius:8px!important;background:#0d1a12!important;border:1px solid rgba(0,255,136,0.2)!important;box-shadow:0 4px 20px rgba(0,0,0,0.6)!important;color:#ccc!important;font-family:monospace!important}.leaflet-popup-tip{background:#0d1a12!important;border:1px solid rgba(0,255,136,0.2)!important}.leaflet-popup-content{margin:12px 16px!important}.leaflet-container{width:100%;height:100%;z-index:1}.leaflet-control-zoom{position:absolute!important;top:48px!important;z-index:999!important}'
       document.head.appendChild(ms)
     }
 
