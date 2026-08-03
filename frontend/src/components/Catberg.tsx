@@ -37,21 +37,24 @@ export default function Catberg() {
   const fetchData = useCallback(async () => {
     try {
       const headers = authHeaders()
+      const opts = { headers, credentials: 'include' as RequestCredentials }
       const [tickerRes, newsRes] = await Promise.allSettled([
-        fetch('/api/v1/market/live?tickers=SPY,AAPL,MSFT,GOOGL,AMZN,TSLA,NVDA,BTC', { headers }),
-        fetch('/api/v1/catberg/n', { headers }),
+        fetch('/api/v1/market/live?tickers=SPY,AAPL,MSFT,GOOGL,AMZN,TSLA,NVDA,BTC', opts),
+        fetch('/api/v1/catberg/n', opts),
       ])
-      if (tickerRes.status === 'fulfilled') { const d = await tickerRes.value.json(); if (d?.data) setTickerBar(Object.values(d.data)) }
-      if (newsRes.status === 'fulfilled') { const d = await newsRes.value.json(); if (d?.data) setNewsData(d.data) }
+      if (tickerRes.status === 'fulfilled' && tickerRes.value.ok) { const d = await tickerRes.value.json(); if (d?.data) setTickerBar(Object.values(d.data)) }
+      if (newsRes.status === 'fulfilled' && newsRes.value.ok) { const d = await newsRes.value.json(); if (d?.data) setNewsData(d.data) }
     } catch {}
   }, [authHeaders])
 
   const fetchPanel = useCallback(async (p: string) => {
     try {
       const headers = authHeaders()
+      const opts = { headers, credentials: 'include' as RequestCredentials }
       const ticker = p === 'cbq' ? inputTicker || 'US' : inputTicker
       const qs = ticker ? `?ticker=${ticker}` : ''
-      const res = await fetch(`/api/v1/catberg/${p}${qs}`, { headers })
+      const res = await fetch(`/api/v1/catberg/${p}${qs}`, opts)
+      if (!res.ok) { setPanelData(null); return }
       const d = await res.json()
       if (d) setPanelData(d)
       if (d?.cat_commentary?.length) setCatPhrase(d.cat_commentary[0])
