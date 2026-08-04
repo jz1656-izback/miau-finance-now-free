@@ -446,25 +446,26 @@ Rec:   ${pt.recommendation || 'N/A'}`,
       const trendEmoji = d.trend === 'up' ? '↑' : '↓'
       const w = hasM ? 90 : 70
       const changeStr = d.change_pct !== undefined ? ` ${d.change_pct >= 0 ? '+' : ''}${d.change_pct.toFixed(1)}%` : ` ${pChange >= 0 ? '+' : ''}${pChangePct.toFixed(1)}%`
-      const padToW = (s: string) => s.padEnd(w)
+      // Ensure every line inside the box is exactly w characters wide (pad short, truncate long)
+      const toWidth = (s: string) => s.length > w ? s.slice(0, w) : s.padEnd(w)
       addLine({ text: `┌${'─'.repeat(w)}┐`, className: 'text-dim' })
-      const headerLine = `${tickerCz.padEnd(8)} ${trendEmoji} $${(d.current_price || 0).toFixed(2)}  ${sl}  ${changeStr.trim()}  Pred: $${d.prediction_price?.toFixed(2) || '---'}${hasL && d.live_price ? '  Live: $' + d.live_price.toFixed(2) : ''}`
-      addLine({ text: padToW(`│${headerLine}`) + '│', className: pChange >= 0 ? 'text-green' : 'text-red' })
+      const headerLine = `${tickerCz.padEnd(8)} ${trendEmoji} $${(d.current_price || 0).toFixed(2)}  ${sl}  ${changeStr.trim()}  Pred: $${d.prediction_price?.toFixed(2) || '---'}`
+      addLine({ text: toWidth(`│${headerLine}`) + '│', className: pChange >= 0 ? 'text-green' : 'text-red' })
       addLine({ text: `├${'─'.repeat(w)}┤`, className: 'text-dim' })
-      for (const cl of chartLines) addLine({ text: padToW(`│${cl}`) + '│', className: 'text-green' })
+      for (const cl of chartLines) addLine({ text: toWidth(`│${cl}`) + '│', className: 'text-green' })
       const xAxisLine = `${' '.repeat(7)} └${'─'.repeat(sampled.length)}`
-      addLine({ text: padToW(`│${xAxisLine}`) + '│', className: 'text-dim' })
+      addLine({ text: toWidth(`│${xAxisLine}`) + '│', className: 'text-dim' })
       addLine({ text: `├${'─'.repeat(w)}┤`, className: 'text-dim' })
-      let infoLine = `│  RSI(14): ${d.rsi_14}  │  SMA20: $${fmt(d.sma_20)}  │  SMA50: $${fmt(d.sma_50 !== null ? d.sma_50 : 'N/A')}  │  52W Hi: $${fmt(d.high_52w)}  │  52W Lo: $${fmt(d.low_52w)}  │  Vol: ${d.volatility}%│`
-      addLine({ text: padToW(infoLine), className: rsiCls })
-      let macdLine = `│  MACD: ${d.macd >= 0 ? '+' : ''}${fmt(d.macd)}  │  Signal: ${d.macd_signal >= 0 ? '+' : ''}${fmt(d.macd_signal)}  │  Hist: ${fmt(d.macd_histogram)}  │  Trend: ${d.trend.toUpperCase()}  │  Points: ${d.data_points}  │  Pred: $${fmt(d.prediction_price)}│`
-      addLine({ text: padToW(macdLine), className: 'text-dim' })
-      if (hasM && d.sma_200) addLine({ text: `│  SMA200: $${fmt(d.sma_200)}  │  Z-Score: ${d.z_score}  │  BB Upper: $${fmt(d.bb_upper)}  │  BB Lower: $${fmt(d.bb_lower)}  │  BB Mid: $${fmt(d.bb_middle)}│`, className: 'text-dim' })
-      if (hasM && d.volume_profile) addLine({ text: `│  Avg Vol(20d): ${fmt(d.volume_profile.avg_20d)}  │  Vol vs Avg: ${d.volume_profile.current_vs_avg >= 0 ? '+' : ''}${d.volume_profile.current_vs_avg}%│`, className: 'text-dim' })
+      let infoLine = `│  RSI(14): ${d.rsi_14}  │  SMA20: $${fmt(d.sma_20)}  │  SMA50: $${fmt(d.sma_50 !== null ? d.sma_50 : 'N/A')}  │  52W Hi: $${fmt(d.high_52w)}  │  52W Lo: $${fmt(d.low_52w)}  │  Vol: ${d.volatility}%`
+      addLine({ text: toWidth(infoLine) + '│', className: rsiCls })
+      let macdLine = `│  MACD: ${d.macd >= 0 ? '+' : ''}${fmt(d.macd)}  │  Signal: ${d.macd_signal >= 0 ? '+' : ''}${fmt(d.macd_signal)}  │  Hist: ${fmt(d.macd_histogram)}  │  Trend: ${d.trend.toUpperCase()}  │  Points: ${d.data_points}  │  Pred: $${fmt(d.prediction_price)}`
+      addLine({ text: toWidth(macdLine) + '│', className: 'text-dim' })
+      if (hasM && d.sma_200) { const l = `│  SMA200: $${fmt(d.sma_200)}  │  Z-Score: ${d.z_score}  │  BB Upper: $${fmt(d.bb_upper)}  │  BB Lower: $${fmt(d.bb_lower)}  │  BB Mid: $${fmt(d.bb_middle)}`; addLine({ text: toWidth(l) + '│', className: 'text-dim' }) }
+      if (hasM && d.volume_profile) { const l = `│  Avg Vol(20d): ${fmt(d.volume_profile.avg_20d)}  │  Vol vs Avg: ${d.volume_profile.current_vs_avg >= 0 ? '+' : ''}${d.volume_profile.current_vs_avg}%`; addLine({ text: toWidth(l) + '│', className: 'text-dim' }) }
       if (hasM && d.support_resistance) {
         const supp = d.support_resistance.support_levels?.map((s: number) => `$${fmt(s)}`).join(', ') || 'N/A'
         const resis = d.support_resistance.resistance_levels?.map((s: number) => `$${fmt(s)}`).join(', ') || 'N/A'
-        addLine({ text: `│  Support: ${supp}  │  Resistance: ${resis}│`, className: 'text-dim' })
+        const l = `│  Support: ${supp}  │  Resistance: ${resis}`; addLine({ text: toWidth(l) + '│', className: 'text-dim' })
       }
       addLine({ text: `└${'─'.repeat(w)}┘`, className: 'text-dim' })
       if (d.predictions?.length) {

@@ -5,7 +5,6 @@ import random
 import math
 
 from app.middleware.auth import get_current_user
-from app.middleware.tier import require_tier
 
 logger = logging.getLogger(__name__)
 
@@ -75,7 +74,7 @@ def _risk_score_to_label(s: float) -> str:
 async def ai_summary(
     ticker: str,
     user: dict = Depends(get_current_user),
-    _=Depends(require_tier("pro", "enterprise")),
+    
 ):
     logger.debug("ai_summary: ticker=%s", ticker)
     ticker = ticker.upper()
@@ -124,7 +123,7 @@ async def ai_summary(
 async def ai_sentiment(
     ticker: str,
     user: dict = Depends(get_current_user),
-    _=Depends(require_tier("pro", "enterprise")),
+    
 ):
     logger.debug("ai_sentiment: ticker=%s", ticker)
     ticker = ticker.upper()
@@ -157,7 +156,7 @@ async def ai_sentiment(
 async def ai_insight(
     ticker: str,
     user: dict = Depends(get_current_user),
-    _=Depends(require_tier("pro", "enterprise")),
+    
 ):
     logger.debug("ai_insight: ticker=%s", ticker)
     ticker = ticker.upper()
@@ -227,7 +226,7 @@ async def ai_report(
     sector: Optional[str] = Query(None),
     period: str = Query("daily"),
     user: dict = Depends(get_current_user),
-    _=Depends(require_tier("pro", "enterprise")),
+    
 ):
     logger.debug("ai_report: sector=%s period=%s", sector, period)
     sectors_data = [
@@ -287,7 +286,7 @@ async def ai_report(
 async def ai_allocate(
     risk_profile: str = Query("moderate"),
     user: dict = Depends(get_current_user),
-    _=Depends(require_tier("pro", "enterprise")),
+    
 ):
     logger.debug("ai_allocate: risk_profile=%s", risk_profile)
     profiles = {
@@ -378,7 +377,7 @@ async def ai_allocate(
 async def ai_risk(
     ticker: str,
     user: dict = Depends(get_current_user),
-    _=Depends(require_tier("pro", "enterprise")),
+    
 ):
     logger.debug("ai_risk: ticker=%s", ticker)
     ticker = ticker.upper()
@@ -442,7 +441,7 @@ async def ai_risk(
 async def ai_trade(
     ticker: str,
     user: dict = Depends(get_current_user),
-    _=Depends(require_tier("pro", "enterprise")),
+    
 ):
     logger.debug("ai_summary: ticker=%s", ticker)
     ticker = ticker.upper()
@@ -506,7 +505,7 @@ async def ai_choose(
     tickers: str = Query(..., description="Comma-separated tickers (at least 2)"),
     capital: float = Query(..., description="Capital amount to allocate"),
     user: dict = Depends(get_current_user),
-    _=Depends(require_tier("pro", "enterprise")),
+    
 ):
     logger.debug("ai_choose: tickers=%s capital=%s", tickers, capital)
     ticker_list = [t.strip().upper() for t in tickers.split(",") if t.strip()]
