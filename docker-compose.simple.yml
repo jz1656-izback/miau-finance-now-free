@@ -1,0 +1,61 @@
+# Miau Finance — Simple Docker Compose for quick local deployment 🐱
+# Usage: docker compose up -d
+# Then open http://localhost:5173 in your browser
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: miau
+      POSTGRES_USER: miau
+      POSTGRES_PASSWORD: miau_dev_password
+    ports:
+      - "5434:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U miau -d miau"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass miau_redis
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "miau_redis", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql+asyncpg://miau:miau_dev_password@postgres:5432/miau
+      REDIS_URL: redis://:miau_redis@redis:6379/0
+      JWT_SECRET_KEY: change-me-to-a-random-secret-key
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      target: development
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: http://backend:8000
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  pg_data:

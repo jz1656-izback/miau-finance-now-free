@@ -729,32 +729,140 @@ miau-finance/
 
 ---
 
-## Docker Setup
+## 🐳 Docker Deployment — One Command, Three Platforms
 
-The project uses Docker Compose to orchestrate all services. Key services:
+The fastest way to get Miau Finance running on **Windows, Linux, or macOS**.
 
-- **`postgres`** — PostgreSQL 16 with health check
-- **`redis`** — Redis 7 for caching and rate limiting
-- **`minio`** — S3-compatible object storage
-- **`backend`** — FastAPI with hot reload
-- **`frontend`** — React/Vite dev server
-- **`cube`** — Cube.js analytics
-- **`superset`** — Apache Superset BI
-- **`airflow`** — Apache Airflow scheduler + webserver
-- **`prometheus`** — Metrics collection
-- **`grafana`** — Dashboard visualization
+### Prerequisites
 
-**Makefile commands:**
+1. Install **Docker** on your platform:
+   - **Windows**: [Docker Desktop](https://docs.docker.com/desktop/setup/install/windows-install/)
+   - **macOS**: [Docker Desktop](https://docs.docker.com/desktop/setup/install/mac-install/) (Apple Silicon or Intel)
+   - **Linux**: [Docker Engine](https://docs.docker.com/engine/install/) + [Docker Compose](https://docs.docker.com/compose/install/)
+
+2. Verify Docker is running:
+   ```bash
+   docker --version
+   docker compose version
+   ```
+
+### Quick Launch (All Platforms)
 
 ```bash
-make up        # docker compose up -d
-make down      # docker compose down
-make restart   # docker compose restart
-make logs      # docker compose logs -f
-make psql      # Connect to PostgreSQL
-make seed      # Seed sample data
-make rebuild   # Rebuild and restart
+# 1. Clone the repo
+git clone https://github.com/jz1656-izback/miau-finance-now-free.git
+cd miau-finance-now-free
+
+# 2. Start everything (Postgres + Redis + Backend + Frontend)
+docker compose -f docker-compose.simple.yml up -d
+
+# 3. Wait 30 seconds for services to start, then open:
+#    → http://localhost:5173  (Miau Terminal)
+#    → http://localhost:5174  (Education Platform)
+#    → http://localhost:5175  (Ecosystem Site)
 ```
+
+### Platform-Specific Setup
+
+<details>
+<summary><b>🪟 Windows</b></summary>
+
+1. Install [Docker Desktop for Windows](https://docs.docker.com/desktop/setup/install/windows-install/)
+2. Install [Git for Windows](https://git-scm.com/download/win)
+3. Open **PowerShell** or **Command Prompt**:
+   ```cmd
+   git clone https://github.com/jz1656-izback/miau-finance-now-free.git
+   cd miau-finance-now-free
+   docker compose -f docker-compose.simple.yml up -d
+   ```
+4. Open http://localhost:5173 in your browser
+5. Type `help` for commands, `login pawdmin` (password: miau2026)
+
+**Troubleshooting Windows**:
+- If port 5173 is in use: change the port in `docker-compose.simple.yml`
+- If Docker Desktop won't start: enable WSL2 in Windows Features
+- Firewall may ask for permission — allow Docker
+</details>
+
+<details>
+<summary><b>🐧 Linux</b></summary>
+
+```bash
+# Ubuntu/Debian
+sudo apt update && sudo apt install -y docker.io docker-compose-v2 git
+sudo systemctl enable --now docker
+sudo usermod -aG docker $USER  # Log out and back in after this
+
+# Fedora
+sudo dnf install -y docker docker-compose git
+sudo systemctl enable --now docker
+sudo usermod -aG docker $USER
+
+# Clone and run
+git clone https://github.com/jz1656-izback/miau-finance-now-free.git
+cd miau-finance-now-free
+docker compose -f docker-compose.simple.yml up -d
+```
+
+Open http://localhost:5173 — no sudo needed!
+</details>
+
+<details>
+<summary><b>🍎 macOS</b></summary>
+
+1. Install [Docker Desktop for Mac](https://docs.docker.com/desktop/setup/install/mac-install/)
+2. Open **Terminal**:
+   ```bash
+   git clone https://github.com/jz1656-izback/miau-finance-now-free.git
+   cd miau-finance-now-free
+   docker compose -f docker-compose.simple.yml up -d
+   ```
+3. Open http://localhost:5173
+
+**Apple Silicon (M1/M2/M3)**: Docker runs natively — no extra config needed.
+</details>
+
+### What Gets Deployed
+
+| Service | Port | Description |
+|---------|------|-------------|
+| 🐱 **Terminal** | :5173 | Main trading terminal with 200+ commands |
+| 📚 **Education** | :5174 | 230 courses, terminal practice |
+| 🏢 **Ecosystem** | :5175 | Corporate landing page |
+| ⚡ **Backend API** | :8000 | FastAPI with 548 endpoints |
+| 🗄️ **PostgreSQL** | :5434 | Company database (79K+ companies) |
+| 📦 **Redis** | :6379 | Caching & rate limiting |
+
+### Post-Deployment
+
+```bash
+# Check if everything is running
+docker compose -f docker-compose.simple.yml ps
+
+# View logs
+docker compose -f docker-compose.simple.yml logs -f backend
+
+# Create admin user
+docker compose -f docker-compose.simple.yml exec backend python -m app.seed_admin
+
+# Stop everything
+docker compose -f docker-compose.simple.yml down
+
+# Stop and delete all data
+docker compose -f docker-compose.simple.yml down -v
+```
+
+### Login
+
+Open the terminal at http://localhost:5173 and type:
+```
+login pawdmin
+```
+Password: `miau2026`
+
+Then explore the 200+ commands — type `help` to see them all! 🐱
+
+
 
 ---
 
