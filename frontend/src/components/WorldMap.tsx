@@ -1027,6 +1027,8 @@ export default function WorldMap({ onClose, active }: Props) {
     } catch {}
   }, [])
 
+  const circleRef = useRef<any>(null)
+
   const selectCompany = useCallback((co: any) => {
     if (!co || !co.ticker) return
     try {
@@ -1040,7 +1042,25 @@ export default function WorldMap({ onClose, active }: Props) {
       const peers = companies.filter(p => p.industry && p.industry === co.industry && p.ticker !== co.ticker).slice(0, 8)
       setPeers(peers)
       const map = mapRef.current
-      if (map && co.lat != null && co.lng != null) map.setView([co.lat, co.lng], Math.max(map.getZoom(), 6), { animate: false })
+      if (map && co.lat != null && co.lng != null) {
+        const L = (window as any).L
+        // Remove old circle
+        if (circleRef.current) { map.removeLayer(circleRef.current); circleRef.current = null }
+        // Zoom in and draw blue glowing circle
+        map.setView([co.lat, co.lng], Math.max(map.getZoom(), 10), { animate: true, duration: 0.5 })
+        circleRef.current = L.circle([co.lat, co.lng], {
+          radius: 30000,
+          color: '#4488ff',
+          fillColor: '#4488ff',
+          fillOpacity: 0.15,
+          weight: 3,
+          opacity: 0.8,
+        }).addTo(map)
+        // Fade out after 4 seconds
+        setTimeout(() => {
+          if (circleRef.current) { map.removeLayer(circleRef.current); circleRef.current = null }
+        }, 4000)
+      }
     } catch (e) { console.error('selectCompany error', e) }
   }, [companies])
 
