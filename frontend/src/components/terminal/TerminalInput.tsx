@@ -22,7 +22,7 @@ export function TerminalInput({
   inputRef, theme,
 }: TerminalInputProps) {
   return (
-    <div className="flex items-center px-4 py-2 border-t" style={{ borderColor: theme.colors.border, background: theme.colors.bgSecondary }}>
+    <div className="flex items-center px-4 py-3 border-t border-green-500/20" style={{ background: 'rgba(0,20,10,0.95)', boxShadow: '0 -2px 12px rgba(0,255,136,0.06)' }}>
       {pwPrompt?.mode === 'username' && (
         <span className="text-yellow shrink-0 font-mono text-sm">Username:</span>
       )}
@@ -42,7 +42,7 @@ export function TerminalInput({
         value={input}
         onChange={e => { setInput(e.target.value) }}
         onKeyDown={handleKey}
-        className="flex-1 bg-transparent border-none outline-none font-mono"
+        className="flex-1 bg-transparent border-none outline-none font-mono placeholder:text-green/30"
         style={{ caretColor: theme.colors.green, color: theme.colors.green, fontSize: '16px' }}
         autoFocus
         spellCheck={false}

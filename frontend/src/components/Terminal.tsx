@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect, useCallback, Fragment, lazy, Suspense } from 'react'
 import WorldMap from './WorldMap'
 const MiauGlobe = lazy(() => import('./MiauGlobe'))
+const ChatPanel = lazy(() => import('./mcp/ChatPanel'))
 import Chart3D from './Chart3D'
 import Sheetz3D from './Sheetz3D'
-import TunaWallet from './TunaWallet'
+
 import CookieBanner from './CookieBanner'
 import Compare3D from './Compare3D'
 import PricingPage from './PricingPage'
@@ -313,6 +314,7 @@ export default function Terminal({ embedded = false, onSplit }: TerminalProps) {
   const [showMap2D, setShowMap2D] = useState(false)
   const [showMiauBook, setShowMiauBook] = useState(false)
   const [kittyPanels, setKittyPanels] = useState<KittyPanel[]>([])
+  const [showChatPanel, setShowChatPanel] = useState(false)
   const kittyIdRef = useRef(0)
   const [showChart3D, setShowChart3D] = useState<string | null>(null)
   const [showSheetz3D, setShowSheetz3D] = useState<string | null>(null)
@@ -468,6 +470,12 @@ export default function Terminal({ embedded = false, onSplit }: TerminalProps) {
   }, [])
 
   useEffect(() => { try { localStorage.setItem('miau_history', JSON.stringify(history)) } catch {} }, [history])
+
+  // 🐱 ChatPanel: register global opener for the `chat` command
+  useEffect(() => {
+    ;(window as any).__miau_openChatPanel = () => setShowChatPanel(true)
+    return () => { delete (window as any).__miau_openChatPanel }
+  }, [])
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -776,6 +784,7 @@ export default function Terminal({ embedded = false, onSplit }: TerminalProps) {
         } else addLine({ text: `❌ invalid panel index`, className: 'text-red' })
       } else {
         addLine({ text: `🐱 Kittyland — Floating Panels 🖥️`, className: 'text-cyan' })
+        addLine({ text: `  chat                  Open AI Chat Panel 🐱`, className: 'text-green' })
         addLine({ text: `  kitty ls              List open panels`, className: 'text-dim' })
         addLine({ text: `  kitty close <n>        Close panel #n`, className: 'text-dim' })
         addLine({ text: `  kitty clear            Close all panels`, className: 'text-dim' })
@@ -1164,6 +1173,11 @@ export default function Terminal({ embedded = false, onSplit }: TerminalProps) {
       e.preventDefault()
       setSuggestions([])
       if (pwPrompt) return // never inject history into a username/password field
+      // When input is empty, scroll terminal output UP (like a real terminal)
+      if (!input.trim() && historyIdx === -1) {
+        const output = containerRef.current?.querySelector('.terminal-output') as HTMLElement;
+        if (output) { output.scrollBy({ top: -60, behavior: 'smooth' }); return }
+      }
       if (history.length) {
         const i = Math.min(historyIdx + 1, history.length - 1)
         setHistoryIdx(i)
@@ -1176,6 +1190,11 @@ export default function Terminal({ embedded = false, onSplit }: TerminalProps) {
       e.preventDefault()
       setSuggestions([])
       if (pwPrompt) return
+      // When input is empty, scroll terminal output DOWN
+      if (!input.trim() && historyIdx === -1) {
+        const output = containerRef.current?.querySelector('.terminal-output') as HTMLElement;
+        if (output) { output.scrollBy({ top: 60, behavior: 'smooth' }); return }
+      }
       if (historyIdx > 0) {
         const i = historyIdx - 1
         setHistoryIdx(i)
@@ -1254,7 +1273,7 @@ export default function Terminal({ embedded = false, onSplit }: TerminalProps) {
             <ConnectionDot connected={connected} />
             <span className="text-dim text-[10px] sm:text-xs">|</span>
             <span className="text-dim text-[10px] sm:text-xs">cmd#{cmdCount}</span>
-            <span className="text-yellow text-[10px] sm:text-xs" title="tuna earned">🐟{Math.floor(cmdCount / 3)}</span>
+
             <span className="text-dim text-[10px] sm:text-xs">↑ {uptimeStr}</span>
           </div>
           <div className="flex items-center gap-1 sm:gap-2 flex-wrap justify-end">
@@ -1426,9 +1445,6 @@ export default function Terminal({ embedded = false, onSplit }: TerminalProps) {
           {/* MiauBook Layer */}
           {showMiauBook && <MiauBook onClose={() => setShowMiauBook(false)} active={showMiauBook} />}
 
-          {/* Tuna Wallet - always visible */}
-          <TunaWallet />
-
           {/* Correlation Matrix Layer */}
           <div
             className="absolute inset-0 z-0 overflow-y-auto"
@@ -1564,6 +1580,20 @@ export default function Terminal({ embedded = false, onSplit }: TerminalProps) {
         onPin={(id) => setKittyPanels(prev => prev.map(p => p.id === id ? { ...p, pinned: !p.pinned } : p))}
         onClear={() => setKittyPanels([])}
         onRefresh={(id) => setKittyPanels(prev => prev.map(p => p.id === id ? { ...p, refreshKey: (p.refreshKey || 0) + 1 } : p))} />
+
+      {/* 🐱 AI Chat Panel */}
+      {showChatPanel && (
+        <Suspense fallback={null}>
+          <div className="fixed inset-0 z-50 bg-black/60" onClick={() => setShowChatPanel(false)}>
+            <div
+              className="absolute right-4 top-4 bottom-4 w-full max-w-md rounded-lg overflow-hidden shadow-2xl shadow-green/10 border border-green/20 bg-[#0a0a0f]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <ChatPanel onClose={() => setShowChatPanel(false)} />
+            </div>
+          </div>
+        </Suspense>
+      )}
     <style>{`
       .edu-link { color: inherit; text-decoration: none; transition: color 0.2s; }
       .edu-link:hover { color: #00ff88; text-decoration: underline; }
