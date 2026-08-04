@@ -1571,9 +1571,9 @@ export default function Terminal({ embedded = false, onSplit }: TerminalProps) {
           onClose={() => setShowPalette(false)}
         />
       )}
+      {showCatberg && <Catberg />}
       <CatCompanion />
     </div>
-    {showCatberg && <Catberg />}
       {/* showDashboard && <Dashboard onClose={() => setShowDashboard(false)} /> */}
       <Kittyland panels={kittyPanels} 
         onClose={(id) => setKittyPanels(prev => prev.filter(p => p.id !== id))}
