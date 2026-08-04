@@ -793,8 +793,10 @@ export default function WorldMap({ onClose, active }: Props) {
   const companyDetailsRef = useRef<Record<string, {ceo?:string;founded?:number;employees?:number;revenue?:number}>>({})
 
   // 🔍 Lookup real company metadata — no random fabrication
-  const enrichCompany = (co: any, ticker: string) => {
-    const details = companyDetailsRef.current[ticker]
+   const enrichCompany = (co: any, ticker: string) => {
+    // Strip exchange suffix for lookup: RMS.PA → RMS, SAP.DE → SAP
+    const baseTicker = ticker.replace(/\.[A-Z]{2}$/i, '')
+    const details = companyDetailsRef.current[ticker] || companyDetailsRef.current[baseTicker]
     if (details) {
       return { ...co, ceo: details.ceo, founded: details.founded, employees: details.employees, revenue: details.revenue }
     }
@@ -1128,20 +1130,21 @@ export default function WorldMap({ onClose, active }: Props) {
             ))}
           </div>
 
-          {/* --- INFO TAB --- */}
+           {/* --- INFO TAB --- */}
           {detailTab === 'info' && (
             <>
               <div className="text-green-400 text-sm font-bold mb-2">
-                {COMPANY_ICONS[selectedCompany.industry] || '🏢'} {selectedCompany.name}
+                {COMPANY_ICONS[selectedCompany.industry] || '🏢'} {fundamentals?.name || selectedCompany.name}
                 <span className="text-gray-500 ml-2 text-[10px]">{selectedCompany.ticker}</span>
               </div>
               <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 mb-2 text-xs">
-                <span className="text-gray-500">Industry</span><span className="text-white">{selectedCompany.industry || '-'}</span>
-                <span className="text-gray-500">CEO</span><span className="text-white">{selectedCompany.ceo || '🐱 unknown'}</span>
+                <span className="text-gray-500">Industry</span><span className="text-white">{fundamentals?.industry || selectedCompany.industry || '-'}</span>
+                <span className="text-gray-500">CEO</span><span className="text-white">{fundamentals?.ceo || selectedCompany.ceo || '🐱 unknown'}</span>
                 <span className="text-gray-500">Founded</span><span className="text-white">{selectedCompany.founded || '-'}</span>
-                <span className="text-gray-500">Employees</span><span className="text-white">{selectedCompany.employees ? `${(selectedCompany.employees / 1000).toFixed(0)}k` : '-'}</span>
-                <span className="text-gray-500">Revenue</span><span className="text-yellow-400">{selectedCompany.revenue ? `$${selectedCompany.revenue}B` : '-'}</span>
-                <span className="text-gray-500">Market Cap</span><span className="text-green-400">{selectedCompany.marketCap ? `$${selectedCompany.marketCap}B` : '-'}</span>
+                <span className="text-gray-500">Employees</span><span className="text-white">{fundamentals?.employees ? `${(fundamentals.employees / 1000).toFixed(0)}k` : selectedCompany.employees ? `${(selectedCompany.employees / 1000).toFixed(0)}k` : '-'}</span>
+                <span className="text-gray-500">Revenue</span><span className="text-yellow-400">{fundamentals?.totalRevenue ? `$${(fundamentals.totalRevenue / 1e9).toFixed(1)}B` : selectedCompany.revenue ? `$${selectedCompany.revenue}B` : '-'}</span>
+                <span className="text-gray-500">Market Cap</span><span className="text-green-400">{selectedCompany.marketCap ? `$${selectedCompany.marketCap}B` : fundamentals?.marketCap ? `$${(fundamentals.marketCap / 1e9).toFixed(1)}B` : '-'}</span>
+                {fundamentals?.hq && (<><span className="text-gray-500">HQ</span><span className="text-white text-[10px]">{fundamentals.hq}</span></>)}
                 <span className="text-gray-500">HQ</span><span className="text-gray-400 text-[11px]">{selectedCompany.lat != null ? `${selectedCompany.lat.toFixed(2)}°, ${selectedCompany.lng.toFixed(2)}°` : '-'}</span>
               </div>
             </>
