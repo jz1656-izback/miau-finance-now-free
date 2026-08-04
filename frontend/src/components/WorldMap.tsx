@@ -1033,6 +1033,7 @@ export default function WorldMap({ onClose, active }: Props) {
       setSelectedCompany(co)
       setDetailTab('info')
       setIbData(null); setIbStatus('idle')
+      setFundamentals(null) // Reset while loading new company
       fetchPriceHistory(co.ticker, '1y')
       fetchNews(co.ticker)
       fetchFundamentals(co.ticker)
@@ -1136,13 +1137,13 @@ export default function WorldMap({ onClose, active }: Props) {
               <div className="text-green-400 text-sm font-bold mb-2">
                 {COMPANY_ICONS[selectedCompany.industry] || '🏢'} {fundamentals?.name || selectedCompany.name}
                 <span className="text-gray-500 ml-2 text-[10px]">{selectedCompany.ticker}</span>
+                {!fundamentals && selectedCompany.ticker && <span className="text-yellow ml-2 text-[9px] animate-pulse">⏳ loading live data...</span>}
               </div>
               <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 mb-2 text-xs">
                 <span className="text-gray-500">Industry</span><span className="text-white">{fundamentals?.industry || selectedCompany.industry || '-'}</span>
-                <span className="text-gray-500">CEO</span><span className="text-white">{fundamentals?.ceo || selectedCompany.ceo || '🐱 unknown'}</span>
-                <span className="text-gray-500">Founded</span><span className="text-white">{selectedCompany.founded || '-'}</span>
-                <span className="text-gray-500">Employees</span><span className="text-white">{fundamentals?.employees ? `${(fundamentals.employees / 1000).toFixed(0)}k` : selectedCompany.employees ? `${(selectedCompany.employees / 1000).toFixed(0)}k` : '-'}</span>
-                <span className="text-gray-500">Revenue</span><span className="text-yellow-400">{fundamentals?.totalRevenue ? `$${(fundamentals.totalRevenue / 1e9).toFixed(1)}B` : selectedCompany.revenue ? `$${selectedCompany.revenue}B` : '-'}</span>
+                <span className="text-gray-500">CEO</span><span className="text-white">{fundamentals?.ceo || selectedCompany.ceo || (fundamentals === null ? '⏳' : '🐱 unknown')}</span>
+                <span className="text-gray-500">Employees</span><span className="text-white">{fundamentals?.employees ? `${(fundamentals.employees / 1000).toFixed(0)}k` : selectedCompany.employees ? `${(selectedCompany.employees / 1000).toFixed(0)}k` : (fundamentals === null ? '⏳' : '-')}</span>
+                <span className="text-gray-500">Revenue</span><span className="text-yellow-400">{fundamentals?.totalRevenue ? `$${(fundamentals.totalRevenue / 1e9).toFixed(1)}B` : selectedCompany.revenue ? `$${selectedCompany.revenue}B` : (fundamentals === null ? '⏳' : '-')}</span>
                 <span className="text-gray-500">Market Cap</span><span className="text-green-400">{selectedCompany.marketCap ? `$${selectedCompany.marketCap}B` : fundamentals?.marketCap ? `$${(fundamentals.marketCap / 1e9).toFixed(1)}B` : '-'}</span>
                 {fundamentals?.hq && (<><span className="text-gray-500">HQ</span><span className="text-white text-[10px]">{fundamentals.hq}</span></>)}
                 <span className="text-gray-500">HQ</span><span className="text-gray-400 text-[11px]">{selectedCompany.lat != null ? `${selectedCompany.lat.toFixed(2)}°, ${selectedCompany.lng.toFixed(2)}°` : '-'}</span>
