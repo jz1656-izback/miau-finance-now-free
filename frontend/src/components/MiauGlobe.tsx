@@ -760,17 +760,20 @@ const _flyToPoint = useCallback((lat: number, lng: number) => {
     animationRef.current = requestAnimationFrame(animate)
   }, [])
 
-  // Load companies for current continent
+  // Load companies for current continent — LIMITED to avoid crashing the globe
   useEffect(() => {
     const file = CONTINENT_FILES[continent] || CONTINENT_FILES.north_america
     fetch(file)
       .then(r => r.ok ? r.json() : { companies: [] })
       .then(data => {
         const raw = data.companies || []
-        const mapped = raw.slice(0, 10000).map((co: any) => ({
+        // Sort by market cap descending, take top 2000 for performance
+        const sorted = [...raw].sort((a: any, b: any) => (b.mc || 0) - (a.mc || 0))
+        const top = sorted.slice(0, 2000)
+        const mapped = top.map((co: any) => ({
           lat: co.lat, lng: co.lng,
           ticker: co.t, name: co.n, industry: co.i, country: co.co, marketCap: co.mc,
-          size: Math.min(0.5, Math.max(0.05, (co.mc || 100) / 2000)),
+          size: Math.min(0.4, Math.max(0.06, (co.mc || 100) / 3000)),
         }))
         setCompanies(mapped)
         setGlobeState(prev => ({ ...prev, points: mapped.length }))
@@ -1060,6 +1063,36 @@ const _flyToPoint = useCallback((lat: number, lng: number) => {
     }
     window.addEventListener('resize', resize)
 
+    // Click handling — raycaster for company/point selection
+    const raycaster = new THREE.Raycaster()
+    raycaster.params.Points.threshold = 0.1
+    const mouse = new THREE.Vector2()
+    const clickHandler = (e: MouseEvent) => {
+      // Ignore clicks on UI elements
+      if ((e.target as HTMLElement)?.closest('.globe-overlay')) return
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1
+      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1
+      raycaster.setFromCamera(mouse, camera)
+      const hits = raycaster.intersectObjects(scene.children, true)
+      if (hits.length > 0) {
+        // Find the closest sprite to the hit point
+        const hit = hits[0].point
+        let closestDist = Infinity
+        let closestCompany: any = null
+        for (const s of spriteMeshes) {
+          if (s.userData?.ticker) {
+            const d = hit.distanceToSquared(s.position)
+            if (d < closestDist) { closestDist = d; closestCompany = s.userData }
+          }
+        }
+        if (closestCompany && closestDist < 0.05) {
+          selectCompany(closestCompany)
+        }
+      }
+    }
+    const canvas = containerRef.current!.querySelector('canvas')
+    if (canvas) canvas.addEventListener('click', clickHandler)
+
     // Render loop
     const animate = () => {
       if (controlsRef.current) controlsRef.current.update()
@@ -1090,6 +1123,7 @@ const _flyToPoint = useCallback((lat: number, lng: number) => {
       clearInterval(acInterval)
       clearInterval(maritimeInterval)
       window.removeEventListener('resize', resize)
+      if (canvas) canvas.removeEventListener('click', clickHandler)
       cancelAnimationFrame(animationRef.current)
       for (const l of arcLineObjects) { scene.remove(l); l.geometry.dispose(); (l.material as THREE.Material).dispose() }
       arcLineObjects = []
@@ -1248,14 +1282,13 @@ const _flyToPoint = useCallback((lat: number, lng: number) => {
     } catch {}
   }, [])
 
-  // @ts-ignore
-const _selectCompany = useCallback((co: any) => {
+  const selectCompany = useCallback((co: any) => {
     setSelectedCompany(co)
     setDetailTab('info')
     fetchPriceHistory(co.ticker, '1y')
     fetchNews(co.ticker)
     fetchFundamentals(co.ticker)
-  }, []); void _flyToPoint; void _selectCompany
+  }, [fetchPriceHistory, fetchNews, fetchFundamentals])
 
   const layerList: { key: keyof LayerState; label: string; icon: string }[] = [
     { key: 'companies', label: 'Companies', icon: '🏢' },
