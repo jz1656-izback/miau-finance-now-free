@@ -37,6 +37,68 @@ export async function executeCommand(cmd: string, addLine: AddLine): Promise<voi
       break
     }
 
+    case 'smarthlep': {
+      const goal = args.join(' ') || ''
+      addLine({ text: '🐱 SmartHelp — Tell me what you want to DO, not just what you want to KNOW.', className: 'text-cyan' })
+      if (!goal) {
+        addLine({ text: '   Usage: smarthlep <your goal>', className: 'text-dim' })
+        addLine({ text: "   e.g. smarthlep how do I analyze my portfolio risk?", className: 'text-dim' })
+        addLine({ text: '   e.g. smarthlep what commands screen for value stocks?', className: 'text-dim' })
+        addLine({ text: '   e.g. smarthlep show me how to compare two stocks', className: 'text-dim' })
+        addLine({ text: '', className: '' })
+        addLine({ text: '   🐱 SmartHelp is AI-powered. It needs the MCP server running.', className: 'text-dim' })
+        break
+      }
+
+      addLine({ text: `🐱 figuring out: "${goal}"`, className: 'text-dim' })
+      addLine({ text: '   📚 consulting the cat manual...', className: 'text-dim' })
+
+      try {
+        // Try MCP smart help first
+        let handled = false
+        try {
+          const { mcp } = await import('./mcp/client')
+          const answer = await mcp.callTool('help', { query: goal, mode: 'workflow' })
+          if (answer) {
+            handled = true
+            addLine({ text: '🐱 Here\'s what to do:', className: 'text-green' })
+            for (const line of answer.split('\n')) {
+              if (line.trim().startsWith('`') && line.includes('`')) {
+                addLine({ text: `   🎯 ${line.trim()}`, className: 'text-green' })
+              } else {
+                addLine({ text: `   ${line}`, className: 'text-cyan' })
+              }
+            }
+          }
+        } catch { /* MCP offline */ }
+
+        if (!handled) {
+          // Fallback: try backend AI
+          try {
+            const res = await authFetch('/api/v1/ai/query', {
+              method: 'POST',
+              headers: authHeaders({ 'Content-Type': 'application/json' }),
+              body: JSON.stringify({ query: `Terminal command help: ${goal}. List the specific terminal commands needed and explain the workflow.` }),
+            })
+            const data = await safeJson(res, addLine)
+            if (data?.response) {
+              addLine({ text: '🐱 Here\'s what to do:', className: 'text-green' })
+              for (const line of data.response.split('\n')) {
+                addLine({ text: line.startsWith('`') ? `   🎯 ${line}` : `   ${line}`, className: 'text-cyan' })
+              }
+            } else {
+              addLine({ text: '😿 Could not figure out a workflow for this. Try "help" for all commands.', className: 'text-red' })
+            }
+          } catch {
+            addLine({ text: '😿 SmartHelp is not available right now. Use "help" for all commands.', className: 'text-red' })
+          }
+        }
+      } catch (e: any) {
+        addLine({ text: `😿 SmartHelp failed: ${e.message}`, className: 'text-red' })
+      }
+      break
+    }
+
     case 'price': {
       const rawTicker = args[0] || 'AAPL'
       const wantsLive = rawTicker === '-l' || args.includes('-l')
@@ -374,26 +436,29 @@ Rec:   ${pt.recommendation || 'N/A'}`,
         const level = minP + range * row / hh
         let line = ''
         for (const p of sampled) line += p >= level ? '█' : ' '
-        chartLines.push(`${level.toFixed(0).padStart(7)} │${line}`)
+        // Right-pad to align the right border consistently
+        chartLines.push(`${level.toFixed(0).padStart(7)} │${line.padEnd(sampled.length)}`)
       }
       const sl = sparkline(prices, 20)
       const pChange = prices.length > 1 ? prices[prices.length - 1] - prices[0] : 0
       const pChangePct = prices[0] > 0 ? (pChange / prices[0]) * 100 : 0
       const rsiCls = d.rsi_14 >= 70 ? 'text-red' : d.rsi_14 <= 30 ? 'text-green' : 'text-yellow'
-      const trendEmoji = d.trend === 'up' ? '📈' : '📉'
+      const trendEmoji = d.trend === 'up' ? '↑' : '↓'
       const w = hasM ? 90 : 70
       const changeStr = d.change_pct !== undefined ? ` ${d.change_pct >= 0 ? '+' : ''}${d.change_pct.toFixed(1)}%` : ` ${pChange >= 0 ? '+' : ''}${pChangePct.toFixed(1)}%`
+      const padToW = (s: string) => s.padEnd(w)
       addLine({ text: `┌${'─'.repeat(w)}┐`, className: 'text-dim' })
-      const headerLine = `${tickerCz.padEnd(10)} ${trendEmoji}  $${fmt(d.current_price)}  ${sl}  ${pChange >= 0 ? '+' : ''}${fmt(pChange)}${changeStr}  Pred: $${fmt(d.prediction_price)}${hasL && d.live_price ? '  Live: $' + fmt(d.live_price) : ''}`
-      addLine({ text: `│${headerLine}${' '.repeat(Math.max(0, w - headerLine.length))}│`, className: pChange >= 0 ? 'text-green' : 'text-red' })
+      const headerLine = `${tickerCz.padEnd(8)} ${trendEmoji} $${(d.current_price || 0).toFixed(2)}  ${sl}  ${changeStr.trim()}  Pred: $${d.prediction_price?.toFixed(2) || '---'}${hasL && d.live_price ? '  Live: $' + d.live_price.toFixed(2) : ''}`
+      addLine({ text: padToW(`│${headerLine}`) + '│', className: pChange >= 0 ? 'text-green' : 'text-red' })
       addLine({ text: `├${'─'.repeat(w)}┤`, className: 'text-dim' })
-      for (const cl of chartLines) addLine({ text: `│${cl}${' '.repeat(Math.max(0, w - cl.length - 2))}│`, className: 'text-green' })
-      addLine({ text: `│${'       '.padEnd(7)} └${'─'.repeat(sampled.length)}${'─'.repeat(Math.max(0, w - sampled.length - 9))}│`, className: 'text-dim' })
+      for (const cl of chartLines) addLine({ text: padToW(`│${cl}`) + '│', className: 'text-green' })
+      const xAxisLine = `${' '.repeat(7)} └${'─'.repeat(sampled.length)}`
+      addLine({ text: padToW(`│${xAxisLine}`) + '│', className: 'text-dim' })
       addLine({ text: `├${'─'.repeat(w)}┤`, className: 'text-dim' })
       let infoLine = `│  RSI(14): ${d.rsi_14}  │  SMA20: $${fmt(d.sma_20)}  │  SMA50: $${fmt(d.sma_50 !== null ? d.sma_50 : 'N/A')}  │  52W Hi: $${fmt(d.high_52w)}  │  52W Lo: $${fmt(d.low_52w)}  │  Vol: ${d.volatility}%│`
-      addLine({ text: infoLine, className: rsiCls })
+      addLine({ text: padToW(infoLine), className: rsiCls })
       let macdLine = `│  MACD: ${d.macd >= 0 ? '+' : ''}${fmt(d.macd)}  │  Signal: ${d.macd_signal >= 0 ? '+' : ''}${fmt(d.macd_signal)}  │  Hist: ${fmt(d.macd_histogram)}  │  Trend: ${d.trend.toUpperCase()}  │  Points: ${d.data_points}  │  Pred: $${fmt(d.prediction_price)}│`
-      addLine({ text: macdLine, className: 'text-dim' })
+      addLine({ text: padToW(macdLine), className: 'text-dim' })
       if (hasM && d.sma_200) addLine({ text: `│  SMA200: $${fmt(d.sma_200)}  │  Z-Score: ${d.z_score}  │  BB Upper: $${fmt(d.bb_upper)}  │  BB Lower: $${fmt(d.bb_lower)}  │  BB Mid: $${fmt(d.bb_middle)}│`, className: 'text-dim' })
       if (hasM && d.volume_profile) addLine({ text: `│  Avg Vol(20d): ${fmt(d.volume_profile.avg_20d)}  │  Vol vs Avg: ${d.volume_profile.current_vs_avg >= 0 ? '+' : ''}${d.volume_profile.current_vs_avg}%│`, className: 'text-dim' })
       if (hasM && d.support_resistance) {
@@ -1165,9 +1230,36 @@ Rec:   ${pt.recommendation || 'N/A'}`,
 
     case 'ask': {
       const query = args.join(' ')
-      if (!query) { addLine({ text: 'usage: ask <question>\ne.g. ask price of AAPL, ask show my portfolios', className: 'text-yellow' }); break }
-      addLine({ text: `💬 asking: ${query}`, className: 'text-dim' })
+      if (!query) {
+        addLine({ text: '🐱 ask <question> — Ask the cat AI anything!', className: 'text-cyan' })
+        addLine({ text: '   Examples:', className: 'text-dim' })
+        addLine({ text: "   ask what's Apple's performance this week?", className: 'text-dim' })
+        addLine({ text: '   ask analyze my portfolio risk', className: 'text-dim' })
+        addLine({ text: '   ask compare TSLA vs F vs RIVN', className: 'text-dim' })
+        break
+      }
+      addLine({ text: `🐱 asking: "${query}"`, className: 'text-dim' })
+      addLine({ text: '   🤔 thinking...', className: 'text-dim' })
       try {
+        // Route through MCP server first (AI Cat Brain)
+        try {
+          const { mcp } = await import('./mcp/client')
+          const tools = await mcp.listTools()
+          const askTool = tools.find(t => t.name === 'ask')
+          if (askTool) {
+            const answer = await mcp.callTool('ask', { question: query })
+            if (answer) {
+              addLine({ text: `🐱 answer:`, className: 'text-green' })
+              const lines = answer.split('\n')
+              for (const line of lines) {
+                if (line.trim()) addLine({ text: `   ${line}`, className: 'text-cyan' })
+              }
+              break
+            }
+          }
+        } catch { /* MCP not available, fall back to API */ }
+
+        // Fallback: backend AI query
         const res = await authFetch('/api/v1/ai/query', {
           method: 'POST',
           headers: authHeaders({ 'Content-Type': 'application/json' }),
@@ -1175,10 +1267,12 @@ Rec:   ${pt.recommendation || 'N/A'}`,
         })
         const data = await safeJson(res, addLine)
         if (data?.response) {
-          addLine({ text: `💬 ${data.response}`, className: 'text-green' })
+          addLine({ text: `🐱 ${data.response}`, className: 'text-green' })
+        } else {
+          addLine({ text: `😿 The cat couldn\'t answer that. Try rephrasing?`, className: 'text-dim' })
         }
       } catch (e: any) {
-        addLine({ text: `❌ query failed: ${e.message}`, className: 'text-red' })
+        addLine({ text: `🐱 The cat is napping. Try again later. (${e.message})`, className: 'text-red' })
       }
       break
     }
@@ -4059,7 +4153,13 @@ Rec:   ${pt.recommendation || 'N/A'}`,
 
     case 'chat': {
       const query = args.join(' ')
-      if (!query) { addLine({ text: 'Usage: chat <your question>', className: 'text-yellow' }); break }
+      if (!query) {
+        addLine({ text: '🐱 Opening AI Chat Panel... type "kitty" to manage.', className: 'text-green' })
+        addLine({ text: '   Or: chat <question> to ask inline.', className: 'text-dim' })
+        // The Terminal component intercepts this signal to open ChatPanel
+        ;(window as any).__miau_openChatPanel?.()
+        break
+      }
       addLine({ text: `🤖 Miau AI is thinking...`, className: 'text-dim' })
       try {
         const token = localStorage.getItem('miau_token')
