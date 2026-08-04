@@ -63,7 +63,7 @@ const CAT_BOOT = `
   じしˍ,)ノ じしˍ,)ノ じしˍ,)ノ じしˍ,)ノ じしˍ,)ノ じしˍ,)ノ
 
   ╔══════════════════════════════════════════════════════╗
-  ║     M I A U   F I N A N C E   v2.5.0                ║
+  ║     M I A U   F I N A N C E   v2.5.1                ║
   ║     🐾 GOLDEN PAW EDITION 🐾                           ║
   ║     where cats trade stocks  🐱📈🐟                   ║
   ║     515+ APIs · 193 commands · 50+ data providers      ║
@@ -233,7 +233,7 @@ const CAT_ASCII = [
     😺 > 🐟 < 😺
     🐟😺🐟😺🐟
 `,
-// ✨ v2.5.0 GOLDEN PAW EDITION ✨
+// ✨ v2.5.1 GOLDEN PAW EDITION ✨
 `
     👑═══👑
     ╱ GOLDEN ╲
@@ -243,7 +243,7 @@ const CAT_ASCII = [
    /\\_/\\    🌟
   ( 👑.👑 )  GOLDEN
    > 🐟 <   PAW
-  🐾🐾🐾🐾🐾 v2.5.0
+  🐾🐾🐾🐾🐾 v2.5.1
 `,
 ]
 
@@ -1269,7 +1269,7 @@ export default function Terminal({ embedded = false, onSplit }: TerminalProps) {
         <div className="flex items-center justify-between px-2 py-1 text-xs sm:px-3 sm:py-1 status-bar" style={{ background: theme.colors.bgSecondary, borderBottom: `1px solid ${theme.colors.border}` }} role="status" aria-label="Status bar">
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
             <span className="text-green font-bold text-glow-green text-[10px] sm:text-xs" style={{letterSpacing: '0.05em'}}>🐱 MIAU</span>
-            <span className="text-dim text-[10px] sm:text-xs">v0.8.0</span>
+            <span className="text-dim text-[10px] sm:text-xs">v2.5.1</span>
             <ConnectionDot connected={connected} />
             <span className="text-dim text-[10px] sm:text-xs">|</span>
             <span className="text-dim text-[10px] sm:text-xs">cmd#{cmdCount}</span>

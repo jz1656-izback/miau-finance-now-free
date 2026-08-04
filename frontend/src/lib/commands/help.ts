@@ -161,6 +161,8 @@ export const HELP = `🐱 MIAU FINANCE v2.5.1 🐾 PAWDENTITY EDITION 🐾 - COM
   💬  NATURAL LANGUAGE
     ask <query>           Ask in plain English (e.g. "ask what are my top holdings?")
     Examples: "ask price of AAPL", "ask show my portfolios", "ask latest news"
+    smarthlep <goal>       AI-powered workflow help — tell it WHAT you want to do
+    chat [query]           🤖 Open AI Chat Panel (or chat inline with query)
 
   🐱  SYSTEM
     catberg <function>     Bloomberg Terminal emulation (cat-style)
@@ -356,7 +358,7 @@ export const HELP = `🐱 MIAU FINANCE v2.5.1 🐾 PAWDENTITY EDITION 🐾 - COM
     rm   -> portfolio      top  -> crypto
     df   -> portfolios     date -> breadth
 
-  🐱💨  v2.3 DATAVORE EDITION
+  🐱💨  v2.5.1 PAWDENTITY EDITION
     fx [base]             FX rates for 200 currencies
     gas                   Ethereum gas prices
     defillama             DeFi TVL overview

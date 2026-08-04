@@ -340,7 +340,7 @@ export default function SplitTerminal() {
       <div className="flex items-center justify-between px-4 py-1 text-xs" style={{ background: '#0d2018', borderBottom: '1px solid #1a3a2a' }}>
         <div className="flex items-center gap-4">
           <span className="text-green font-bold">🐱 MIAU FINANCE</span>
-           <span className="text-dim">v0.8.0</span>
+           <span className="text-dim">v2.5.1</span>
           <span className="text-dim">|</span>
           <span className="text-dim">uptime: {uptimeStr}</span>
         </div>

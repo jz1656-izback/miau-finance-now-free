@@ -526,7 +526,7 @@ if('serviceWorker' in navigator) {
       <div class="product-card fade-up delay-2" style="--card-color:#ff66aa" onclick="openProductModal('Marketing Dashboard')">
         <div class="glow"></div>
         <div class="product-icon" style="background:rgba(255,102,170,0.1);border:1px solid rgba(255,102,170,0.2)">📈</div>
-        <h3>Marketing Dashboard <span class="status" style="background:rgba(255,102,170,0.15);color:#ff66aa">v2.4.5</span></h3>
+        <h3>Marketing Dashboard <span class="status" style="background:rgba(255,102,170,0.15);color:#ff66aa">v2.5.1</span></h3>
         <div class="tag">Analytics · Campaigns · SEO · Sales</div>
         <p>Real-time marketing intelligence across all 15 ecosystem services. Track visitors, page views, conversions, campaigns, geo distribution, SEO keywords, and sales pipeline. 6 interactive tabs with live data from the Marketing API. The cat knows everything.</p>
       </div>
@@ -573,239 +573,42 @@ if('serviceWorker' in navigator) {
       </div>
     </div>
 
-    <!-- Top row: 3 tiers — ALL CROSSED OUT -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:700px;margin:0 auto 24px;opacity:0.3;filter:grayscale(0.8)" class="fade-up delay-1">
-      <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,102,136,0.15);border-radius:12px;padding:20px 16px;text-align:center;position:relative">
-        <div style="position:absolute;top:-8px;right:-8px;font-size:24px;color:#ff3344;text-shadow:0 0 8px rgba(255,51,68,0.5)">✕</div>
-        <div style="font-size:28px;margin-bottom:6px">🐱</div>
-        <h3 style="font-size:14px;font-weight:700;color:#fff;margin-bottom:2px;text-decoration:line-through;text-decoration-color:#ff3344">Tamagotchi</h3>
-        <div style="font-size:24px;font-weight:900;color:#ff6688;margin:6px 0;text-decoration:line-through;text-decoration-color:#ff3344">€0</div>
-        <div style="font-size:11px;color:rgba(200,214,208,0.4);margin-bottom:12px">Virtual pet. No finance.</div>
-        <ul style="list-style:none;padding:0;margin:0 0 14px;font-size:12px;line-height:2;color:rgba(200,214,208,0.6);text-align:left">
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ Virtual pet cat</li>
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">❌ No stock data</li>
-        </ul>
-        <div style="display:block;padding:8px;border:1px solid rgba(255,102,136,0.2);border-radius:8px;font-size:12px;font-weight:600;color:#ff6688;text-decoration:line-through;text-decoration-color:#ff3344">🐱 Play Free</div>
-        <div style="font-size:10px;color:#00ff88;margin-top:6px">← NOW TOTALLY FREE 🎉</div>
-      </div>
-      <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,102,136,0.15);border-radius:12px;padding:20px 16px;text-align:center;position:relative">
-        <div style="position:absolute;top:-8px;right:-8px;font-size:24px;color:#ff3344;text-shadow:0 0 8px rgba(255,51,68,0.5)">✕</div>
-        <div style="font-size:28px;margin-bottom:6px">🐟</div>
-        <h3 style="font-size:14px;font-weight:700;color:#fff;margin-bottom:2px;text-decoration:line-through;text-decoration-color:#ff3344">Trial</h3>
-        <div style="font-size:24px;font-weight:900;color:#ff6688;margin:6px 0;text-decoration:line-through;text-decoration-color:#ff3344">€2.49</div>
-        <div style="font-size:11px;color:rgba(200,214,208,0.4);margin-bottom:12px"><span style="text-decoration:line-through;opacity:0.4">€4.99</span> /mo</div>
-        <ul style="list-style:none;padding:0;margin:0 0 14px;font-size:12px;line-height:2;color:rgba(200,214,208,0.6);text-align:left">
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ 50 calls/day</li>
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ 7-day history</li>
-        </ul>
-        <div style="display:block;padding:8px;border:1px solid rgba(255,102,136,0.2);border-radius:8px;font-size:12px;font-weight:600;color:#ff6688;text-decoration:line-through;text-decoration-color:#ff3344">Try Now</div>
-        <div style="font-size:10px;color:#00ff88;margin-top:6px">← FREE NOW! 🥳</div>
-      </div>
-      <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,102,136,0.15);border-radius:12px;padding:20px 16px;text-align:center;position:relative">
-        <div style="position:absolute;top:-8px;right:-8px;font-size:24px;color:#ff3344;text-shadow:0 0 8px rgba(255,51,68,0.5)">✕</div>
-        <div style="font-size:28px;margin-bottom:6px">🐱</div>
-        <h3 style="font-size:14px;font-weight:700;color:#fff;margin-bottom:2px;text-decoration:line-through;text-decoration-color:#ff3344">Starter</h3>
-        <div style="font-size:24px;font-weight:900;color:#ff6688;margin:6px 0;text-decoration:line-through;text-decoration-color:#ff3344">€25</div>
-        <div style="font-size:11px;color:rgba(200,214,208,0.4);margin-bottom:12px"><span style="text-decoration:line-through;opacity:0.4">€50</span> /mo</div>
-        <ul style="list-style:none;padding:0;margin:0 0 14px;font-size:12px;line-height:2;color:rgba(200,214,208,0.6);text-align:left">
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ 500 calls/day</li>
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ 15 providers</li>
-        </ul>
-        <div style="display:block;padding:8px;border:1px solid rgba(255,102,136,0.2);border-radius:8px;font-size:12px;font-weight:600;color:#ff6688;text-decoration:line-through;text-decoration-color:#ff3344">Subscribe</div>
-        <div style="font-size:10px;color:#00ff88;margin-top:6px">→ ALL FREE! 🐱</div>
-      </div>
-    </div>
+    <!-- Everything is now FREE — old pricing removed -->
+    <div style="text-align:center;margin:0 auto 32px;padding:32px 24px;background:radial-gradient(ellipse at 50% 0%, rgba(0,255,136,0.06), transparent);border-radius:20px" class="fade-up delay-1">
+      <div style="font-size:10px;color:rgba(255,102,136,0.4);font-family:monospace;letter-spacing:3px;margin-bottom:6px">❌ PRICING RETIRED</div>
+      <div style="font-size:36px;margin-bottom:8px">😿  🥳  😿</div>
+      <h2 style="font-size:clamp(28px,5vw,52px);font-weight:900;margin-bottom:6px">
+        MIAU IS <span style="color:#00ff88">FREE</span>! 🥳
+      </h2>
+      <p style="font-size:14px;color:rgba(200,214,208,0.6);margin-bottom:4px">No pawborghinis. No billionaires eating kittens. Just cats and charts.</p>
+      <p style="font-size:16px;font-weight:700;color:#00ff88;margin-bottom:16px">Miau Finance is now FREE & OPEN SOURCE! 🎉</p>
 
-    <!-- Adopt Cat - Featured (keep this, it's fun) -->
-    <div style="max-width:650px;margin:0 auto 24px;position:relative" class="fade-up delay-2">
-      <div style="position:relative;background:linear-gradient(135deg,rgba(255,204,0,0.08),rgba(0,0,0,0.4),rgba(255,204,0,0.08));border:2px solid rgba(255,204,0,0.5);border-radius:20px;padding:32px 24px;text-align:center;overflow:hidden;box-shadow:0 8px 40px rgba(255,204,0,0.08)">
-        <div style="position:absolute;top:-10px;left:-10px;font-size:40px;animation:bounce 2s infinite">🐱</div>
-        <div style="position:absolute;top:-8px;right:-8px;font-size:32px;animation:ping 2s infinite">😸</div>
-        <div style="position:absolute;bottom:-8px;left:-8px;font-size:32px;animation:bounce 2s infinite;animation-delay:0.5s">😻</div>
-        <div style="position:absolute;bottom:-10px;right:-10px;font-size:40px;animation:pulse 2s infinite">🙀</div>
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:16px">
+        <a href="http://localhost:5173" target="_blank" style="display:inline-block;padding:12px 32px;background:#00ff88;color:#05080a;border-radius:12px;font-size:14px;font-weight:700;box-shadow:0 4px 20px rgba(0,255,136,0.2)">🐱 Launch Terminal Free</a>
+        <a href="http://localhost:5174" target="_blank" style="display:inline-block;padding:12px 32px;border:1px solid rgba(0,255,136,0.3);color:#00ff88;border-radius:12px;font-size:14px;font-weight:600">🎓 Start Learning Free</a>
+        <a href="http://localhost:3001/papers" target="_blank" style="display:inline-block;padding:12px 32px;border:1px solid rgba(200,214,208,0.2);color:rgba(200,214,208,0.5);border-radius:12px;font-size:14px;font-weight:500">📄 Read the Papers</a>
+      </div>
 
-        <div style="font-size:10px;color:rgba(255,204,0,0.6);font-family:monospace;letter-spacing:3px;margin-bottom:8px">⭐ THE ULTIMATE TIER ⭐</div>
-        <h3 style="font-size:24px;font-weight:800;color:#fff;margin-bottom:4px">🐱 Adopt Cat 🐱</h3>
-        <p style="font-size:12px;color:rgba(255,204,0,0.5);margin-bottom:16px">Buy the whole project. 50% launch discount. All IP. All cats.</p>
-        <div style="margin-bottom:16px">
-          <span style="font-size:14px;color:rgba(200,214,208,0.4);text-decoration:line-through;margin-right:8px">€67M</span>
-          <span style="font-size:36px;font-weight:900;color:rgba(255,204,0,0.9)">€33.5M</span>
-          <span style="font-size:13px;color:rgba(200,214,208,0.4)">/once</span>
-          <span style="font-size:11px;color:rgba(255,204,0,0.7);margin-left:8px">🎉 50% off</span>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:500px;margin:0 auto 20px">
-          <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,204,0,0.15);border-radius:8px;padding:8px 4px;text-align:center;font-size:10px;color:rgba(255,204,0,0.6)">Full ownership</div>
-          <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,204,0,0.15);border-radius:8px;padding:8px 4px;text-align:center;font-size:10px;color:rgba(255,204,0,0.6)">All source code</div>
-          <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,204,0,0.15);border-radius:8px;padding:8px 4px;text-align:center;font-size:10px;color:rgba(255,204,0,0.6)">All domains</div>
-          <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,204,0,0.15);border-radius:8px;padding:8px 4px;text-align:center;font-size:10px;color:rgba(255,204,0,0.6)">37 providers</div>
-          <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,204,0,0.15);border-radius:8px;padding:8px 4px;text-align:center;font-size:10px;color:rgba(255,204,0,0.6)">230 courses</div>
-          <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,204,0,0.15);border-radius:8px;padding:8px 4px;text-align:center;font-size:10px;color:rgba(255,204,0,0.6)">All IP rights</div>
-          <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,204,0,0.15);border-radius:8px;padding:8px 4px;text-align:center;font-size:10px;color:rgba(255,204,0,0.6)">Infrastructure</div>
-          <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,204,0,0.15);border-radius:8px;padding:8px 4px;text-align:center;font-size:10px;color:rgba(255,204,0,0.6)">Cat included 🐱</div>
-        </div>
-        <a href="http://localhost:5173" target="_blank" style="display:inline-block;padding:12px 40px;background:rgba(255,204,0,0.9);color:#05080a;border-radius:12px;font-size:14px;font-weight:700;box-shadow:0 4px 20px rgba(255,204,0,0.2)">🐱👑 Adopt Cat — €33.5M</a>
-        <div style="font-size:9px;color:rgba(255,204,0,0.2);margin-top:12px">∞ barks · ∞ tuna · ∞ cats</div>
-      </div>
-    </div>
-
-    <!-- Bottom row: 3 tiers — CROSSED OUT (Miau is FREE!) -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:700px;margin:0 auto;opacity:0.2;filter:grayscale(1)" class="fade-up delay-3">
-      <div style="background:rgba(0,0,0,0.4);border:2px solid rgba(255,102,136,0.2);border-radius:12px;padding:20px 16px;text-align:center;position:relative">
-        <span style="position:absolute;top:-8px;right:-8px;font-size:24px;color:#ff3344;text-shadow:0 0 8px rgba(255,51,68,0.5)">✕</span>
-        <div style="font-size:28px;margin-bottom:6px">🔥</div>
-        <h3 style="font-size:14px;font-weight:700;color:#fff;margin-bottom:2px;text-decoration:line-through;text-decoration-color:#ff3344">Pro Cat</h3>
-        <div style="font-size:24px;font-weight:900;color:#ff6688;margin:6px 0;text-decoration:line-through;text-decoration-color:#ff3344">€49.50</div>
-        <div style="font-size:11px;color:rgba(200,214,208,0.4);margin-bottom:12px"><span style="text-decoration:line-through;opacity:0.4">€99</span> /mo</div>
-        <ul style="list-style:none;padding:0;margin:0 0 14px;font-size:12px;line-height:2;color:rgba(200,214,208,0.3);text-align:left">
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ 3k calls/day · 37 providers</li>
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ AI advisor &amp; risk analytics</li>
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ Trading signals</li>
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ 1 bark included</li>
-        </ul>
-        <div style="padding:8px;border:1px solid rgba(255,102,136,0.2);border-radius:8px;font-size:12px;font-weight:700;color:#ff6688;text-decoration:line-through;text-decoration-color:#ff3344;cursor:not-allowed">🔥 Subscribe</div>
-        <div style="font-size:10px;color:#00ff88;margin-top:6px">← FREE NOW! 🎉</div>
-      </div>
-      <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,102,136,0.12);border-radius:12px;padding:20px 16px;text-align:center;position:relative">
-        <span style="position:absolute;top:-8px;right:-8px;font-size:24px;color:#ff3344;text-shadow:0 0 8px rgba(255,51,68,0.5)">✕</span>
-        <div style="font-size:28px;margin-bottom:6px">👥</div>
-        <h3 style="font-size:14px;font-weight:700;color:#fff;margin-bottom:2px;text-decoration:line-through;text-decoration-color:#ff3344">Fund Cat</h3>
-        <div style="font-size:24px;font-weight:900;color:#ff6688;margin:6px 0;text-decoration:line-through;text-decoration-color:#ff3344">€75</div>
-        <div style="font-size:11px;color:rgba(200,214,208,0.4);margin-bottom:12px"><span style="text-decoration:line-through;opacity:0.4">€150</span> /mo</div>
-        <ul style="list-style:none;padding:0;margin:0 0 14px;font-size:12px;line-height:2;color:rgba(200,214,208,0.3);text-align:left">
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ 10k calls/day · 37 providers</li>
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ 3 team seats</li>
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ 2 barks included</li>
-        </ul>
-        <div style="padding:8px;border:1px solid rgba(255,102,136,0.2);border-radius:8px;font-size:12px;font-weight:600;color:#ff6688;text-decoration:line-through;text-decoration-color:#ff3344;cursor:not-allowed">Subscribe</div>
-        <div style="font-size:10px;color:#00ff88;margin-top:6px">← FREE! 🥳</div>
-      </div>
-      <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,102,136,0.12);border-radius:12px;padding:20px 16px;text-align:center;position:relative">
-        <span style="position:absolute;top:-8px;right:-8px;font-size:24px;color:#ff3344;text-shadow:0 0 8px rgba(255,51,68,0.5)">✕</span>
-        <div style="font-size:28px;margin-bottom:6px">👑</div>
-        <h3 style="font-size:14px;font-weight:700;color:#fff;margin-bottom:2px;text-decoration:line-through;text-decoration-color:#ff3344">Enterprise</h3>
-        <div style="font-size:24px;font-weight:900;color:#ff6688;margin:6px 0;text-decoration:line-through;text-decoration-color:#ff3344">€349.84</div>
-        <div style="font-size:11px;color:rgba(200,214,208,0.4);margin-bottom:12px"><span style="text-decoration:line-through;opacity:0.4">€699.67</span> /user/mo</div>
-        <ul style="list-style:none;padding:0;margin:0 0 14px;font-size:12px;line-height:2;color:rgba(200,214,208,0.3);text-align:left">
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ Unlimited calls</li>
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ On-premise + SSO</li>
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ 10 barks included</li>
-        </ul>
-        <div style="padding:8px;border:1px solid rgba(255,102,136,0.2);border-radius:8px;font-size:12px;font-weight:600;color:#ff6688;text-decoration:line-through;text-decoration-color:#ff3344;cursor:not-allowed">Contact Sales</div>
-        <div style="font-size:10px;color:#00ff88;margin-top:6px">→ ALL FREE NOW! 🐱</div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:20px;padding:12px;background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.1);border-radius:8px">
-      <p style="font-size:13px;color:#ff6688;margin:4px 0"><strong>MIAU IS FREE & OPEN SOURCE! 🎉</strong></p>
-      <p style="font-size:11px;color:rgba(200,214,208,0.4)">No pawborghinis · No billionaires eating kittens · Just cats and charts 🐱📊</p>
-      <p style="font-size:10px;color:rgba(200,214,208,0.2);margin-top:8px"><span style="text-decoration:line-through;text-decoration-color:#ff3344">Pro Cat €49.50 · Fund Cat €75 · Enterprise €349.84</span> → <span style="color:#00ff88">ALL FREE!</span></p>
-    </div>
-  </div>
-</section>
-
-<!-- Education — CROSSED OUT (all free now) -->
-<section class="section" style="background:rgba(0,0,0,0.2);border-bottom:1px solid rgba(0,255,136,0.04);opacity:0.2;filter:grayscale(1)">
-  <div class="mx-auto">
-    <div class="section-title fade-up">
-      <span class="section-tag" style="text-decoration:line-through;text-decoration-color:#ff3344">🎓 Education</span>
-      <span style="font-size:11px;color:#00ff88;margin-left:8px">→ FREE NOW!</span>
-      <h2 style="text-decoration:line-through;text-decoration-color:#ff3344">Miau Learning Pricing</h2>
-      <p style="text-decoration:line-through;text-decoration-color:#ff3344">230 courses. 18 certifications. All taught through the terminal.</p>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:700px;margin:0 auto" class="fade-up delay-1">
-      <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,102,136,0.12);border-radius:12px;padding:24px 20px;text-align:center;position:relative">
-        <span style="position:absolute;top:-8px;right:-8px;font-size:20px;color:#ff3344">✕</span>
-        <div style="font-size:32px;margin-bottom:6px">📖</div>
-        <h3 style="font-size:15px;font-weight:700;color:#fff;margin-bottom:2px;text-decoration:line-through;text-decoration-color:#ff3344">Free</h3>
-        <div style="font-size:28px;font-weight:900;color:#ff6688;margin:8px 0;text-decoration:line-through;text-decoration-color:#ff3344">€0</div>
-        <ul style="list-style:none;padding:0;margin:0 0 16px;font-size:12px;line-height:2.2;color:rgba(200,214,208,0.3);text-align:left">
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ 3 introductory courses</li>
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ Basic terminal practice</li>
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ Community access</li>
-        </ul>
-        <div style="padding:10px;border:1px solid rgba(255,102,136,0.2);border-radius:8px;font-size:12px;font-weight:600;color:#ff6688;text-decoration:line-through;cursor:not-allowed">Start Free</div>
-      </div>
-      <div style="background:rgba(0,0,0,0.4);border:2px solid rgba(255,102,136,0.2);border-radius:12px;padding:24px 20px;text-align:center;position:relative">
-        <span style="position:absolute;top:-8px;right:-8px;font-size:20px;color:#ff3344">✕</span>
-        <div style="font-size:32px;margin-bottom:6px">🐱</div>
-        <h3 style="font-size:15px;font-weight:700;color:#fff;margin-bottom:2px;text-decoration:line-through;text-decoration-color:#ff3344">Pro Learning</h3>
-        <div style="font-size:28px;font-weight:900;color:#ff6688;margin:8px 0;text-decoration:line-through;text-decoration-color:#ff3344">€49.50</div>
-        <div style="font-size:11px;color:rgba(200,214,208,0.4);margin-bottom:12px"><span style="text-decoration:line-through;opacity:0.4">€99</span> /mo</div>
-        <ul style="list-style:none;padding:0;margin:0 0 16px;font-size:12px;line-height:2.2;color:rgba(200,214,208,0.3);text-align:left">
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ All 230 courses</li>
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ All 18 certifications</li>
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ Live terminal practice</li>
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ Progress tracking</li>
-        </ul>
-        <div style="padding:10px;background:rgba(255,102,136,0.1);border-radius:8px;font-size:12px;font-weight:700;color:#ff6688;text-decoration:line-through;cursor:not-allowed">Start Learning</div>
-      </div>
-      <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,102,136,0.12);border-radius:12px;padding:24px 20px;text-align:center;position:relative">
-        <span style="position:absolute;top:-8px;right:-8px;font-size:20px;color:#ff3344">✕</span>
-        <div style="font-size:32px;margin-bottom:6px">🏢</div>
-        <h3 style="font-size:15px;font-weight:700;color:#fff;margin-bottom:2px;text-decoration:line-through;text-decoration-color:#ff3344">Team Learning</h3>
-        <div style="font-size:28px;font-weight:900;color:#ff6688;margin:8px 0;text-decoration:line-through;text-decoration-color:#ff3344">€349.84</div>
-        <ul style="list-style:none;padding:0;margin:0 0 16px;font-size:12px;line-height:2.2;color:rgba(200,214,208,0.3);text-align:left">
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ All courses + certs</li>
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ Team management</li>
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ Progress reports</li>
-          <li style="text-decoration:line-through;text-decoration-color:#ff3344">✅ Dedicated support</li>
-        </ul>
-        <div style="padding:10px;border:1px solid rgba(255,102,136,0.2);border-radius:8px;font-size:12px;font-weight:600;color:#ff6688;text-decoration:line-through;cursor:not-allowed">Contact Us</div>
+      <div style="font-size:11px;color:rgba(200,214,208,0.25);font-family:monospace">
+        <span style="text-decoration:line-through;text-decoration-color:#ff3344">Was: €2.49 · €25 · €49.50 · €75 · €349.84</span>
+        <span style="color:#00ff88;margin-left:8px">→ Now: FREE for everyone 🐱</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Comparison — CROSSED OUT (irrelevant now, Miau is free!) -->
-<section class="section" id="comparison" style="background:rgba(0,0,0,0.2);border-bottom:1px solid rgba(0,255,136,0.04);opacity:0.15;filter:grayscale(1)">
+<!-- Education — ALL FREE NOW -->
+<section class="section" style="border-bottom:1px solid rgba(0,255,136,0.04)">
   <div class="mx-auto">
     <div class="section-title fade-up">
-      <span class="section-tag">🐱 vs 🐶 The Competition</span>
-      <h2 style="text-decoration:line-through;text-decoration-color:#ff3344">Cat vs Dogs: €49.50 vs $24,000. Who Barks Less?</h2>
-      <p style="text-decoration:line-through;text-decoration-color:#ff3344">Bloomberg, Reuters, TradingView — they're all dogs. Expensive, loud, loyal to old tech. Miau is a cat. Independent, clean, comes with 9 lives. The cat always wins.</p>
+      <span class="section-tag" style="color:#ff6688">🎓 Education</span>
+      <span style="font-size:11px;color:#00ff88;margin-left:8px">→ ALL FREE!</span>
+      <h2>232 Courses. 18 Certifications. €0.</h2>
+      <p>From "What is a stock?" to advanced pairs trading. All free. No paywalls. Just cats teaching finance.</p>
     </div>
-    <div class="fade-up delay-1" style="overflow-x:auto;font-family:monospace;font-size:11px">
-      <table style="width:100%;border-collapse:collapse;min-width:700px">
-        <thead>
-          <tr style="border-bottom:1px solid rgba(0,255,136,0.15)">
-            <th style="text-align:left;padding:10px 14px;color:rgba(200,214,208,0.5);font-weight:600">Feature</th>
-            <th style="text-align:center;padding:10px 14px;color:#00ff88;font-weight:700;font-size:12px">🐱 Miau</th>
-            <th style="text-align:center;padding:10px 14px;color:rgba(200,214,208,0.2);font-weight:600;font-size:12px">📊 Bloomberg</th>
-            <th style="text-align:center;padding:10px 14px;color:rgba(200,214,208,0.2);font-weight:600;font-size:12px">📈 Reuters Eikon</th>
-            <th style="text-align:center;padding:10px 14px;color:rgba(200,214,208,0.2);font-weight:600;font-size:12px">📉 TradingView</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0;font-weight:600">Annual cost</td><td style="text-align:center;padding:8px 14px;color:#00ff88;font-weight:700">€49.50 🐱💨</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">$24,000</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">$2,184</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">$599</td></tr>
-          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">Setup time</td><td style="text-align:center;padding:8px 14px;color:#00ff88">30 seconds 🚀</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">3 months 🐌</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">6 weeks 🐌</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">5 minutes</td></tr>
-          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">AI advisor</td><td style="text-align:center;padding:8px 14px;color:#00ff88">✅ DeepSeek-R1</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌ "Bloomberg GPT" (2027 maybe)</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td></tr>
-          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">3D interactive globe</td><td style="text-align:center;padding:8px 14px;color:#00ff88">✅ 7 layers + aliens</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌ (2D map from 1998)</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td></tr>
-          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">Paper trading</td><td style="text-align:center;padding:8px 14px;color:#00ff88">✅ $100K virtual + slippage</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">✅ Basic</td></tr>
-          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">DeFi &amp; Web3</td><td style="text-align:center;padding:8px 14px;color:#00ff88">✅ 8 protocols + MEV</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌ "What's DeFi?"</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td></tr>
-          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">Cats included</td><td style="text-align:center;padding:8px 14px;color:#00ff88;font-weight:700">✅ 14 cats on staff</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌ (0 cats)</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌ (0 cats)</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌ (0 cats)</td></tr>
-          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">230 finance courses</td><td style="text-align:center;padding:8px 14px;color:#00ff88">✅ 18 certs included</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌ ($5,000 extra)</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">❌</td></tr>
-          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">Post-quantum crypto</td><td style="text-align:center;padding:8px 14px;color:#00ff88">✅ CRYSTALS-Kyber</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌ (RSA from 1977)</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td></tr>
-          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">On-premise deploy</td><td style="text-align:center;padding:8px 14px;color:#00ff88">✅ Your servers</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌ (their cloud)</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td></tr>
-          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">Quant engine speed</td><td style="text-align:center;padding:8px 14px;color:#00ff88">✅ Rust 40× faster</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">✅ Python</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">✅ C++</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌ Pine Script</td></tr>
-          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">Data providers</td><td style="text-align:center;padding:8px 14px;color:#00ff88">✅ 37 providers</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">✅</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">✅</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">✅</td></tr>
-          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">Contract length</td><td style="text-align:center;padding:8px 14px;color:#00ff88">Month-to-month 🎉</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">2 years minimum 🔒</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">1 year minimum 🔒</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">Month-to-month</td></tr>
-          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">Install size</td><td style="text-align:center;padding:8px 14px;color:#00ff88">2MB (browser)</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">40GB (dedicated server)</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">15GB</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">5MB (browser)</td></tr>
-          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">Customer support</td><td style="text-align:center;padding:8px 14px;color:#00ff88">Cat responds in 2min 🐱</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">Phone tree hell 📞</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">Email only 📧</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">Forum 💬</td></tr>
-          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">Free tier</td><td style="text-align:center;padding:8px 14px;color:#00ff88">✅ Cat game included</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌ ("Free trial" = sales call)</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">❌</td><td style="text-align:center;padding:8px 14px;color:rgba(200,214,208,0.3)">✅ Limited</td></tr>
-          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:8px 14px;color:#c8d6d0">Cats on staff</td><td style="text-align:center;padding:8px 14px;color:#00ff88;font-weight:700;font-size:14px">🐱🐱🐱🐱🐱</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">😞</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">😞</td><td style="text-align:center;padding:8px 14px;color:rgba(255,68,68,0.5)">😞</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div style="margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;font-size:11px;color:rgba(200,214,208,0.3)" class="fade-up delay-2">
-      <span>🐱 Miau: <strong style="color:#00ff88">€49.50/mo</strong></span>
-      <span style="color:rgba(200,214,208,0.1)">|</span>
-      <span>📊 Bloomberg: <strong style="color:rgba(255,68,68,0.5)">$24,000/yr + 2yr contract + your soul</strong></span>
-      <span style="color:rgba(200,214,208,0.1)">|</span>
-      <span>📈 Reuters: <strong style="color:rgba(255,68,68,0.5)">$2,184/yr + a degree in patience</strong></span>
-      <span style="color:rgba(200,214,208,0.1)">|</span>
-      <span>📉 TradingView: <strong style="color:rgba(200,214,208,0.3)">$599/yr but no cats</strong></span>
-    </div>
-    <div style="text-align:center;margin-top:20px;font-size:13px;color:rgba(200,214,208,0.4)" class="fade-up delay-3">
-      🐱 <a href="http://localhost:5173" style="color:#00ff88;font-weight:700">Try Miau Free</a> · No contract. No credit card. 14 cats on staff.
+    <div style="text-align:center" class="fade-up delay-1">
+      <a href="http://localhost:5174" target="_blank" style="display:inline-block;padding:14px 40px;background:#00ff88;color:#05080a;border-radius:12px;font-size:15px;font-weight:700;box-shadow:0 4px 20px rgba(0,255,136,0.2)">🎓 Start Learning Free</a>
+      <p style="font-size:10px;color:rgba(200,214,208,0.25);margin-top:12px">No credit card. No trial. Just cats. 🐱</p>
     </div>
   </div>
 </section>
@@ -1014,11 +817,11 @@ if('serviceWorker' in navigator) {
   </div>
 </section>
 
-<!-- 🆕 What's New in v2.4.5 -->
+<!-- 🆕 What's New in v2.5.1 -->
 <section class="section" id="whatsnew" style="border-bottom:1px solid rgba(0,255,136,0.04)">
   <div class="mx-auto">
     <div class="section-title fade-up">
-      <span class="section-tag">🐱 v2.4.5</span>
+      <span class="section-tag">🐱 v2.5.1</span>
       <h2>What's New: Miautwork & Marketing Intelligence</h2>
       <p>The cat empire grows — social network and marketing analytics join the family</p>
     </div>
@@ -1100,7 +903,7 @@ if('serviceWorker' in navigator) {
       <a href="http://localhost:5174" target="_blank" class="btn btn-secondary" style="padding:14px 28px;border-radius:10px;font-size:14px;font-weight:600;color:#c8d6d0;border:1px solid rgba(200,214,208,0.15);transition:all 0.2s">🎓  Learning Platform</a>
     </div>
     <div class="cta-footer fade-up delay-4">
-      Made with 🐟 by the Miau Corp cats · v2.4.5 · 15 services · 232 courses · 104 papers · 🐱 chonk 45 · ∞ tuna · Cats have won
+      Made with 🐟 by the Miau Corp cats · v2.5.1 · 15 services · 232 courses · 104 papers · 🐱 chonk 45 · ∞ tuna · Cats have won
       <br>
       <a href="/compliance/imprint" style="color:rgba(200,214,208,0.2);text-decoration:underline">Impressum</a>
       <span style="color:rgba(200,214,208,0.1)"> · </span>

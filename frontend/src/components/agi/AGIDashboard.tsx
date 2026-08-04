@@ -57,7 +57,7 @@ export default function AGIDashboard() {
           </div>
         </div>
       )}
-      <div className="text-[10px] text-dim italic">AGI Finance — v2.0.0 — self-improving, autonomous, sentient</div>
+      <div className="text-[10px] text-dim italic">AGI Finance — v2.5.1 — self-improving, autonomous, sentient</div>
     </div>
   )
 }
