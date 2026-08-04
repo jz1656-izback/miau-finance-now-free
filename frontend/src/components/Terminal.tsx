@@ -585,12 +585,6 @@ export default function Terminal({ embedded = false, onSplit }: TerminalProps) {
     if (t.startsWith('chartz3d') || t.startsWith('chart3d')) {
       const parts = raw.split(/\s+/)
       const tk = (parts[1] || 'AAPL').toUpperCase()
-      // Tier check: Pro required for 3D charts
-      const tier = localStorage.getItem('miau_tier')
-      if (tier !== 'pro' && tier !== 'enterprise') {
-        addLine({ text: `💎 3D charts require Pro (€49.50/mo). Type 'billing upgrade' to upgrade.`, className: 'text-yellow' })
-        return
-      }
       setShowChart3D(tk)
       addLine({ text: `📈 Opening 3D chart for ${tk}...`, className: 'text-green' })
       return
@@ -598,11 +592,6 @@ export default function Terminal({ embedded = false, onSplit }: TerminalProps) {
     if (t.startsWith('sheetz3d')) {
       const parts = raw.split(/\s+/)
       const tk = (parts[1] || 'AAPL').toUpperCase()
-      const tier = localStorage.getItem('miau_tier')
-      if (tier !== 'pro' && tier !== 'enterprise') {
-        addLine({ text: `💎 3D IB dashboard requires Pro (€49.50/mo). Type 'billing upgrade' to upgrade.`, className: 'text-yellow' })
-        return
-      }
       setShowSheetz3D(tk)
       addLine({ text: `🏦 Opening 3D IB dashboard for ${tk}...`, className: 'text-green' })
       return
@@ -611,11 +600,6 @@ export default function Terminal({ embedded = false, onSplit }: TerminalProps) {
       const parts = raw.split(/\s+/)
       const tks = parts.slice(1).filter(Boolean).map(s => s.toUpperCase())
       if (tks.length < 2) { addLine({ text: 'Usage: compare3d <ticker1> <ticker2> [...]', className: 'text-yellow' }); return }
-      const tier = localStorage.getItem('miau_tier')
-      if (tier !== 'pro' && tier !== 'enterprise') {
-        addLine({ text: `💎 3D comparison requires Pro (€49.50/mo). Type 'billing upgrade' to upgrade.`, className: 'text-yellow' })
-        return
-      }
       setShowCompare3D(tks)
       addLine({ text: `📊 Comparing ${tks.join(' vs ')} in 3D...`, className: 'text-green' })
       return
