@@ -96,7 +96,7 @@ export default function Catberg() {
   )
 
   return (
-    <div ref={containerRef} className="h-full w-full flex flex-col bg-black text-green font-mono text-[11px] relative overflow-hidden" style={{ fontFamily: '"JetBrains Mono", "Fira Code", monospace' }}>
+    <div ref={containerRef} className="fixed inset-0 z-[9999] flex flex-col bg-[#05080a] text-green font-mono text-[11px]" style={{ fontFamily: '"JetBrains Mono", "Fira Code", monospace' }}>
       {/* Ticker Bar */}
       <div className="flex items-center h-5 px-2 bg-[#0a0a0a] border-b border-green/10 overflow-hidden select-none" style={{ fontSize: '10px' }}>
         {tickerBar.slice(0, 8).map((t: any, i: number) => {
